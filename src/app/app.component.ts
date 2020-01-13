@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+// services
+import { WpService } from './services/wp/wp.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'web';
+  constructor(
+    private wpService: WpService
+  ) {
+    this.wpService.getCategories();
+    this.wpService.getPages();
+    this.wpService.getUsers();
+    this.wpService.getTags();
+  }
 }

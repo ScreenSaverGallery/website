@@ -1,0 +1,19 @@
+<ng-container *ngIf="categories && pages; else loading">
+    <nav>
+        <ng-container *ngFor="let cat of categories">
+            <!-- TOP CATEGORIES -->
+            <ng-container *ngIf="cat?.parent === 0">
+                <p><a [routerLink]="'/archive/' + cat.slug" [state]="{type: 'category'}" routerLinkActive="active" [innerHtml]="cat.name | titlecase | safeHtml"></a></p>
+            </ng-container>
+        </ng-container>
+        ----------------
+        <ng-container *ngFor="let page of pages">
+            <ng-container *ngIf="page.content.rendered">
+                <p><a [routerLink]="'/' + page.slug" [innerHtml]="page.title.rendered | titlecase | safeHtml"></a></p>
+            </ng-container>
+        </ng-container>
+    </nav>
+</ng-container>
+<ng-template #loading>
+    Loading ...
+</ng-template>

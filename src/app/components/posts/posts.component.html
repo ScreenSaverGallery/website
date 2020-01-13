@@ -1,0 +1,13 @@
+<ng-container *ngIf="posts && posts.length > 0; else loading">
+    <ng-container *ngFor="let post of posts; let i = index">
+        <app-post
+            *ngIf="i <= maxVisiblePosts"
+            [post]="post"
+        ></app-post>
+        <!-- TODO LOAD MORE -->
+    </ng-container>
+</ng-container>
+
+<ng-template #loading>
+    Loading ...
+</ng-template>

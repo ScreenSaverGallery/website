@@ -1,0 +1,17 @@
+<ng-container *ngIf="post || loadedPost; else loading">
+    <ng-container *ngIf="!post; else excerpt">
+        <!-- LIST OF POSTS -->
+        <!-- <app-menu></app-menu> -->
+        <h2 [innerHTML]="loadedPost.title.rendered | safeHtml"></h2>
+        <article [innerHTML]="loadedPost.content.rendered | safeHtml"></article>
+    </ng-container>
+    
+    <ng-template #excerpt>
+        <a [routerLink]="'/' + post.slug"><h2 [innerHtml]="post.title.rendered | safeHtml"></h2></a>
+    </ng-template>
+</ng-container>
+
+<ng-template #Loading>
+    Loading...
+</ng-template>
+<!-- <p>post works!</p> -->
