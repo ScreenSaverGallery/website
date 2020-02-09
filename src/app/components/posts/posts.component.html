@@ -1,10 +1,17 @@
-<ng-container *ngIf="posts && posts.length > 0; else loading">
+<ng-container *ngIf="posts && posts.length > 0">
     <ng-container *ngFor="let post of posts; let i = index">
         <app-post
-            *ngIf="i <= maxVisiblePosts"
             [post]="post"
         ></app-post>
-        <!-- TODO LOAD MORE -->
+    </ng-container>
+    <!-- TODO LOAD MORE -->
+    <app-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></app-load-more>
+</ng-container>
+
+<ng-container *ngIf="children.length > 0">
+    <ng-container *ngFor="let child of children">
+        <app-post [post]="child"></app-post>
+        <!-- <h2><a [routerLink]="child.slug">{{child.name | titlecase}}</a></h2> -->
     </ng-container>
 </ng-container>
 
