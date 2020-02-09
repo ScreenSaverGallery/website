@@ -1,0 +1,55 @@
+import {
+  Component,
+  AfterViewInit,
+  Output,
+  Input,
+  EventEmitter,
+  ElementRef
+} from '@angular/core';
+
+@Component({
+  selector: 'app-load-more',
+  templateUrl: './load-more.component.html',
+  styleUrls: ['./load-more.component.scss']
+})
+export class LoadMoreComponent implements AfterViewInit {
+
+  rect: any;
+  visible: boolean = true;
+
+  @Input() set loadMore(load: boolean) {
+    if (!load) {
+      this.visible = false;
+    }
+  }
+  @Output() inViewport: EventEmitter<boolean> = new EventEmitter();
+
+
+  constructor(
+    private elm: ElementRef
+  ) { }
+
+  ngAfterViewInit() {
+    window.addEventListener('scroll', (e: any) => {
+      if (this.isInViewPort() && this.visible) {
+        this.inViewport.emit(true);
+      } else {
+        this.inViewport.emit(false);
+      }
+    });
+  }
+
+  private isInViewPort(): boolean {
+    const rect = this.elm.nativeElement.getBoundingClientRect();
+    if (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+}
