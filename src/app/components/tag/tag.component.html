@@ -1,5 +1,8 @@
-<ng-container *ngIf="name && link">
-    <div class="name">
-        <a [href]="link">{{name}}</a>
+<ng-container *ngIf="tag; else loading">
+    <div class="tag">
+        <a [routerLink]="'/tag/' + tag.slug">{{tag.name}}</a>
     </div>
 </ng-container>
+
+<ng-template #loading>Loading...</ng-template>
+
