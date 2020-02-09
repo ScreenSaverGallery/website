@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 // services
-import { WpService } from './services/wp/wp.service';
+// import { WpService } from './services/wp/wp.service';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +8,11 @@ import { WpService } from './services/wp/wp.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'web';
+  title = 'ScreenSaverGallery';
   constructor(
-    private wpService: WpService
+    // private wpService: WpService
   ) {
-    this.wpService.getCategories();
-    this.wpService.getPages();
-    this.wpService.getUsers();
-    this.wpService.getTags();
+    // this.wpService.getUsers();
+    // this.wpService.getTags();
   }
 }
