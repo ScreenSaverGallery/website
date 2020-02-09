@@ -1,0 +1,7 @@
+<ng-container *ngIf="author; else loading">
+    <div class="author">
+        <a [routerLink]="'/author/' + author.slug" [innerHtml]="author.name | safeHtml"></a>
+    </div>
+</ng-container>
+
+<ng-template #loading>Loading...</ng-template>
