@@ -1,17 +1,54 @@
 <ng-container *ngIf="post || loadedPost; else loading">
+
     <ng-container *ngIf="!post; else excerpt">
-        <!-- LIST OF POSTS -->
-        <!-- <app-menu></app-menu> -->
-        <h2 [innerHTML]="loadedPost.title.rendered | safeHtml"></h2>
-        <article [innerHTML]="loadedPost.content.rendered | safeHtml"></article>
+        <!-- POSTS -->
+        <div class="post">
+            <h2 [innerHTML]="loadedPost.title.rendered | safeHtml"></h2>
+            <!-- post meta -->
+            <div class="post-meta">
+                <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
+                <app-author [id]="loadedPost.author"></app-author>
+            </div>
+            <article [innerHTML]="loadedPost.content.rendered | safeHtml"></article>
+            <div class="tags" *ngIf="loadedPost.tags && loadedPost.tags.length > 0">
+                <ng-container *ngFor="let tagId of loadedPost.tags">
+                    <app-tag [id]="tagId"></app-tag>
+                </ng-container>
+            </div>
+        </div>
     </ng-container>
     
     <ng-template #excerpt>
-        <a [routerLink]="'/' + post.slug"><h2 [innerHtml]="post.title.rendered | safeHtml"></h2></a>
+        <!-- POST EXCERPT -->
+        <ng-container *ngIf="post.title; else subcategory">
+            <div class="post excerpt">
+                <h2><a [routerLink]="'/' + post.slug" [innerHtml]="post.title.rendered | safeHtml"></a></h2>
+                <!-- post meta -->
+                <div class="post-meta">
+                    <div class="date">{{post.date | date: 'longDate' }}</div>
+                    <app-author [id]="post.author"></app-author>
+                </div>
+                <ng-container *ngIf="post.featured_media">
+                    <a [routerLink]="'/' + post.slug">
+                        <app-media [id]="post.featured_media"></app-media>
+                    </a>
+                </ng-container>
+                <article [innerHtml]="post.excerpt.rendered | safeHtml"></article>
+                <div class="tags" *ngIf="post.tags && post.tags.length > 0">
+                    <ng-container *ngFor="let tagId of post.tags">
+                        <app-tag [id]="tagId"></app-tag>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+    </ng-template>
+
+    <!-- SUBCATEGORY -->
+    <ng-template #subcategory>
+        <h2><a [routerLink]="post.slug" [innerHtml]="post.name | titlecase">{{post.name}}</a></h2>
     </ng-template>
 </ng-container>
 
-<ng-template #Loading>
+<ng-template #loading>
     Loading...
 </ng-template>
-<!-- <p>post works!</p> -->

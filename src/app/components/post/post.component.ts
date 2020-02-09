@@ -24,6 +24,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit() {
 
+    // if not post, get it from url
     if (!this.post) {
       
       this.wpService.pages.subscribe((pages: any) => {
@@ -38,10 +39,11 @@ export class PostComponent implements OnInit {
               // console.log('post', this.loadedPost);
             } else { // page not exists, get post by slug
               // post
-              this.wpService.getPostBySlug(slug).subscribe((posts: any) => {
-                // console.log('post by slug', posts[0]);
-                if (posts && posts.length === 1) {
-                  this.loadedPost = posts[0];
+              this.wpService.getPostBySlug(slug).subscribe((res: any) => {
+                // console.log('post by slug', res);
+                if (res && res.body && res.body.length === 1) {
+                  this.loadedPost = res.body[0];
+                  // console.log('post', this.loadedPost);
                 }
               });
             }
@@ -50,6 +52,7 @@ export class PostComponent implements OnInit {
       });
     } else {
       // post is set => listing posts
+      // console.log('post is set', this.post);
     }
       
   }
