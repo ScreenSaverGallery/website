@@ -1,0 +1,14 @@
+<ng-container *ngIf="url">
+    <ng-container *ngIf="mediaType && mediaType === 'image'">
+        <img
+            [src]="url"
+            [alt]="title"
+            [width]="imageDetails.width"
+            [height]="imageDetails.height"
+            [srcset]="getImageSrcset()"
+            [sizes]="getImageSrcSizes()"
+        >
+    </ng-container>
+</ng-container>
+
+<ng-template #loading>Loading...</ng-template>
