@@ -13,6 +13,11 @@ import { MainComponent } from './components/main/main.component';
 import { TagComponent } from './components/tag/tag.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { MediaComponent } from './components/media/media.component';
+import { TagPostsComponent } from './components/tag-posts/tag-posts.component';
+import { LoadMoreComponent } from './components/load-more/load-more.component';
+import { AuthorComponent } from './components/author/author.component';
+import { AuthorPostsComponent } from './components/author-posts/author-posts.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,12 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     MainComponent,
     TagComponent,
     MenuComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    MediaComponent,
+    TagPostsComponent,
+    LoadMoreComponent,
+    AuthorComponent,
+    AuthorPostsComponent
   ],
   imports: [
     BrowserModule,
