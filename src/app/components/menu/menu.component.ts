@@ -17,17 +17,18 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // get all pages and categories
+    this.wpService.getAllCategories();
+    this.wpService.getAllPages();
     // subscribe categories
     this.wpService.categories.subscribe((res: any) => {
       if (res) {
-        console.log('menu.component categories', res);
         this.categories = res;
       }
     });
     // subscribe pages
     this.wpService.pages.subscribe((res: any) => {
       if (res) {
-        console.log('menu.component pages', res);
         this.pages = res;
       }
     });
