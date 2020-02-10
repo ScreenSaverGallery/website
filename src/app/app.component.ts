@@ -8,11 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ScreenSaverGallery';
-  constructor(
-    // private wpService: WpService
-  ) {
-    // this.wpService.getUsers();
-    // this.wpService.getTags();
-  }
+
+  title: string = 'ScreenSaverGallery';
+  // toggle: boolean = false;
+// 
+  // constructor() {}
+// 
+  // toggleMenu(): void {
+  //   this.toggle = !this.toggle;
+  // }
 }
