@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+$space: 24px;
+
 * {
     box-sizing: border-box;
 }
@@ -9,9 +11,48 @@ body,
 app-root {
     display: block;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     padding: 0;
     margin: 0;
+    color: silver;
+    background-color: #14141e;
 }
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Roboto Mono', monospace; }
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+a {
+    color: #55b5db;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover {
+    color: red;
+    transform: skew(10deg, 10deg);
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Russo One', sans-serif;
+}
+
+h1 {
+    position: sticky;
+    top: 3 * $space;
+}
+
+img, p {
+    margin-top: $space;
+    margin-bottom: $space; 
+}
+
+.mat-drawer-side.mat-drawer-end {
+    border-left: none;
+}
