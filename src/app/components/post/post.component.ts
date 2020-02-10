@@ -6,6 +6,7 @@ import {
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 // services
 import { WpService } from '../../services/wp/wp.service';
+import { ColorService } from '../../services/color/color.service';
 
 @Component({
   selector: 'app-post',
@@ -17,13 +18,17 @@ export class PostComponent implements OnInit {
   @Input() post: any;
   loadedPost: any;
 
+  randomColor: string = 'silver';
+
   constructor(
     private wpService: WpService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private colorService: ColorService
   ) { }
 
   ngOnInit() {
 
+    this.randomColor = this.colorService.generateHslaColor(100);
     // if not post, get it from url
     if (!this.post) {
       
