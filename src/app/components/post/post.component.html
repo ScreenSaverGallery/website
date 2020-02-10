@@ -3,14 +3,14 @@
     <ng-container *ngIf="!post; else excerpt">
         <!-- POSTS -->
         <div class="post">
-            <h1 [innerHTML]="loadedPost.title.rendered | safeHtml"></h1>
+            <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
             <!-- post meta -->
-            <div class="post-meta">
+            <div class="post-meta" fxLayout="row wrap" fxLayoutGap="12px">
                 <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
-                <app-author [id]="loadedPost.author"></app-author>
+                <app-author [id]="loadedPost.author" [text]="'by'"></app-author>
             </div>
-            <article [innerHTML]="loadedPost.content.rendered | safeHtml"></article>
-            <div class="tags" *ngIf="loadedPost.tags && loadedPost.tags.length > 0">
+            <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
+            <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="loadedPost.tags && loadedPost.tags.length > 0">
                 <ng-container *ngFor="let tagId of loadedPost.tags">
                     <app-tag [id]="tagId"></app-tag>
                 </ng-container>
@@ -24,17 +24,17 @@
             <div class="post excerpt">
                 <h2><a [routerLink]="'/' + post.slug" [innerHtml]="post.title.rendered | safeHtml"></a></h2>
                 <!-- post meta -->
-                <div class="post-meta">
+                <div class="post-meta" fxLayout="row wrap" fxLayoutGap="12px">
                     <div class="date">{{post.date | date: 'longDate' }}</div>
-                    <app-author [id]="post.author"></app-author>
+                    <app-author  [id]="post.author" [text]="'by'"></app-author >
                 </div>
                 <ng-container *ngIf="post.featured_media">
                     <a [routerLink]="'/' + post.slug">
                         <app-media [id]="post.featured_media"></app-media>
                     </a>
                 </ng-container>
-                <article [innerHtml]="post.excerpt.rendered | safeHtml"></article>
-                <div class="tags" *ngIf="post.tags && post.tags.length > 0">
+                <article [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
+                <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="post.tags && post.tags.length > 0">
                     <ng-container *ngFor="let tagId of post.tags">
                         <app-tag [id]="tagId"></app-tag>
                     </ng-container>
