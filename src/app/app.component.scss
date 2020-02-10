@@ -1,0 +1,6 @@
+$space: 24px;
+
+:host {
+    padding: $space;
+    padding-top: 3 * $space; 
+}
