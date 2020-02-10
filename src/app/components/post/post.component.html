@@ -3,7 +3,7 @@
     <ng-container *ngIf="!post; else excerpt">
         <!-- POSTS -->
         <div class="post">
-            <h2 [innerHTML]="loadedPost.title.rendered | safeHtml"></h2>
+            <h1 [innerHTML]="loadedPost.title.rendered | safeHtml"></h1>
             <!-- post meta -->
             <div class="post-meta">
                 <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
