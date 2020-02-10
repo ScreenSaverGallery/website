@@ -51,8 +51,12 @@ export class WpService {
     return this.wpApiService.getPosts(`slug=${slug}`);
   }
 
-  getPostsByTag(tag: string): Observable<HttpResponse<any>> {
-    return this.wpApiService.getPosts(`tag=${tag}`);
+  getPostsByTag(tag: number, page: number = 1): Observable<HttpResponse<any>> {
+    return this.wpApiService.getPosts(`tags=${tag}&orderby=date&page=${page}`);
+  }
+
+  getPostsByAuthor(authorId: number, page: number = 1): Observable<HttpResponse<any>> {
+    return this.wpApiService.getPosts(`author=${authorId}&orderby=date&page=${page}`);
   }
 
   getCategoryPosts(id: number, page: number = 1): Observable<HttpResponse<any>> {
@@ -137,6 +141,10 @@ export class WpService {
     return this.wpApiService.getUser(id);
   }
 
+  getUserBySlug(slug: string): Observable<any> {
+    return this.wpApiService.getUsers(`slug=${slug}`);
+  }
+
   /* PAGES */
 
   getAllPages(): void {
@@ -199,6 +207,14 @@ export class WpService {
 
   getTag(id: number): Observable<any> {
     return this.wpApiService.getTag(id);
+  }
+
+  getTagBySlug(slug: string): Observable<any> {
+    return this.wpApiService.getTags(`slug=${slug}`);
+  }
+
+  getTagPosts(id: number): Observable<any> {
+    return this.wpApiService.getPosts(`tags=${id}`);
   }
 
   /* MEDIAS */
