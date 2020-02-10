@@ -5,7 +5,6 @@ import { Routes, RouterModule, UrlSegment } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostComponent } from './components/post/post.component';
-import { PostsComponent } from './components/posts/posts.component';
 import { TagPostsComponent } from './components/tag-posts/tag-posts.component';
 import { AuthorPostsComponent } from './components/author-posts/author-posts.component';
 import { CategoryPostsComponent } from './components/category-posts/category-posts.component';
