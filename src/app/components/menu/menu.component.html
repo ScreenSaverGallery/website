@@ -1,19 +1,51 @@
-<ng-container *ngIf="categories && pages; else loading">
-    <nav>
-        <ng-container *ngFor="let cat of categories">
-            <!-- TOP CATEGORIES -->
-            <ng-container *ngIf="cat?.parent === 0">
-                <p><a [routerLink]="'/archive/' + cat.slug" [state]="{type: 'category'}" routerLinkActive="active" [innerHtml]="cat.name | titlecase | safeHtml"></a></p>
-            </ng-container>
+<div class="back" *ngIf="!home">
+    <button mat-icon-button [color]="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
+<div class="sandwitch" #sandwitch>
+    <button  mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+</div>
+<mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer mode="side" position="end" closed>
+        <ng-container *ngIf="categories && pages; else loading">
+            <nav>
+                <button mat-icon-button (click)="drawer.close()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <ng-container *ngFor="let cat of categories">
+                    <!-- TOP CATEGORIES -->
+                    <ng-container *ngIf="cat?.parent === 0">
+                        <p>
+                            <a
+                                [routerLink]="'/archive/' + cat.slug"
+                                [state]="{type: 'category'}"
+                                routerLinkActive="active"
+                                [innerHtml]="cat.name | titlecase | safeHtml"
+                                (click)="drawer.close()"
+                            ></a>
+                        </p>
+                    </ng-container>
+                </ng-container>
+                ----------------
+                <ng-container *ngFor="let page of pages">
+                    <ng-container *ngIf="page.content.rendered">
+                        <p>
+                            <a
+                                [routerLink]="'/' + page.slug"
+                                [innerHtml]="page.title.rendered | titlecase | safeHtml"
+                                (click)="drawer.close()"
+                            ></a></p>
+                    </ng-container>
+                </ng-container>
+            </nav>
         </ng-container>
-        ----------------
-        <ng-container *ngFor="let page of pages">
-            <ng-container *ngIf="page.content.rendered">
-                <p><a [routerLink]="'/' + page.slug" [innerHtml]="page.title.rendered | titlecase | safeHtml"></a></p>
-            </ng-container>
-        </ng-container>
-    </nav>
-</ng-container>
-<ng-template #loading>
-    Loading ...
-</ng-template>
+        
+        <ng-template #loading>
+            Loading ...
+        </ng-template>
+    </mat-drawer>
+</mat-drawer-container>
