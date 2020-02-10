@@ -138,12 +138,60 @@ export class WpService {
   }
 
   getUser(id: number): Observable<any> {
-    return this.wpApiService.getUser(id);
+    const subject: Subject<any> = new Subject();
+    let user: any = this.getLoadedUser(id);
+    if (user) {
+      setTimeout(() => {
+        subject.next(user);
+        subject.complete();
+      }, 100);
+    } else {
+      this.wpApiService.getUser(id).subscribe((res: any) => {
+        if (res.status === 200) {
+          user = res.body;
+          this._users.push(user);
+          subject.next(user);
+          subject.complete();
+        }
+      });
+    }
+    
+    return subject;
   }
 
   getUserBySlug(slug: string): Observable<any> {
-    return this.wpApiService.getUsers(`slug=${slug}`);
+    const subject: Subject<any> = new Subject();
+    let user: any = this.getLoadedUser(null, slug);
+    if (user) {
+      setTimeout(() => {
+        subject.next(user);
+        subject.complete();
+      }, 100);
+    } else {
+      this.wpApiService.getUsers(`slug=${slug}`).subscribe((res: any) => {
+        // console.log('getUsers by slug', res);
+        if (res.status === 200) {
+          user = res.body[0];
+          this._users.push(user);
+          subject.next(user);
+          subject.complete();
+        }
+      });
+    }
+    return subject;
   }
+
+  private getLoadedUser(id?: number, slug?: string): any {
+    let i: number = 0;
+    const len: number = this._users.length;
+    for (i; i < len; i++) {
+      const user: any = this._users[i];
+      if (id && user.id === id || slug && user.slug === slug) {
+        return user;
+      }
+    }
+    return null;
+  } 
 
   /* PAGES */
 
@@ -205,6 +253,7 @@ export class WpService {
     });
   }
 
+  // TODO: OPTIMIZE LOADING ONCE ONLY
   getTag(id: number): Observable<any> {
     return this.wpApiService.getTag(id);
   }
