@@ -2,14 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './modules/material/material.module';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './modules/routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { PostComponent } from './components/post/post.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PostsComponent } from './components/posts/posts.component';
-import { MainComponent } from './components/main/main.component';
 import { TagComponent } from './components/tag/tag.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
@@ -20,6 +20,8 @@ import { AuthorComponent } from './components/author/author.component';
 import { AuthorPostsComponent } from './components/author-posts/author-posts.component';
 import { CategoryPostsComponent } from './components/category-posts/category-posts.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemetazoaPipe } from './pipes/demetazoa.pipe';
+import { SsgIconComponent } from './components/ssg-icon/ssg-icon.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     NotFoundComponent,
     PostsComponent,
-    MainComponent,
     TagComponent,
     MenuComponent,
     SafeHtmlPipe,
@@ -37,14 +38,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoadMoreComponent,
     AuthorComponent,
     AuthorPostsComponent,
-    CategoryPostsComponent
+    CategoryPostsComponent,
+    DemetazoaPipe,
+    SsgIconComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
