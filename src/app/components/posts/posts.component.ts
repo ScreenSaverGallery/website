@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 // services
 import { WpService } from '../../services/wp/wp.service';
+import { ColorService } from '../../services/color/color.service';
 
 @Component({
   selector: 'app-posts',
@@ -33,19 +34,22 @@ export class PostsComponent implements OnInit {
   loadingPosts: boolean = false;
 
   title: string;
+  randomColor: string = 'silver';
 
   constructor(
-    private wpService: WpService
+    private wpService: WpService,
+    private colorService: ColorService
   ) { }
 
   ngOnInit() {
     if (this._postsFrom && this._postsOf) {
       this.loadPosts();
     }
+    this.randomColor = this._getRandomColor();
   }
 
   private loadPosts(): void {
-    console.log('postsFrom', this._postsFrom);
+    // console.log('postsFrom', this._postsFrom);
     switch (this._postsFrom) {
       case 'archive':
         this.getCategoryPosts(this._postsOf);
@@ -56,9 +60,6 @@ export class PostsComponent implements OnInit {
       case 'author':
         this.getAuthorPosts(this._postsOf);
         break;
-      /* default:
-        this.getCategoryPosts(this._postsOf);
-        break; */
     }
   }
 
@@ -82,9 +83,8 @@ export class PostsComponent implements OnInit {
 
   getAuthorPosts(authorSlug: string): void {
     this.wpService.getUserBySlug(authorSlug).subscribe((res: any) => {
-      if (res.status === 200) {
-        const author = res.body[0];
-        // console.log('author', author);
+      if (res) {
+        const author = res;
         this.title = (author.name === '&amp;' ? '&' : author.name);
         this.wpService.getPostsByAuthor(author.id, this.postsPage).subscribe((r: any) => {
           this.recievePosts(r);
@@ -137,6 +137,12 @@ export class PostsComponent implements OnInit {
     if (load && !this.loadingPosts) {
       this.loadPosts();
     }
+  }
+
+  private _getRandomColor(): string {
+    const color: string = this.colorService.generateHslaColor(100);
+    console.log(color);
+    return color;
   }
 
   log(key: any, value: any): void {
