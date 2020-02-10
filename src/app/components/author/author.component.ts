@@ -10,6 +10,7 @@ import { WpService } from '../../services/wp/wp.service';
 export class AuthorComponent implements OnInit {
 
   @Input() id: number;
+  @Input() text: string = undefined;
   author: any;
 
   constructor(
@@ -19,9 +20,8 @@ export class AuthorComponent implements OnInit {
   ngOnInit() {
     if (this.id) {
       this.wpService.getUser(this.id).subscribe((res: any) => {
-        if (res.status === 200) {
-          this.author = res.body;
-          // console.log('author', this.author);
+        if (res) {
+          this.author = res;
         }
       });
     }
