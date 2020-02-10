@@ -31,6 +31,7 @@ export class LoadMoreComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     window.addEventListener('scroll', (e: any) => {
+      // console.log('isInViewPort', this.isInViewPort());
       if (this.isInViewPort() && this.visible) {
         this.inViewport.emit(true);
       } else {
@@ -41,10 +42,11 @@ export class LoadMoreComponent implements AfterViewInit {
 
   private isInViewPort(): boolean {
     const rect = this.elm.nativeElement.getBoundingClientRect();
+    // console.log('rect', rect);
     if (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 24 &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     ) {
       return true;
