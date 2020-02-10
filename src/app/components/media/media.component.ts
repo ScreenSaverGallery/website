@@ -31,7 +31,7 @@ export class MediaComponent implements OnInit {
         if (res.status === 200 && res.body.source_url) {
           this.mediaType = res.body.media_type;
           this.title = res.body.title.rendered;
-          console.log('title', this.title);
+          // console.log('title', this.title);
           this.imageDetails = res.body.media_details;
           // console.log('imageDetails', this.imageDetails);
 
