@@ -17,6 +17,8 @@ export class LoadMoreComponent implements AfterViewInit {
   rect: any;
   visible: boolean = true;
 
+  private _offset: number = 144;
+
   @Input() set loadMore(load: boolean) {
     if (!load) {
       this.visible = false;
@@ -46,7 +48,7 @@ export class LoadMoreComponent implements AfterViewInit {
     if (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 24 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + this._offset &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     ) {
       return true;
