@@ -18,6 +18,8 @@ import { TagPostsComponent } from './components/tag-posts/tag-posts.component';
 import { LoadMoreComponent } from './components/load-more/load-more.component';
 import { AuthorComponent } from './components/author/author.component';
 import { AuthorPostsComponent } from './components/author-posts/author-posts.component';
+import { CategoryPostsComponent } from './components/category-posts/category-posts.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,13 +36,15 @@ import { AuthorPostsComponent } from './components/author-posts/author-posts.com
     TagPostsComponent,
     LoadMoreComponent,
     AuthorComponent,
-    AuthorPostsComponent
+    AuthorPostsComponent,
+    CategoryPostsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
