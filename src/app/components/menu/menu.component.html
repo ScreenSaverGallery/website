@@ -24,9 +24,8 @@
                                 [routerLink]="'/archive/' + cat.slug"
                                 [state]="{type: 'category'}"
                                 routerLinkActive="active"
-                                [innerHtml]="cat.name | titlecase | safeHtml"
                                 (click)="drawer.close()"
-                            ></a>
+                            ><span class="link-content" [innerHtml]="cat.name | titlecase | safeHtml"></span></a>
                         </p>
                     </ng-container>
                 </ng-container>
@@ -36,9 +35,8 @@
                         <p>
                             <a
                                 [routerLink]="'/' + page.slug"
-                                [innerHtml]="page.title.rendered | titlecase | safeHtml"
                                 (click)="drawer.close()"
-                            ></a></p>
+                            ><span class="link-content" [innerHtml]="page.title.rendered | titlecase | safeHtml"></span></a></p>
                     </ng-container>
                 </ng-container>
             </nav>

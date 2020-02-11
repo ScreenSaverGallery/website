@@ -22,7 +22,7 @@
         <!-- POST EXCERPT -->
         <ng-container *ngIf="post.title; else subcategory">
             <div class="post excerpt">
-                <h2><a [routerLink]="'/' + post.slug" [innerHtml]="post.title.rendered | safeHtml"></a></h2>
+                <h2><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></h2>
                 <!-- post meta -->
                 <div class="post-meta" fxLayout="row wrap" fxLayoutGap="12px">
                     <div class="date">{{post.date | date: 'longDate' }}</div>
@@ -33,7 +33,7 @@
                     <ng-container *ngIf="post.featured_media; else onlytext">
                         <div class="featured-media" fxFlex="35%">
                             <a [routerLink]="'/' + post.slug">
-                                <app-media [id]="post.featured_media"></app-media>
+                                <span class="link-content"><app-media [id]="post.featured_media"></app-media></span>
                             </a>
                         </div>
                         <article fxFlex="65%" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>

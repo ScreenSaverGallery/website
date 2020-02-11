@@ -1,6 +1,6 @@
 <ng-container *ngIf="author; else loading">
     <div class="author">
-        {{text ? text : ''}} <a [routerLink]="'/author/' + author.slug" [innerHtml]="author.name | safeHtml"></a>
+        {{text ? text : ''}} <a [routerLink]="'/author/' + author.slug"><span class="link-content" [innerHtml]="author.name | safeHtml"></span></a>
     </div>
 </ng-container>
 
