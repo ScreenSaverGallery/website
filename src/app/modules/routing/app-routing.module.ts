@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'archive/:name/:subarchive', component: CategoryPostsComponent },
   { path: 'tag/:name', component: TagPostsComponent },
   { path: 'author/:name', component: AuthorPostsComponent },
+  { path: 'error/404', component: NotFoundComponent }, // for handy purpose
   { path: '**', component: NotFoundComponent }
 ];
 
