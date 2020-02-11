@@ -3,7 +3,7 @@ import {
   OnInit,
   Input
 } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
@@ -23,6 +23,7 @@ export class PostComponent implements OnInit {
   constructor(
     private wpService: WpService,
     private route: ActivatedRoute,
+    private router: Router,
     private colorService: ColorService
   ) { }
 
@@ -49,6 +50,9 @@ export class PostComponent implements OnInit {
                 if (res && res.body && res.body.length === 1) {
                   this.loadedPost = res.body[0];
                   // console.log('post', this.loadedPost);
+                } else {
+                  // navigate to 404
+                  this.router.navigate(['/error/404']);
                 }
               });
             }
