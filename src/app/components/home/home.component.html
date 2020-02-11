@@ -1,10 +1,10 @@
 <ng-container *ngIf="starsText">
-    <app-stars [text]="'now in ScreenSaverGallery ' + starsText | uppercase"></app-stars>
+    <app-stars [color]="'random'" [text]="'NOW! ScreenSaverGallery PRESENT ' + starsText"></app-stars>
 </ng-container>
 
 <div class="home" fxLayout="column" fxLayoutAlign="center center">
     <div class="get-ssg" fxLayout="column" fxLayoutAlign="center cetner" (click)="goToDownload()">
-        <app-ssg-icon [size]="200"></app-ssg-icon>
+        <app-ssg-icon [size]="200" [animated]="false"></app-ssg-icon>
         <button mat-raised-button color="primary">
             <mat-icon>get_app</mat-icon> Get ScreenSaverGallery
         </button>

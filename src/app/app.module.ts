@@ -22,6 +22,7 @@ import { CategoryPostsComponent } from './components/category-posts/category-pos
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemetazoaPipe } from './pipes/demetazoa.pipe';
 import { SsgIconComponent } from './components/ssg-icon/ssg-icon.component';
+import { StarsComponent } from './components/stars/stars.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SsgIconComponent } from './components/ssg-icon/ssg-icon.component';
     AuthorPostsComponent,
     CategoryPostsComponent,
     DemetazoaPipe,
-    SsgIconComponent
+    SsgIconComponent,
+    StarsComponent
   ],
   imports: [
     BrowserModule,
