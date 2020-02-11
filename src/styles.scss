@@ -32,11 +32,20 @@ a {
     color: #55b5db;
     text-decoration: none;
     display: inline-block;
+    border: 1px solid transparent;
+
+    .link-content { 
+        display: inline-block;
+    }
 }
 
 a:hover {
-    color: red;
-    transform: skew(10deg, 10deg);
+    border: 1px solid #55b5db;
+    .link-content {
+        color: red;
+        transform: skew(10deg, 10deg);
+    }
+    
 }
 
 h1, h2, h3, h4 {
@@ -56,3 +65,7 @@ img, p {
 .mat-drawer-side.mat-drawer-end {
     border-left: none;
 }
+
+// .mat-icon, img {
+//     filter: wave(add=0, freq=1, lightstrength=10, phase=20, strength=20);
+// }
