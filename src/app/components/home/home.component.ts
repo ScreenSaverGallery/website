@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 // services
 import { WpService } from '../../services/wp/wp.service';
 
@@ -9,14 +10,23 @@ import { WpService } from '../../services/wp/wp.service';
 })
 export class HomeComponent implements OnInit {
 
+  starsText: string;
+
   constructor(
+    private router: Router,
     private wpService: WpService
   ) { }
 
-  ngOnInit() {
-    // this.wpService.categories.subscribe((res: any) => {
-    //   console.log('categories', res);
-    // });
+  ngOnInit(): void {
+    // get name of last screensaver
+    this.wpService.getPosts('category=screensavers&orderby=date&per_page=1').subscribe((res: any) => {
+      this.starsText = res.body[0].title.rendered;
+    });
+
+  }
+
+  goToDownload(): void {
+    this.router.navigate(['/download']);
   }
 
 }
