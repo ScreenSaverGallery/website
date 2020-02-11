@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+// services
+import { ColorService } from '../../services/color/color.service';
 
 @Component({
   selector: 'app-not-found',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor() { }
+  randomColor: string = 'silver';
+
+  constructor(
+    private colorService: ColorService
+  ) { } 
 
   ngOnInit() {
+    this.randomColor = this.colorService.generateHslaColor(100);
   }
 
 }
