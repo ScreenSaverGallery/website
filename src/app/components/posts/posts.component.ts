@@ -45,7 +45,7 @@ export class PostsComponent implements OnInit {
     if (this._postsFrom && this._postsOf) {
       this.loadPosts();
     }
-    this.randomColor = this._getRandomColor();
+    this.randomColor = this.colorService.generateHslaColor(100);
   }
 
   private loadPosts(): void {
@@ -139,11 +139,6 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  private _getRandomColor(): string {
-    const color: string = this.colorService.generateHslaColor(100);
-    console.log(color);
-    return color;
-  }
 
   log(key: any, value: any): void {
     console.log(key, value);
