@@ -14,22 +14,18 @@ import {
 })
 export class WpService {
 
-  private _posts: any[] = [];
   private _categories: any[] = [];
   private _users: any[] = [];
   private _pages: any[] = [];
   private _tags: any[] = [];
   private _media: any[] = [];
 
-  posts: BehaviorSubject<HttpResponse<any>> = new BehaviorSubject(null);
   categories: BehaviorSubject<any> = new BehaviorSubject(null);
   users: BehaviorSubject<HttpResponse<any>> = new BehaviorSubject(null);
   pages: BehaviorSubject<any> = new BehaviorSubject(null);
   tags: BehaviorSubject<HttpResponse<any>> = new BehaviorSubject(null);
   media: BehaviorSubject<HttpResponse<any>> = new BehaviorSubject(null);
 
-  numberOfPosts: number = 0;
-  maxResults: number = 100;
 
   constructor(
     private wpApiService: WpApiLibService
@@ -37,14 +33,8 @@ export class WpService {
 
   /* POSTS */
 
-  getPosts(): void {
-    this.wpApiService.getPosts().subscribe((res: HttpResponse<any>) => {
-      if (res && res.body) {
-        // console.log('getPosts', res);
-        this.posts.next(res);
-        this._posts = res.body;
-      }
-    });
+  getPosts(params?: string): Observable<any> {
+    return this.wpApiService.getPosts(params ? params : '');
   }
 
   getPostBySlug(slug: string): Observable<HttpResponse<any>> {
