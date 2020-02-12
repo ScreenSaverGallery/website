@@ -1,6 +1,6 @@
 import {
   Component,
-  OnInit,
+  OnDestroy,
   ElementRef,
   AfterViewInit,
   ViewChild,
@@ -14,7 +14,7 @@ import { ExplosionService } from '../../services/explosion/explosion.service';
   templateUrl: './stars.component.html',
   styleUrls: ['./stars.component.scss']
 })
-export class StarsComponent implements AfterViewInit {
+export class StarsComponent implements AfterViewInit, OnDestroy {
 
   @Input() set play(value: any) {
     // console.log('set play', value);
@@ -77,18 +77,14 @@ export class StarsComponent implements AfterViewInit {
     // play
     this._play = true;
     // listen mouse
-    window.addEventListener('mousemove', (e: any) => {
-      this._mouseX = (e.clientX - (window.innerWidth  / 2)); // / window.innerWidth;
-      this._mouseY = (e.clientY - (window.innerHeight  / 2)); // / window.innerHeight;
-    });
+    window.addEventListener('mousemove', this.mouseMove.bind(this));
     // listen resize
-    window.addEventListener('resize', (e: any) => {
-      this._canvas.width = this.width;
-      this._canvas.height = this.height;
-    });
+    window.addEventListener('resize', this.onResize.bind(this));
     // request first frame
     window.requestAnimationFrame(this._draw.bind(this));
   }
+
+  
 
   private _draw(): void {
     if (this._play) {
@@ -98,7 +94,7 @@ export class StarsComponent implements AfterViewInit {
       const halfWidth = this._canvas.width / 2;
       const halfHeight = this._canvas.height / 2;
       // fill background
-      this._ctx.fillStyle = /* gradientLinear; // */ 'rgb(0, 0, 0, 0)';
+      this._ctx.fillStyle = 'rgb(0, 0, 0, 0)'; // transparent background
       this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
       // process graph
       this._graph.edges.forEach((edge: any) => {
@@ -137,7 +133,7 @@ export class StarsComponent implements AfterViewInit {
 
             this._ctx.fillStyle = star.color; // 'rgb(255, 255, 255)';
             this._ctx.beginPath();
-            
+            // EXPLOSIONS
             if (
               star.z < 8 &&
               star.px > (window.innerWidth / 2) - this._explosionOffset &&
@@ -154,7 +150,7 @@ export class StarsComponent implements AfterViewInit {
               }
             }
             
-            // arc
+            // STAR (ARC)
             if (!star.text) {
               this._ctx.arc(
                 star.px, // + (Math.sin(py) * k), // x
@@ -163,12 +159,14 @@ export class StarsComponent implements AfterViewInit {
                 0, // start angle
                 2 * Math.PI // end angle
               );
+            // TEXT
             } else {
               // TODO
               // console.log('draw text', star.text);
-              // this._ctx.font = '24px monospace';
-              // star.text = star.text.replace(/\//g, '');
-              // this._ctx.fillText(star.text, star.px, star.py);
+              this._ctx.font = '24px "Russo One"';
+              star.text = star.text.replace(/\//g, '');
+              this._ctx.fillStyle = 'yellow';
+              this._ctx.fillText(star.text, star.px, star.py);
             }
             
             this._ctx.closePath();
@@ -178,6 +176,16 @@ export class StarsComponent implements AfterViewInit {
       window.requestAnimationFrame(this._draw.bind(this));
     }
   }
+
+  ngOnDestroy(): void {
+    console.log('stars destroy');
+    this._stars = [];
+    this._play = false;
+    window.removeEventListener('mousemove', this.mouseMove.bind(this));
+    window.removeEventListener('resize', this.onResize.bind(this));
+  }
+
+
 
 
 
@@ -235,7 +243,18 @@ export class StarsComponent implements AfterViewInit {
     });
 
     return graph;
-}
+  } 
+
+  private mouseMove(e: any): void {
+    // console.log('mouseMove', e);
+    this._mouseX = (e.clientX - (window.innerWidth  / 2)); // / window.innerWidth;
+    this._mouseY = (e.clientY - (window.innerHeight  / 2)); // / window.innerHeight;
+  }
+
+  private onResize(e: any): void {
+    this._canvas.width = this.width;
+      this._canvas.height = this.height;
+  }
 
   private _randomFromTo(from: number, to: number) {
     return Math.floor(Math.random() * (to - from - 1)) + from;
