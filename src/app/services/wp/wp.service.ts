@@ -156,7 +156,7 @@ export class WpService {
       setTimeout(() => {
         subject.next(user);
         subject.complete();
-      }, 100);
+      }, 10);
     } else {
       this.wpApiService.getUsers(`slug=${slug}`).subscribe((res: any) => {
         // console.log('getUsers by slug', res);
@@ -233,23 +233,70 @@ export class WpService {
 
   /* TAGS */
 
-  getTags(): void {
-    this.wpApiService.getTags(`orderby=name`).subscribe((res: any) => {
-      if (res && res.body) {
-        // console.log('getTags', res);
-        this._tags = res.body;
-        this.tags.next(res);
-      }
-    });
-  }
+  // getTags(): void {
+  //   this.wpApiService.getTags(`orderby=name`).subscribe((res: any) => {
+  //     if (res && res.body) {
+  //       // console.log('getTags', res);
+  //       this._tags = res.body;
+  //       this.tags.next(res);
+  //     }
+  //   });
+  // }
 
   // TODO: OPTIMIZE LOADING ONCE ONLY
   getTag(id: number): Observable<any> {
-    return this.wpApiService.getTag(id);
+    const subject: Subject<any> = new Subject();
+    const tag = this.getLoadedTag(id);
+    if (tag) {
+      setTimeout(() => {
+        subject.next(tag);
+        subject.complete();
+      }, 10);
+    } else {
+      this.wpApiService.getTag(id).subscribe((res: any) => {
+        if (res.status === 200) {
+          // console.log(res.body);
+          this._tags.push(res.body);
+          subject.next(res.body);
+          subject.complete();
+        }
+        
+      });
+    }
+    return subject;
   }
 
   getTagBySlug(slug: string): Observable<any> {
-    return this.wpApiService.getTags(`slug=${slug}`);
+    const subject: Subject<any> = new Subject();
+    const tag = this.getLoadedTag(null, slug);
+    if (tag) {
+      setTimeout(() => {
+        subject.next(tag);
+        subject.complete();
+      }, 10);
+    } else {
+      this.wpApiService.getTags(`slug=${slug}`).subscribe((res: any) => {
+        if (res.status === 200) {
+          // console.log(res.body);
+          this._tags.push(res.body[0]);
+          subject.next(res.body[0]);
+          subject.complete();
+        }
+        
+      });
+    }
+    return subject;
+    // return this.wpApiService.getTags(`slug=${slug}`);
+  }
+
+  private getLoadedTag(id?: number, slug?: string): any {
+    for (let i = 0; i < this._tags.length; i++) {
+      const tag = this._tags[i];
+      if (id && id === tag.id || slug && slug === tag.slug) {
+        return tag;
+      }
+    }
+    return null;
   }
 
   getTagPosts(id: number): Observable<any> {
