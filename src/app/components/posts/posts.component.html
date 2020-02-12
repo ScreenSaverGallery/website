@@ -1,9 +1,11 @@
 <ng-container *ngIf="posts && posts.length > 0 || children.length > 0; else loading">
     <ng-container *ngIf="posts && posts.length > 0">
         <h1 [innerHtml]="title | titlecase" [ngStyle]="{'color': randomColor}"></h1>
-        <ng-container *ngFor="let post of posts; let i = index">
-            <app-post [post]="post"></app-post>
-        </ng-container>
+        <div class="posts-container" class="posts-container" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
+            <ng-container *ngFor="let post of posts; let i = index">
+                <app-post fxFlex="44%" fxFlex.lt-md="100%" [post]="post"></app-post>
+            </ng-container>
+        </div>
         <!-- TODO LOAD MORE -->
         <app-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></app-load-more>
     </ng-container>
