@@ -95,10 +95,8 @@ export class PostsComponent implements OnInit {
 
   getTagPosts(tagSlug: string): void {
     this.wpService.getTagBySlug(tagSlug).subscribe((res: any) => {
-      if (res.status === 200) {
-        // console.log('getTagBySlug', res);
-        const tag = res.body[0];
-        // console.log('tag', tag);
+      if (res) {
+        const tag = res;
         this.title = tag.name;
         this.wpService.getPostsByTag(tag.id, this.postsPage).subscribe((r: any) => {
           this.recievePosts(r);
