@@ -25,8 +25,8 @@ export class TagComponent implements OnInit {
     if (this.id) {
       this.wpService.getTag(this.id).subscribe((res: any) => {
         // console.log('tag res', res);
-        if (res.status === 200) {
-          this.tag = res.body;
+        if (res) {
+          this.tag = res;
         }
       });
     }
