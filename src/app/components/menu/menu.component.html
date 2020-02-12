@@ -1,14 +1,23 @@
-<div class="back" *ngIf="!home">
-    <button mat-icon-button color="primary" (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
+<div class="controls" fxLayout="row" [fxLayoutAlign]="(!home ? 'space-between center' : 'end center')">
+    <div class="back" *ngIf="!home">
+        <button mat-icon-button color="primary" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+    </div>
+    
+    <div class="get" *ngIf="!home">
+        <button mat-raised-button color="primary" routerLink="/download">
+            <mat-icon>get_app</mat-icon>
+        </button>
+    </div>
+    
+    <div class="sandwitch" #sandwitch>
+        <button  mat-icon-button (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
 </div>
 
-<div class="sandwitch" #sandwitch>
-    <button  mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-    </button>
-</div>
 <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer mode="side" position="end" closed>
         <ng-container *ngIf="categories && pages; else loading">
