@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 // services
 import { WpService } from '../../services/wp/wp.service';
+import { ColorService } from '../../services/color/color.service';
 
 @Component({
   selector: 'app-tag',
@@ -14,11 +15,14 @@ import { WpService } from '../../services/wp/wp.service';
 export class TagComponent implements OnInit {
 
   @Input() id: number;
+  @Input() dark: boolean = true;
 
   tag: any;
+  randomColor: string = '#55b5db'; // default
 
   constructor(
-    private wpService: WpService
+    private wpService: WpService,
+    private colorService: ColorService
   ) { }
 
   ngOnInit() {
@@ -29,6 +33,7 @@ export class TagComponent implements OnInit {
           this.tag = res;
         }
       });
+      this.randomColor = this.colorService.generateHslaColor(100, (this.dark ? 80 : 25));
     }
     
   }
