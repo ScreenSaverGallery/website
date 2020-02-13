@@ -10,16 +10,12 @@ $space: 24px;
         left: 0;
         right: 0;
         padding: $space;
+
+        .sandwitch.home {
+            transform: scale(1.5);
+        }
     }
 
-    // .sandwitch {
-    //     position: fixed;
-    // }
-    // .back {
-    //     position: fixed;
-    //     left: $space;
-    //     top: $space;
-    // }
     mat-drawer-container {
         width: 100%;
         height: 100%;
@@ -40,9 +36,13 @@ $space: 24px;
         mat-drawer {
             pointer-events: all;
             padding: $space;
-            background-color: #14141e;
+            background-color: #14141e; // #14141e;
             width: 100%;
             text-align: center;
+
+            .archives {
+                border-bottom: 1px solid #55b5db;
+            }
         }
     }
 }
