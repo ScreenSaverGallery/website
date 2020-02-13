@@ -9,12 +9,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  title: string = 'ScreenSaverGallery';
-  // toggle: boolean = false;
-// 
-  // constructor() {}
-// 
-  // toggleMenu(): void {
-  //   this.toggle = !this.toggle;
-  // }
+  title: string = 'Screensaver';
 }
