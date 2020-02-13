@@ -165,7 +165,7 @@ export class StarsComponent implements AfterViewInit, OnDestroy {
               // console.log('draw text', star.text);
               this._ctx.font = '24px "Russo One"';
               star.text = star.text.replace(/\//g, '');
-              this._ctx.fillStyle = 'yellow';
+              // this._ctx.fillStyle = 'yellow';
               this._ctx.fillText(star.text, star.px, star.py);
             }
             
