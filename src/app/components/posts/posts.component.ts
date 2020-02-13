@@ -15,6 +15,7 @@ export class PostsComponent implements OnInit {
     // reset
     this.posts = [];
     this.postsPage = 1;
+    this.slug = value;
     this.loadPosts();
   };
   @Input() set postsFrom(value: string) {
@@ -34,6 +35,7 @@ export class PostsComponent implements OnInit {
   loadingPosts: boolean = false;
 
   title: string;
+  slug: string;
   randomColor: string = 'silver';
 
   constructor(

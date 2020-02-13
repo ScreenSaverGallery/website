@@ -3,7 +3,8 @@
         <h1 [innerHtml]="title | titlecase" [ngStyle]="{'color': randomColor}"></h1>
         <div class="posts-container" class="posts-container" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
             <ng-container *ngFor="let post of posts; let i = index">
-                <app-post fxFlex="44%" fxFlex.lt-md="100%" [post]="post"></app-post>
+                <!-- {{slug}} {{i}} -->
+                <app-post fxFlex="44%" fxFlex.lt-md="100%" [post]="post" [highlighted]="(slug === 'screensavers' && i === 0)"></app-post>
             </ng-container>
         </div>
         <!-- TODO LOAD MORE -->

@@ -21,8 +21,23 @@
     <ng-template #excerpt>
         <!-- POST EXCERPT -->
         <ng-container *ngIf="post.title; else subcategory">
-            <div class="post excerpt">
-                <h2><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></h2>
+            <div [ngClass]="{'post': true, 'excerpt': true}">
+                <div class="post-header" fxLayout="row" fxLayoutAlign="space-between start">
+                    <h2 fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start start">
+                        <button *ngIf="highlighted"  mat-icon-button routerLink="/download">
+                            <app-ssg-icon [size]="24" [flat]="true" [flatColor]="'red'" [animated]="true"></app-ssg-icon>
+                        </button>
+                        <div><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></div>
+                    </h2>
+                    <!-- toggle pin if highlighted -->
+                    <ng-container *ngIf="highlighted">
+                        <button mat-icon-button (click)="togglePin()">
+                            <mat-icon *ngIf="pinned">turned_in</mat-icon>
+                            <mat-icon *ngIf="!pinned">turned_in_not</mat-icon>
+                        </button>
+                    </ng-container>
+                </div>
+
                 <!-- post meta -->
                 <div class="post-meta" fxLayout="row wrap" fxLayoutGap="12px">
                     <div class="date">{{post.date | date: 'longDate' }}</div>
@@ -46,7 +61,7 @@
 
                 <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="post.tags && post.tags.length > 0">
                     <ng-container *ngFor="let tagId of post.tags">
-                        <app-tag [id]="tagId"></app-tag>
+                        <app-tag [id]="tagId" [dark]="!highlighted"></app-tag>
                     </ng-container>
                 </div>
             </div>

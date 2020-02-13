@@ -1,7 +1,8 @@
 import {
   Component,
   OnInit,
-  Input
+  Input,
+  ElementRef
 } from '@angular/core';
 import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
 // services
@@ -16,6 +17,8 @@ import { ColorService } from '../../services/color/color.service';
 export class PostComponent implements OnInit {
 
   @Input() post: any;
+  @Input() highlighted: boolean = false;
+  pinned: boolean = true;
   loadedPost: any;
 
   randomColor: string = 'silver';
@@ -24,12 +27,18 @@ export class PostComponent implements OnInit {
     private wpService: WpService,
     private route: ActivatedRoute,
     private router: Router,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private elm: ElementRef
   ) { }
 
   ngOnInit() {
-
+    // set random color
     this.randomColor = this.colorService.generateHslaColor(100);
+    // higlight
+    if (this.highlighted) {
+      this.elm.nativeElement.classList.add('highlight');
+      this.elm.nativeElement.classList.add('pinned');
+    }
     // if not post, get it from url
     if (!this.post) {
       
@@ -64,6 +73,11 @@ export class PostComponent implements OnInit {
       // console.log('post is set', this.post);
     }
       
+  }
+
+  togglePin(): void {
+    this.pinned = !this.pinned;
+    this.elm.nativeElement.classList.toggle('pinned');
   }
 
 }
