@@ -1,9 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
 $space: 24px;
+$dark-color: #14141e;
+$light-color: silver;
+
 
 * {
     box-sizing: border-box;
+}
+
+.bw-theme {
+    // $light-color: white;
+    app-root {
+        color: white;
+        background-color: black;
+    }
 }
 
 html,
@@ -14,8 +25,8 @@ app-root {
     min-height: 100%;
     padding: 0;
     margin: 0;
-    color: silver;
-    background-color: #14141e;
+    color: $light-color; // silver;
+    background-color: $dark-color; // #14141e;
 }
 
 html, body { height: 100%; }
@@ -50,6 +61,7 @@ a:hover {
 
 h1, h2, h3, h4 {
     font-family: 'Russo One', sans-serif;
+    // letter-spacing: 2px;
 }
 
 h1 {
@@ -66,6 +78,37 @@ img, p {
     border-left: none;
 }
 
-// .mat-icon, img {
-//     filter: wave(add=0, freq=1, lightstrength=10, phase=20, strength=20);
-// }
+app-menu {
+    color: white;
+
+    .get {
+        .mat-button-base {
+            line-height: .7;
+            app-ssg-icon {
+                margin: $space / 12;
+            }
+        }
+    }
+}
+
+
+// HIGHLIGHTED POST
+.highlight {
+    background-color: #55b5db;
+    color: #14141e;
+    padding: $space / 2;
+
+    &.pinned {
+        position: sticky;
+        top: 5 * $space;
+    }
+    
+    .post, app-author, .author {
+        a {
+            color: #14141e; 
+        }
+        a:hover {
+            border-color: #14141e;
+        }
+    }
+}
