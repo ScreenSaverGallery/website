@@ -14,10 +14,22 @@
 
         .get-ssg {
             cursor: pointer;
+
+            .mat-raised-button.mat-primary {
+                background-color: white;
+                color: #14141e;
+            }
+
         }
 
         app-ssg-icon {
             z-index: 0;
+        }
+
+        h4 {
+            margin: 0;
+            padding: 0;
+            display: inline;
         }
     }
 
