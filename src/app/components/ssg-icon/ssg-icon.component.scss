@@ -1,13 +1,13 @@
 $space: 24px;
 
 :host {
-    display: block;
+    display: inline-block;
     width: auto;
     height: auto;
-    margin: $space / 2;
+    margin: $space / 4;
 
     &.animated {
-        animation: blink-animation .3s steps(5, start) infinite;
+        animation: blink-animation .8s steps(5, start) infinite;
     }
 }
 
