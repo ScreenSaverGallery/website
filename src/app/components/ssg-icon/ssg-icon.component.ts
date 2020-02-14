@@ -6,6 +6,7 @@ import {
   ElementRef
 } from '@angular/core';
 
+
 @Component({
   selector: 'app-ssg-icon',
   templateUrl: './ssg-icon.component.html',
@@ -15,13 +16,22 @@ export class SsgIconComponent implements OnInit, AfterViewInit {
 
   @Input() size: number = 100;
   @Input() animated: boolean = false;
-  @Input() flat: boolean = false;
-  @Input() flatColor: string = 'white';
 
-  flatStyle: string;
+  // flat or not flat change
+  @Input() set flat( value: boolean ) {
+    this._flat = value;
+  };
+  // flat color change
+  @Input() set flatColor(value: string) {
+    this._flatColor = value;
+    this.setStyleToSvg();
+  };
+
+  _flat: boolean;
+  private _flatColor: string = 'silver';
 
   constructor(
-    private elm: ElementRef
+    private elm: ElementRef,
   ) { }
 
   ngOnInit(): void {
@@ -29,18 +39,20 @@ export class SsgIconComponent implements OnInit, AfterViewInit {
     if (this.animated) {
       this.elm.nativeElement.classList.add('animated');
     }
-    // console.log('flatColor', this.flatColor);
-    this.flatStyle = `.cls-1{fill:${this.flatColor}}`;
   }
 
   ngAfterViewInit(): void {
-    if (this.flat) {
+    // this.setStyleToSvg();
+  }
+
+  setStyleToSvg(): void {
+    if (this._flat) {
       const svgElms = this.elm.nativeElement.querySelectorAll('.cls-1');
       // console.log('svgElms', svgElms);
       for (let i = 0; i < svgElms.length; i++) {
         const elm = svgElms[i];
-        elm.style.fill = this.flatColor;
-      }
+        elm.style.fill = this._flatColor;
+      }      
     }
   }
 
