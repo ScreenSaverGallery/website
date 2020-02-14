@@ -6,6 +6,22 @@ $light-color: silver;
 $accent-color: #55b5db;
 $warn-color: red;
 
+/* layers */
+@mixin layer-0 {
+    z-index: 0;
+}
+
+@mixin layer-1 {
+    z-index: 99;
+}
+
+@mixin layer-2 {
+    z-index: 999;
+}
+
+@mixin layer-3 {
+    z-index: 9999;
+}
 
 * {
     box-sizing: border-box;
@@ -58,6 +74,7 @@ h1, h2, h3, h4 {
 }
 
 h1 {
+    @include layer-2();
     position: sticky;
     top: 3 * $space;
 }
@@ -74,6 +91,8 @@ img, p {
 app-menu {
     color: white;
 
+    position: relative;
+
     .get {
         .mat-button-base {
             line-height: .7;
@@ -82,9 +101,12 @@ app-menu {
             }
         }
     }
-    // .archives {
-    //     border-bottom: 1px solid $accent-color;
-    // }
+
+    @include layer-3();
+
+    .theme {
+        @include layer-3();
+    }
 
     mat-icon {
         transform: skewY(12deg);
@@ -101,6 +123,7 @@ app-post {
         padding: $space / 2;
 
         &.pinned {
+            @include layer-2();
             position: sticky;
             top: 5 * $space;
         }
@@ -129,21 +152,31 @@ app-post {
     }
 
     a {
-        color: $light-color;
-    }
-
-    app-media {
-        img {
-            filter: grayscale(100%);
+        .link-content {
+            color: $light-color;
+            text-decoration: underline;
+            // text-shadow: 0px 5px 15px $light-color;
         }
     }
 
     a:hover {
         .link-content {
             color: $light-color;
+            text-decoration: none;
         }
         border-color: $light-color;
+
     }
+
+    app-media {
+        img {
+            filter: grayscale(100%);
+            z-index: 0;
+            position: relative;
+        }
+    }
+
+    
 
     app-post {
         border-top-color: $light-color;
@@ -151,7 +184,9 @@ app-post {
             background-color: white; // $light-color;
             .post, app-author, .author {
                 a {
-                    color: $dark-color; 
+                    .link-content {
+                        color: $dark-color;
+                    }
                 }
                 a:hover {
                     .link-content {
@@ -163,10 +198,6 @@ app-post {
     }
 
     app-menu {
-        // .archives {
-        //     border-color: $light-color;
-        // }
-
         mat-icon {
             text-shadow: 0px 5px 15px $light-color;
         }

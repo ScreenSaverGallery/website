@@ -2,7 +2,7 @@ $space: 24px;
 
 :host {
     display: block;
-    z-index: 99;
+    // z-index: 99;
 
     .controls {
         position: fixed;
@@ -20,7 +20,7 @@ $space: 24px;
         position: fixed;
         bottom: $space;
         right: $space;
-        z-index: 99;
+        // z-index: 99;
     }
 
     mat-drawer-container {
