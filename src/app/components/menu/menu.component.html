@@ -13,53 +13,63 @@
     </div>
     
     <div class="sandwitch" #sandwitch [ngClass]="{'home': home}">
-        <button  mat-icon-button (click)="drawer.toggle()">
+        <button  mat-icon-button (click)="toggleMenu(drawer.toggle())">
             <mat-icon>menu</mat-icon>
         </button>
     </div>
 </div>
 
+<div class="theme">
+    <button mat-icon-button (click)="toggleTheme()">
+        <mat-icon>invert_colors</mat-icon>
+    </button>
+</div>
+
 <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer mode="side" position="end" closed>
+        <button mat-icon-button (click)="closeMenu(drawer.close())">
+            <mat-icon>close</mat-icon>
+        </button>
         <ng-container *ngIf="categories && pages; else loading">
             <nav>
-                <button mat-icon-button (click)="drawer.close()">
-                    <mat-icon>close</mat-icon>
-                </button>
-                <!-- ARCHIVES -->
-                <div class="archives">
-                    <ng-container *ngFor="let cat of categories">
-                        <!-- TOP CATEGORIES -->
-                        <ng-container *ngIf="cat?.parent === 0">
-                            <p>
-                                <a
-                                    [routerLink]="'/archive/' + cat.slug"
-                                    [state]="{type: 'category'}"
-                                    routerLinkActive="active"
-                                    (click)="drawer.close()"
-                                ><span class="link-content" [innerHtml]="cat.name | titlecase | safeHtml"></span></a>
-                            </p>
+                <div class="menu-blocks" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
+                    <!-- ARCHIVES -->
+                    <div class="archives" fxFlex="44%" fxFlex.lt-md="100%">
+                        <ng-container *ngFor="let cat of categories">
+                            <!-- TOP CATEGORIES -->
+                            <ng-container *ngIf="cat?.parent === 0">
+                                <p>
+                                    <a
+                                        [routerLink]="'/archive/' + cat.slug"
+                                        [state]="{type: 'category'}"
+                                        routerLinkActive="active"
+                                        (click)="closeMenu(drawer.close())"
+                                    ><span class="link-content" [innerHtml]="cat.name | titlecase | safeHtml"></span></a>
+                                </p>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                </div>
-                
-                <!-- PAGES -->
-                <div class="pages">
-                    <ng-container *ngFor="let page of pages">
-                        <ng-container *ngIf="page.content.rendered">
-                            <p>
-                                <a
-                                    [routerLink]="'/' + page.slug"
-                                    (click)="drawer.close()"
-                                ><span class="link-content" [innerHtml]="page.title.rendered | titlecase | safeHtml"></span></a></p>
+                    </div>
+
+                    <!-- PAGES -->
+                    <div class="pages" fxFlex="44%" fxFlex.lt-md="100%">
+                        <ng-container *ngFor="let page of pages">
+                            <ng-container *ngIf="page.content.rendered">
+                                <p>
+                                    <a
+                                        [routerLink]="'/' + page.slug"
+                                        (click)="closeMenu(drawer.close())"
+                                    ><span class="link-content" [innerHtml]="page.title.rendered | titlecase | safeHtml"></span></a></p>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
+                    </div>
                 </div>
             </nav>
         </ng-container>
         
         <ng-template #loading>
-            Loading ...
+            <div>
+                Loading ...
+            </div>
         </ng-template>
     </mat-drawer>
 </mat-drawer-container>

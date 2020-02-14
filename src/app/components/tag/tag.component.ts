@@ -6,6 +6,7 @@ import {
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
+import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
   selector: 'app-tag',
@@ -22,20 +23,27 @@ export class TagComponent implements OnInit {
 
   constructor(
     private wpService: WpService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit() {
     if (this.id) {
       this.wpService.getTag(this.id).subscribe((res: any) => {
-        // console.log('tag res', res);
         if (res) {
           this.tag = res;
         }
       });
-      this.randomColor = this.colorService.generateHslaColor(100, (this.dark ? 80 : 25));
+
+      this.themeService.bwTheme.subscribe((bw: boolean) => {
+        if (bw) {
+          this.randomColor = (this.dark ? 'silver' : '#14141e');
+        } else {
+          this.randomColor = this.colorService.generateHslaColor(100, (this.dark ? 80 : 25));
+        }
+      });
+      
     }
-    
   }
 
 }

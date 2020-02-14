@@ -25,7 +25,7 @@
                 <div class="post-header" fxLayout="row" fxLayoutAlign="space-between start">
                     <h2 fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start start">
                         <button *ngIf="highlighted"  mat-icon-button routerLink="/download">
-                            <app-ssg-icon [size]="24" [flat]="true" [flatColor]="'red'" [animated]="true"></app-ssg-icon>
+                            <app-ssg-icon [size]="24" [flat]="true" [flatColor]="ssgIconColor" [animated]="true"></app-ssg-icon>
                         </button>
                         <div><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></div>
                     </h2>
@@ -70,7 +70,12 @@
 
     <!-- SUBCATEGORY -->
     <ng-template #subcategory>
-        <h2><a [routerLink]="post.slug" [innerHtml]="post.name | titlecase">{{post.name}}</a></h2>
+        <!-- subcategory -->
+        <h2>
+            <a [routerLink]="post.slug"><span class="link-content" [innerHtml]="post.name | titlecase"></span></a>
+        </h2>
+        <!-- description -->
+        <div *ngIf="post.description">{{post.description}}</div>
     </ng-template>
 </ng-container>
 

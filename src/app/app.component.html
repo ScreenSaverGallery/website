@@ -1,4 +1,4 @@
-<div class="bw-theme">
+<div [ngClass]="{'theme': true, 'bw-theme': bwTheme}">
     <router-outlet></router-outlet>
-    <app-menu></app-menu>
+    <app-menu (opened)="menuAction($event)"></app-menu>
 </div>

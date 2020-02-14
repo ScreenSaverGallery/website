@@ -8,6 +8,7 @@ import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
+import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
   selector: 'app-post',
@@ -22,18 +23,30 @@ export class PostComponent implements OnInit {
   loadedPost: any;
 
   randomColor: string = 'silver';
+  ssgIconColor: string = 'red';
 
   constructor(
     private wpService: WpService,
     private route: ActivatedRoute,
     private router: Router,
     private colorService: ColorService,
-    private elm: ElementRef
+    private elm: ElementRef,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit() {
-    // set random color
-    this.randomColor = this.colorService.generateHslaColor(100);
+    this.themeService.bwTheme.subscribe((bw: boolean) => {
+      if (bw) {
+        // set random color
+        this.randomColor = 'white';
+        this.ssgIconColor = 'black';
+      } else {
+        this.randomColor = this.colorService.generateHslaColor(100);
+        this.ssgIconColor = 'red';
+      }
+      // console.log('theme changed', this.randomColor);
+    });
+    
     // higlight
     if (this.highlighted) {
       this.elm.nativeElement.classList.add('highlight');

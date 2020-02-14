@@ -3,14 +3,18 @@ import {
   OnInit,
   AfterViewInit,
   Input,
+  Output,
+  EventEmitter,
   ViewChild,
   ElementRef
 } from '@angular/core';
 // router
 import { Router, NavigationEnd } from '@angular/router';
+// import * as Warp from 'warpjs';
 // services
 import { WpService } from '../../services/wp/wp.service';
-
+import { ThemeService } from '../../services/theme/theme.service';
+import { LocalStorageService } from 'local-storage';
 
 @Component({
   selector: 'app-menu',
@@ -22,16 +26,21 @@ export class MenuComponent implements OnInit, AfterViewInit {
   @ViewChild('sandwitch', {static: false}) sandwitchElm: ElementRef;
 
   @Input() position: string = 'top-right';
+  @Output() opened: EventEmitter<boolean> = new EventEmitter();
 
   categories: any[];
   pages: any[];
   home: boolean = false;
+  private _openedMenu: boolean = false;
   private _space: number = 24;
 
 
   constructor(
     private wpService: WpService,
-    private router: Router
+    private router: Router,
+    private themeService: ThemeService,
+    private localStorage: LocalStorageService,
+    private menuElm: ElementRef
   ) { }
 
   ngOnInit() {
@@ -44,7 +53,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
         } else {
           this.home = false;
         }
-        // console.log('home', this.home);
       }
       
     });
@@ -67,11 +75,32 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this._positionOfSandwitch();
+    // this._animateIcons();
   }
 
   goBack(): void {
     window.history.back();
   }
+
+  toggleTheme(): void {
+    this.themeService.toggleBW();
+    // save to local storage
+    this.localStorage.setItem('ssgIsBw', this.themeService.isBw());
+  }
+
+
+  toggleMenu(callback: any): void {
+    // console.log('toggleMenu');
+    this._openedMenu = !this._openedMenu;
+    this.opened.emit(this._openedMenu);
+  }
+
+  closeMenu(callback: any): void {
+    // console.log('closeMenu');
+    this._openedMenu = false;
+    this.opened.emit(this._openedMenu);
+  }
+
 
   private _positionOfSandwitch(): void {
     switch (this.position) {

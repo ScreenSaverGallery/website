@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 // services
 import { WpService } from '../../services/wp/wp.service';
+import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private wpService: WpService
+    private wpService: WpService,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +29,10 @@ export class HomeComponent implements OnInit {
 
   goToDownload(): void {
     this.router.navigate(['/download']);
+  }
+
+  themeIsBw(): boolean {
+    return this.themeService.isBw();
   }
 
 }

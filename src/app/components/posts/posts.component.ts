@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
+import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
   selector: 'app-posts',
@@ -38,16 +39,24 @@ export class PostsComponent implements OnInit {
   slug: string;
   randomColor: string = 'silver';
 
+  bwTheme: boolean = false;
+
   constructor(
     private wpService: WpService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit() {
+    this.themeService.bwTheme.subscribe((bw: boolean) => {
+      this.bwTheme = bw;
+      this.randomColor = (bw ? 'white' : this.colorService.generateHslaColor(100));
+    });
+
     if (this._postsFrom && this._postsOf) {
       this.loadPosts();
     }
-    this.randomColor = this.colorService.generateHslaColor(100);
+    
   }
 
   private loadPosts(): void {
@@ -78,6 +87,11 @@ export class PostsComponent implements OnInit {
           this.wpService.getCategoryPosts(this.category.id, this.postsPage).subscribe((res: any) => {
             this.recievePosts(res);
           });
+        } else {
+          // sort children
+          // console.log('children', this.children);
+          // this.children = this.children.sort((a: any, b: any) => parseFloat(a.id) + parseFloat(b.id) );
+          // console.log('sorted children', this.children);
         }
       }
     });
@@ -125,7 +139,6 @@ export class PostsComponent implements OnInit {
   }
 
   shouldLoadMore(): boolean {
-    // console.log('shouldLoadMore', this.total > this.posts.length && this.postsPage < this.totalPages + 1);
     if (this.total > this.posts.length && this.postsPage < this.totalPages + 1) {
       return true;
     }
@@ -133,7 +146,6 @@ export class PostsComponent implements OnInit {
   }
 
   loadMorePosts(load: boolean): void {
-    // console.log('loadMorePosts', load);
     if (load && !this.loadingPosts) {
       this.loadPosts();
     }
