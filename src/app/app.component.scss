@@ -2,5 +2,12 @@ $space: 24px;
 
 :host {
     padding: $space;
-    padding-top: 3 * $space; 
+    padding-top: 3 * $space;
+    // width: 100%;
+    // height: 100%;
+    // overflow: scroll;
+
+    // &.active-menu {
+    //     overflow: hidden;        
+    // }
 }
