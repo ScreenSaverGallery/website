@@ -88,6 +88,20 @@ img, p {
     border-left: none;
 }
 
+app-root {
+    &#mac {
+        .win {
+            display: none;
+        }
+    }
+
+    &#win {
+        .mac {
+            display: none;
+        }
+    }
+}
+
 app-menu {
     color: white;
 
@@ -138,6 +152,12 @@ app-post {
         }
     }
 
+}
+
+app-home {
+    .get-ssg-button {
+        font-family: 'Roboto Mono', monospace;
+    }
 }
 
 
