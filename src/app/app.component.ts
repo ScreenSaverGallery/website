@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
 
   title: string = 'Screensaver';
   bwTheme: boolean = false;
+  OS: string = 'Unknown';
 
   constructor(
     private themeService: ThemeService,
@@ -21,10 +22,13 @@ export class AppComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    // add os as class
+    this.OS = this.getOS();
+    this.appElm.nativeElement.setAttribute('id', this.OS.toLowerCase());
+    // THEME
     this.themeService.bwTheme.subscribe((bw: boolean) => {
       this.bwTheme = bw;
     });
-
     const isSsgBw: string =  this.localStorage.getItem('ssgIsBw');
     if (isSsgBw !== null) { // item was previously saved
       // saved theme
@@ -41,6 +45,19 @@ export class AppComponent implements OnInit {
     } else {
       this.appElm.nativeElement.classList.remove('active-menu');
     }
+  }
+
+  private getOS(): string {
+    let result: string;
+    const app: string = navigator.appVersion;
+    console.log('navigator.appVersion', navigator.appVersion);
+    if (app.indexOf('Win') != -1) result = 'Win';
+    if (app.indexOf('Mac') != -1) result = 'Mac';
+    if (app.indexOf('iPhone') != -1 || app.indexOf('iPod') != -1 || app.indexOf('iPad') != -1) result = 'iOS';
+    if (app.indexOf('X11') != -1) result = 'UNIX';
+    if (app.indexOf('Linux') != -1) result = 'Linux';
+
+    return result;
   }
 
   log(key: any, value: any): void {
