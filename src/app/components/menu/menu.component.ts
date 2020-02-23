@@ -15,6 +15,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { WpService } from '../../services/wp/wp.service';
 import { ThemeService } from '../../services/theme/theme.service';
 import { LocalStorageService } from 'local-storage';
+import { LinksService } from '../../services/links/links.service';
 
 @Component({
   selector: 'app-menu',
@@ -31,6 +32,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   categories: any[];
   pages: any[];
   home: boolean = false;
+  downloadLink: string;
   private _openedMenu: boolean = false;
   private _space: number = 24;
 
@@ -40,10 +42,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
     private router: Router,
     private themeService: ThemeService,
     private localStorage: LocalStorageService,
+    private linksService: LinksService,
     private menuElm: ElementRef
   ) { }
 
   ngOnInit() {
+    this.downloadLink = this.linksService.downloadLink;
     // home route
     this.router.events.subscribe((res: any) => {
       // console.log('router res', res);

@@ -6,7 +6,7 @@
     </div>
     
     <div class="get" *ngIf="!home">
-        <button mat-icon-button routerLink="/download">
+        <button mat-icon-button [routerLink]="downloadLink">
             <!-- <mat-icon>get_app</mat-icon> -->
             <app-ssg-icon [flat]="true" [flatColor]="'white'" [size]="36"></app-ssg-icon>
         </button>

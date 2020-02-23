@@ -9,6 +9,7 @@ import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
 import { ThemeService } from '../../services/theme/theme.service';
+import { LinksService } from '../../services/links/links.service';
 
 @Component({
   selector: 'app-post',
@@ -22,6 +23,8 @@ export class PostComponent implements OnInit {
   pinned: boolean = true;
   loadedPost: any;
 
+  downloadLink: string;
+
   randomColor: string = 'silver';
   ssgIconColor: string = 'red';
 
@@ -31,10 +34,13 @@ export class PostComponent implements OnInit {
     private router: Router,
     private colorService: ColorService,
     private elm: ElementRef,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private linksService: LinksService
   ) { }
 
   ngOnInit() {
+    this.downloadLink = this.linksService.downloadLink;
+    // THEME
     this.themeService.bwTheme.subscribe((bw: boolean) => {
       if (bw) {
         // set random color
