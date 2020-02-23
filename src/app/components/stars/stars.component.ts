@@ -135,11 +135,18 @@ export class StarsComponent implements AfterViewInit, OnDestroy {
             this._ctx.beginPath();
             // EXPLOSIONS
             if (
-              star.z < 8 &&
+              // logo explosion
+              (star.z < 8 &&
               star.px > (window.innerWidth / 2) - this._explosionOffset &&
               star.px < (window.innerWidth / 2) + this._explosionOffset &&
               star.py > (window.innerHeight / 2) - this._explosionOffset &&
-              star.py < (window.innerHeight / 2) + this._explosionOffset
+              star.py < (window.innerHeight / 2) + this._explosionOffset) ||
+              // mouse explosion
+              (star.z < 14 &&
+              star.px > (window.innerWidth / 2 + this._mouseX) - (this._explosionOffset / 2) &&
+              star.px < (window.innerWidth / 2 + this._mouseX) + (this._explosionOffset / 2) &&
+              star.py > (window.innerHeight / 2 + this._mouseY) - (this._explosionOffset / 2) &&
+              star.py < (window.innerHeight / 2 + this._mouseY) + (this._explosionOffset / 2)) 
             ) {
               if (star.explosionIndex < this._explosionImages.length) {
                 const img = this._explosionImages[star.explosionIndex];
@@ -159,6 +166,9 @@ export class StarsComponent implements AfterViewInit, OnDestroy {
                 0, // start angle
                 2 * Math.PI // end angle
               );
+              // too much
+              // this._ctx.shadowBlur = 15;
+              // this._ctx.shadowColor = star.color;
             // TEXT
             } else {
               // TODO
@@ -168,6 +178,9 @@ export class StarsComponent implements AfterViewInit, OnDestroy {
               // this._ctx.fillStyle = 'yellow';
               this._ctx.fillText(star.text, star.px, star.py);
             }
+
+            
+
             
             this._ctx.closePath();
             this._ctx.fill();
