@@ -1,18 +1,24 @@
-<div class="controls" fxLayout="row" [fxLayoutAlign]="(!home ? 'space-between center' : 'end center')">
-    <div class="back" *ngIf="!home">
+<div class="controls" fxLayout="row" [fxLayoutAlign]="(!homePage ? 'space-between center' : 'end center')">
+    <div class="back" *ngIf="!homePage">
         <button mat-icon-button (click)="goBack()">
             <mat-icon>arrow_back</mat-icon>
         </button>
     </div>
     
-    <div class="get" *ngIf="!home">
-        <button mat-icon-button [routerLink]="downloadLink">
-            <!-- <mat-icon>get_app</mat-icon> -->
+    <div class="get" *ngIf="!homePage">
+        <button *ngIf="getPage; else downloadButton" mat-icon-button [routerLink]="homeLink">
             <app-ssg-icon [flat]="true" [flatColor]="'white'" [size]="36"></app-ssg-icon>
         </button>
+        <ng-template #downloadButton>
+            <button *ngIf="siteTitle" mat-raised-button [routerLink]="homeLink">Get {{siteTitle}}</button>
+        </ng-template>
     </div>
     
-    <div class="sandwitch" #sandwitch [ngClass]="{'home': home}">
+    <!-- <div class="info" *ngIf="home">
+        <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider>
+    </div> -->
+
+    <div class="sandwitch" #sandwitch [ngClass]="{'home': homePage}">
         <button  mat-icon-button (click)="toggleMenu(drawer.toggle())">
             <mat-icon>menu</mat-icon>
         </button>
@@ -30,11 +36,16 @@
         <button mat-icon-button (click)="closeMenu(drawer.close())">
             <mat-icon>close</mat-icon>
         </button>
+        <ssg-search></ssg-search>
         <ng-container *ngIf="categories && pages; else loading">
             <nav>
                 <div class="menu-blocks" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
                     <!-- ARCHIVES -->
                     <div class="archives" fxFlex="44%" fxFlex.lt-md="100%">
+                        <!-- CURRENT SHOW -->
+                        <p *ngIf="currentShow">
+                            <a [routerLink]="'/' + currentShow.slug" (click)="closeMenu(drawer.close())"><span class="link-content" [innerHtml]="'Current Show'"></span></a>
+                        </p>
                         <ng-container *ngFor="let cat of categories">
                             <!-- TOP CATEGORIES -->
                             <ng-container *ngIf="cat?.parent === 0">
@@ -64,6 +75,7 @@
                     </div>
                 </div>
             </nav>
+            TODO: add social here
         </ng-container>
         
         <ng-template #loading>

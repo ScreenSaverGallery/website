@@ -16,6 +16,8 @@ import { WpService } from '../../services/wp/wp.service';
 import { ThemeService } from '../../services/theme/theme.service';
 import { LocalStorageService } from 'local-storage';
 import { LinksService } from '../../services/links/links.service';
+import { SiteInfoService } from '../../services/site-info/site-info.service';
+
 
 @Component({
   selector: 'app-menu',
@@ -31,8 +33,11 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   categories: any[];
   pages: any[];
-  home: boolean = false;
-  downloadLink: string;
+  homePage: boolean = false;
+  getPage: boolean = false;
+  homeLink: string;
+  currentShow: any;
+  siteTitle: string;
   private _openedMenu: boolean = false;
   private _space: number = 24;
 
@@ -43,22 +48,49 @@ export class MenuComponent implements OnInit, AfterViewInit {
     private themeService: ThemeService,
     private localStorage: LocalStorageService,
     private linksService: LinksService,
-    private menuElm: ElementRef
+    private siteInfoService: SiteInfoService
   ) { }
 
   ngOnInit() {
-    this.downloadLink = this.linksService.downloadLink;
+    this.homeLink = this.linksService.homeLink;
     // home route
     this.router.events.subscribe((res: any) => {
-      // console.log('router res', res);
       if (res instanceof NavigationEnd) {
+        console.log('router res', res);
         if (res && res.url === '/') {
-          this.home = true;
+          this.homePage = true;
         } else {
-          this.home = false;
+          this.homePage = false;
+        }
+
+        if (res && res.url === '/get') {
+          this.getPage = true;
+          this.homeLink = this.linksService.homeLink;
+        } else {
+          this.getPage = false;
+          this.homeLink = this.linksService.downloadLink;
         }
       }
-      
+    });
+    // site info
+    this.siteInfoService.siteInfo.subscribe((info: any) => {
+      if (info) {
+        this.siteTitle = info.name;
+      }
+      // get name of last screensaver
+      /* this.wpService.getCurrentScreensaver().subscribe((res: any) => {
+        this.currentShow = res.body[0];
+        const currentShowMessage: Message = {
+          text: `Current Show: ${res.body[0].title.rendered}`,
+          delay: 10000,
+          url: res.body[0].slug
+        }
+        this.addMessage = currentShowMessage;
+      }); */
+    });
+    // get name of last screensaver
+    this.wpService.getCurrentScreensaver().subscribe((res: any) => {
+      this.currentShow = res.body[0];
     });
     // get all pages and categories
     this.wpService.getAllCategories();
