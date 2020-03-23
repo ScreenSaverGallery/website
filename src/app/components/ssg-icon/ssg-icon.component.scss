@@ -4,7 +4,7 @@ $space: 24px;
     display: inline-block;
     width: auto;
     height: auto;
-    margin: $space / 4;
+    // margin: $space / 4;
 
     &.animated {
         animation: blink-animation .8s steps(5, start) infinite;
