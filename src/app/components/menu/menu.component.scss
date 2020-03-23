@@ -45,7 +45,15 @@ $space: 24px;
             padding: $space;
             background-color: #14141e; // #14141e;
             width: 100%;
-            text-align: right;
+            text-align: center;
+
+            ssg-search {
+                margin-bottom: $space;
+            }
+
+            .close-menu {
+                text-align: right;
+            }
 
             .menu-blocks {
                 text-align: left;

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './modules/material/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './modules/routing/app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemetazoaPipe } from './pipes/demetazoa.pipe';
 import { SsgIconComponent } from './components/ssg-icon/ssg-icon.component';
 import { StarsComponent } from './components/stars/stars.component';
+import { SocialComponent } from './components/social/social.component';
+import { SearchComponent } from './components/search/search.component';
+import { InfoSliderComponent } from './components/info-slider/info-slider.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +46,18 @@ import { StarsComponent } from './components/stars/stars.component';
     CategoryPostsComponent,
     DemetazoaPipe,
     SsgIconComponent,
-    StarsComponent
+    StarsComponent,
+    SocialComponent,
+    SearchComponent,
+    InfoSliderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule
   ],

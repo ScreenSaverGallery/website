@@ -33,9 +33,11 @@
 
 <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer mode="side" position="end" closed>
-        <button mat-icon-button (click)="closeMenu(drawer.close())">
-            <mat-icon>close</mat-icon>
-        </button>
+        <div class="close-menu">
+            <button mat-icon-button (click)="closeMenu(drawer.close())">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
         <ssg-search></ssg-search>
         <ng-container *ngIf="categories && pages; else loading">
             <nav>
@@ -75,7 +77,9 @@
                     </div>
                 </div>
             </nav>
-            TODO: add social here
+            <div>
+                TODO: add social here
+            </div>
         </ng-container>
         
         <ng-template #loading>
