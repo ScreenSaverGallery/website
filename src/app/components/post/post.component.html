@@ -4,16 +4,19 @@
         <!-- POSTS -->
         <div class="post">
             <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
-            <!-- post meta -->
-            <div class="post-meta" fxLayout="row wrap" fxLayoutGap="12px">
+            <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
+            <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
                 <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
-                <app-author [id]="loadedPost.author" [text]="'by'"></app-author>
-            </div>
+                <app-author [id]="loadedPost.author" [text]="'posted by'"></app-author>
+            </div> -->
             <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
             <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="loadedPost.tags && loadedPost.tags.length > 0">
                 <ng-container *ngFor="let tagId of loadedPost.tags">
                     <app-tag [id]="tagId"></app-tag>
                 </ng-container>
+            </div>
+            <div class="social">
+                <app-social [medias]="social"></app-social>
             </div>
         </div>
     </ng-container>
@@ -38,11 +41,11 @@
                     </ng-container>
                 </div>
 
-                <!-- post meta -->
-                <div class="post-meta" fxLayout="row wrap" fxLayoutGap="12px">
+                <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
+                <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
                     <div class="date">{{post.date | date: 'longDate' }}</div>
-                    <app-author  [id]="post.author" [text]="'by'"></app-author >
-                </div>
+                    <app-author  [id]="post.author" [text]="'posted by'"></app-author >
+                </div> -->
 
                 <div class="excerpt-body" fxLayout="row" fxLayoutGap="12px">
                     <ng-container *ngIf="post.featured_media; else onlytext">
@@ -58,11 +61,14 @@
                     </ng-template>
                 </div>
 
-
                 <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="post.tags && post.tags.length > 0">
                     <ng-container *ngFor="let tagId of post.tags">
                         <app-tag [id]="tagId" [dark]="!highlighted"></app-tag>
                     </ng-container>
+                </div>
+
+                <div class="social">
+                    <app-social [medias]="social" [referenceUrl]="getRefUrl()"></app-social>
                 </div>
             </div>
         </ng-container>
