@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class LinksService {
 
   downloadLink: string = '/get';
+  homeLink: string = '/';
 
   constructor() { }
 }
