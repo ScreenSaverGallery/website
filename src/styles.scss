@@ -40,7 +40,22 @@ app-root {
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto Mono', monospace; }
+body {
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: larger;
+    line-height: 1.6;
+}
+/* body { margin: 0; font-family: 'Anonymous Pro', monospace; } */
+
+h1, h2, h3, h4 {
+    font-family: 'Russo One', sans-serif;
+}
+
+/* h1, h2, h3, h4 {
+    font-family: 'Alfa Slab One', cursive;
+} */
+
 
 img {
     max-width: 100%;
@@ -69,9 +84,7 @@ a:hover {
     
 }
 
-h1, h2, h3, h4 {
-    font-family: 'Russo One', sans-serif;
-}
+
 
 h1 {
     @include layer-2();
@@ -80,7 +93,7 @@ h1 {
 }
 
 img, p {
-    margin-top: $space;
+    margin-top: 0;
     margin-bottom: $space; 
 }
 
@@ -108,11 +121,16 @@ app-menu {
     position: relative;
 
     .get {
-        .mat-button-base {
+        .mat-icon-button {
             line-height: .7;
             app-ssg-icon {
                 margin: $space / 12;
             }
+        }
+        .mat-raised-button {
+            font-family: inherit;
+            color: $dark-color;
+            background-color: $accent-color;
         }
     }
 
@@ -122,6 +140,9 @@ app-menu {
         @include layer-3();
     }
 
+}
+
+app-menu {
     mat-icon {
         transform: skewY(12deg);
         text-shadow: 0px 5px 15px $accent-color;
@@ -155,9 +176,34 @@ app-post {
 }
 
 app-home {
-    .get-ssg-button {
-        font-family: 'Roboto Mono', monospace;
+    .get-ssg-button.mat-raised-button.mat-primary {
+        // font-family: inherit; /* 'Roboto Mono', monospace; */
+        background-color: $accent-color;
+        color: $dark-color;
     }
+}
+
+.mat-button-base {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.download-button {
+    display: inline-block;
+    padding: $space / 2;
+    background-color: red;
+    color: white;
+    margin-bottom: $space;
+    border-radius: $space / 8;
+    
+    a .link-content {
+        color: white;
+    }
+}
+
+::selection {
+    background: $accent-color;
+    color: $dark-color;
 }
 
 
@@ -165,6 +211,10 @@ app-home {
 
 // BW THEME
 .bw-theme {
+    ::selection {
+        background-color: white;
+        color: $dark-color;
+    }
     // $light-color: white;
     app-root {
         color: $light-color;
@@ -221,9 +271,32 @@ app-home {
         mat-icon {
             text-shadow: 0px 5px 15px $light-color;
         }
+
+        .mat-raised-button {
+            color: $dark-color;
+            background-color: white;
+        }
     }
+
+    app-home {
+        .get-ssg-button.mat-raised-button.mat-primary {
+            font-family: inherit; /* 'Roboto Mono', monospace; */
+            background-color: white;
+            color: $dark-color;
+        }
+    }
+
+    /* .download-button {
+        background-color: white;
+        a .link-content {
+            color: $dark-color;
+        }
+    } */
     
 }
+
+
+
 
 
 /* EFFECTS */
