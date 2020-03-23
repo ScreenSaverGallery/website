@@ -49,12 +49,12 @@
 
                 <div class="excerpt-body" fxLayout="row" fxLayoutGap="12px">
                     <ng-container *ngIf="post.featured_media; else onlytext">
-                        <div class="featured-media" fxFlex="35%">
+                        <div class="featured-media">
                             <a [routerLink]="'/' + post.slug">
                                 <span class="link-content"><app-media [id]="post.featured_media"></app-media></span>
                             </a>
                         </div>
-                        <article fxFlex="65%" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
+                        <!-- <article fxFlex="65%" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article> -->
                     </ng-container>
                     <ng-template #onlytext>
                         <article [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
