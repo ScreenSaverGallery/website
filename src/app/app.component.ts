@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 // services
 import { ThemeService } from './services/theme/theme.service';
+import { SiteInfoService } from './services/site-info/site-info.service';
 // local storage
 import { LocalStorageService } from 'local-storage';
 
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(
     private themeService: ThemeService,
     private localStorage: LocalStorageService,
+    private siteInfoService: SiteInfoService,
     private appElm: ElementRef
   ){}
 
@@ -25,6 +27,8 @@ export class AppComponent implements OnInit {
     // add os as class
     this.OS = this.getOS();
     this.appElm.nativeElement.setAttribute('id', this.OS.toLowerCase());
+    // load site info
+    this.siteInfoService.getSitInfo();
     // THEME
     this.themeService.bwTheme.subscribe((bw: boolean) => {
       this.bwTheme = bw;
