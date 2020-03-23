@@ -20,13 +20,18 @@ export class PostComponent implements OnInit {
 
   @Input() post: any;
   @Input() highlighted: boolean = false;
-  pinned: boolean = true;
+  pinned: boolean = false;
   loadedPost: any;
 
   downloadLink: string;
 
   randomColor: string = 'silver';
   ssgIconColor: string = 'red';
+
+  social: any[] = [
+    {name: 'facebook', shortcut: 'fb', urlBase: 'https://facebook.com/sharer/sharer.php?u='},
+    {name: 'twitter', shortcut: 't', urlBase: 'https://twitter.com/intent/tweet?text='}
+  ];
 
   constructor(
     private wpService: WpService,
@@ -56,6 +61,8 @@ export class PostComponent implements OnInit {
     // higlight
     if (this.highlighted) {
       this.elm.nativeElement.classList.add('highlight');
+    }
+    if (this.pinned) {
       this.elm.nativeElement.classList.add('pinned');
     }
     // if not post, get it from url
@@ -92,6 +99,10 @@ export class PostComponent implements OnInit {
       // console.log('post is set', this.post);
     }
       
+  }
+
+  getRefUrl(): string {
+    return `${window.location.protocol}//${window.location.host}/${this.post.slug}`;
   }
 
   togglePin(): void {
