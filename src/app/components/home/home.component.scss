@@ -13,17 +13,27 @@
         z-index: 99999;
 
         .get-ssg {
-            cursor: pointer;
+            z-index: 0;
+            width: 100%;
 
-            .mat-raised-button.mat-primary {
-                background-color: white;
-                color: #14141e;
+            & > div {
+                width: 100%;
             }
+            // .mat-raised-button.mat-primary {
+            //     cursor: pointer;
+            //     background-color: white;
+            //     color: #14141e;
+            // }
 
         }
 
         app-ssg-icon {
+            cursor: pointer;
             z-index: 0;
+        }
+
+        h1 {
+            margin: 0;
         }
 
         h4 {
