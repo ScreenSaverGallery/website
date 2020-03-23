@@ -1,0 +1,10 @@
+<ng-container *ngIf="medias && medias.length > 0">
+    <div fxLayout="row wrap" fxLayoutGap="12px" fxLayoutAlign="start center">
+        <div><mat-icon>share</mat-icon></div>
+        <ng-container *ngFor="let medium of medias">
+            <div [ngClass]="{'medium': true}">
+                <button mat-button (click)="openHref(medium.urlBase + getHref())" [title]="'share on ' + medium.name">{{medium.name}}</button>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
