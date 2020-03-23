@@ -33,6 +33,10 @@ export class WpService {
 
   /* POSTS */
 
+  getCurrentScreensaver(): Observable<any> {
+    return this.getPosts('categories=2&orderby=date&per_page=1');
+  }
+
   getPosts(params?: string): Observable<any> {
     return this.wpApiService.getPosts(params ? params : '');
   }
@@ -51,6 +55,14 @@ export class WpService {
 
   getCategoryPosts(id: number, page: number = 1): Observable<HttpResponse<any>> {
     return this.wpApiService.getPosts(`categories=${id}&orderby=date&page=${page}`);
+  }
+
+  search(query: string, page: number = 1) : Observable<HttpResponse<any>> {
+    return this.wpApiService.search(`${query}&page=${page}`);
+  }
+
+  getSiteInfo(): Observable<HttpResponse<any>> {
+    return this.wpApiService.getSiteInfo();
   }
 
   /* CATEGORIES */
