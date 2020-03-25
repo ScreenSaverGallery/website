@@ -3,7 +3,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 
 
 @Component({
-  selector: 'app-author-posts',
+  selector: 'ssg-author-posts',
   templateUrl: './author-posts.component.html',
   styleUrls: ['./author-posts.component.scss']
 })

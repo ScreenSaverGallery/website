@@ -12,7 +12,7 @@ import { ThemeService } from '../../services/theme/theme.service';
 import { LinksService } from '../../services/links/links.service';
 
 @Component({
-  selector: 'app-post',
+  selector: 'ssg-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })

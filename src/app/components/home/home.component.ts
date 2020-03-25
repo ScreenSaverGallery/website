@@ -13,7 +13,7 @@ interface Message {
 }
 
 @Component({
-  selector: 'app-home',
+  selector: 'ssg-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

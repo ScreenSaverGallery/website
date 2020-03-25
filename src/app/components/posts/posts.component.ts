@@ -5,7 +5,7 @@ import { ColorService } from '../../services/color/color.service';
 import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
-  selector: 'app-posts',
+  selector: 'ssg-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })

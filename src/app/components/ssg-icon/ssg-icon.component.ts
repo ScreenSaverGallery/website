@@ -8,7 +8,7 @@ import {
 
 
 @Component({
-  selector: 'app-ssg-icon',
+  selector: 'ssg-ssg-icon',
   templateUrl: './ssg-icon.component.html',
   styleUrls: ['./ssg-icon.component.scss']
 })

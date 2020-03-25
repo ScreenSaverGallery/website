@@ -12,7 +12,7 @@ interface Medium {
 }
 
 @Component({
-  selector: 'app-social',
+  selector: 'ssg-social',
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.scss']
 })
@@ -24,8 +24,8 @@ export class SocialComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('medias', this.medias);
-    console.log('referenceUrl', this.referenceUrl);
+    // console.log('medias', this.medias);
+    // console.log('referenceUrl', this.referenceUrl);
   }
 
   getHref(): string {

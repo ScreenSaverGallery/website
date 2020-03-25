@@ -6,7 +6,7 @@ import { SiteInfoService } from './services/site-info/site-info.service';
 import { LocalStorageService } from 'local-storage';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ssg-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

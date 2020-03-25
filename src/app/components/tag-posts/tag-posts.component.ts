@@ -3,7 +3,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 
 
 @Component({
-  selector: 'app-tag-posts',
+  selector: 'ssg-tag-posts',
   templateUrl: './tag-posts.component.html',
   styleUrls: ['./tag-posts.component.scss']
 })

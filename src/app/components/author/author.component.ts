@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { WpService } from '../../services/wp/wp.service';
 
 @Component({
-  selector: 'app-author',
+  selector: 'ssg-author',
   templateUrl: './author.component.html',
   styleUrls: ['./author.component.scss']
 })

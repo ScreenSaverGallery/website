@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-load-more',
+  selector: 'ssg-load-more',
   templateUrl: './load-more.component.html',
   styleUrls: ['./load-more.component.scss']
 })

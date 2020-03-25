@@ -10,7 +10,7 @@ import {
 import { ExplosionService } from '../../services/explosion/explosion.service';
 
 @Component({
-  selector: 'app-stars',
+  selector: 'ssg-stars',
   templateUrl: './stars.component.html',
   styleUrls: ['./stars.component.scss']
 })

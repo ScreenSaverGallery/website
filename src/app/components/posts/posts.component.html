@@ -4,16 +4,16 @@
         <div class="posts-container" class="posts-container" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
             <ng-container *ngFor="let post of posts; let i = index">
                 <!-- {{slug}} {{i}} -->
-                <app-post fxFlex="44%" fxFlex.lt-md="100%" [post]="post" [highlighted]="(slug === 'screensavers' && i === 0)"></app-post>
+                <ssg-post fxFlex="44%" fxFlex.lt-md="100%" [post]="post" [highlighted]="(slug === 'screensavers' && i === 0)"></ssg-post>
             </ng-container>
         </div>
         <!-- TODO LOAD MORE -->
-        <app-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></app-load-more>
+        <ssg-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></ssg-load-more>
     </ng-container>
     
     <ng-container *ngIf="children.length > 0">
         <ng-container *ngFor="let child of children">
-            <app-post [post]="child"></app-post>
+            <ssg-post [post]="child"></ssg-post>
         </ng-container>
     </ng-container>
 </ng-container>

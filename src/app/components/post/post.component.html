@@ -1,5 +1,4 @@
 <ng-container *ngIf="post || loadedPost; else loading">
-
     <ng-container *ngIf="!post; else excerpt">
         <!-- POSTS -->
         <div class="post">
@@ -7,16 +6,16 @@
             <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
             <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
                 <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
-                <app-author [id]="loadedPost.author" [text]="'posted by'"></app-author>
+                <ssg-author [id]="loadedPost.author" [text]="'posted by'"></ssg-author>
             </div> -->
             <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
             <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="loadedPost.tags && loadedPost.tags.length > 0">
                 <ng-container *ngFor="let tagId of loadedPost.tags">
-                    <app-tag [id]="tagId"></app-tag>
+                    <ssg-tag [id]="tagId"></ssg-tag>
                 </ng-container>
             </div>
             <div class="social">
-                <app-social [medias]="social"></app-social>
+                <ssg-social [medias]="social"></ssg-social>
             </div>
         </div>
     </ng-container>
@@ -28,7 +27,7 @@
                 <div class="post-header" fxLayout="row" fxLayoutAlign="space-between start">
                     <h2 fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start start">
                         <button *ngIf="highlighted" class="get-ssg"  mat-icon-button [routerLink]="downloadLink">
-                            <app-ssg-icon [size]="24" [flat]="true" [flatColor]="ssgIconColor" [animated]="true"></app-ssg-icon>
+                            <ssg-ssg-icon [size]="24" [flat]="true" [flatColor]="ssgIconColor" [animated]="true"></ssg-ssg-icon>
                         </button>
                         <div><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></div>
                     </h2>
@@ -44,14 +43,14 @@
                 <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
                 <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
                     <div class="date">{{post.date | date: 'longDate' }}</div>
-                    <app-author  [id]="post.author" [text]="'posted by'"></app-author >
+                    <ssg-author  [id]="post.author" [text]="'posted by'"></ssg-author >
                 </div> -->
 
                 <div class="excerpt-body" fxLayout="row" fxLayoutGap="12px">
                     <ng-container *ngIf="post.featured_media; else onlytext">
                         <div class="featured-media">
                             <a [routerLink]="'/' + post.slug">
-                                <span class="link-content"><app-media [id]="post.featured_media"></app-media></span>
+                                <span class="link-content"><ssg-media [id]="post.featured_media"></ssg-media></span>
                             </a>
                         </div>
                         <!-- <article fxFlex="65%" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article> -->
@@ -63,12 +62,12 @@
 
                 <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="post.tags && post.tags.length > 0">
                     <ng-container *ngFor="let tagId of post.tags">
-                        <app-tag [id]="tagId" [dark]="!highlighted"></app-tag>
+                        <ssg-tag [id]="tagId" [dark]="!highlighted"></ssg-tag>
                     </ng-container>
                 </div>
 
                 <div class="social">
-                    <app-social [medias]="social" [referenceUrl]="getRefUrl()"></app-social>
+                    <ssg-social [medias]="social" [referenceUrl]="getRefUrl()"></ssg-social>
                 </div>
             </div>
         </ng-container>

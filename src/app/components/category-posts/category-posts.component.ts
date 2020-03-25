@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 
 @Component({
-  selector: 'app-category-posts',
+  selector: 'ssg-category-posts',
   templateUrl: './category-posts.component.html',
   styleUrls: ['./category-posts.component.scss']
 })

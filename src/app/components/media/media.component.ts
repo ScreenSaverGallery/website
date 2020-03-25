@@ -7,7 +7,7 @@ import {
 import { WpService } from '../../services/wp/wp.service';
 
 @Component({
-  selector: 'app-media',
+  selector: 'ssg-media',
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.scss']
 })

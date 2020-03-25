@@ -9,7 +9,7 @@ import { ColorService } from '../../services/color/color.service';
 import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
-  selector: 'app-tag',
+  selector: 'ssg-tag',
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss']
 })

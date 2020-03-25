@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColorService } from '../../services/color/color.service';
 
 @Component({
-  selector: 'app-not-found',
+  selector: 'ssg-not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss']
 })
