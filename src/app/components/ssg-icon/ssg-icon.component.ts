@@ -27,6 +27,8 @@ export class SsgIconComponent implements OnInit, AfterViewInit {
     this.setStyleToSvg();
   };
 
+  @Input() title: string = 'ScreenSaverGallery';
+
   _flat: boolean;
   private _flatColor: string = 'silver';
 
