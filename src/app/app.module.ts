@@ -27,6 +27,7 @@ import { StarsComponent } from './components/stars/stars.component';
 import { SocialComponent } from './components/social/social.component';
 import { SearchComponent } from './components/search/search.component';
 import { InfoSliderComponent } from './components/info-slider/info-slider.component';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { InfoSliderComponent } from './components/info-slider/info-slider.compon
     StarsComponent,
     SocialComponent,
     SearchComponent,
-    InfoSliderComponent
+    InfoSliderComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,

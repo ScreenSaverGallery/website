@@ -1,22 +1,17 @@
-<!-- <ng-container *ngIf="starsText"> -->
-    <ssg-stars [color]="'white'"></ssg-stars>
-<!-- </ng-container> -->
+<!-- <ssg-stars [color]="'white'"></ssg-stars> -->
 
 <div class="home" fxLayout="column" fxLayoutAlign="center center">
     <div class="get-ssg" fxLayout="column" fxLayoutAlign="center center">
-        
-        <ssg-ssg-icon (click)="goToDownload()" [size]="200" [animated]="false" [flat]="themeIsBw()" [flatColor]="'white'"></ssg-ssg-icon>
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="24px">
-            <!-- <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
-                <h1>{{siteTitle}}</h1>
-                <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider>
-            </div> -->
-            <div>
-                <button mat-raised-button color="primary" class="get-ssg-button" (click)="goToDownload()">
-                    Get {{siteTitle}}
-                </button>
-            </div>
-            <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider>
-        </div>
+        <ssg-button [type]="'stroked'" routerLink="/get">Get ScreenSaverGallery</ssg-button>
+        <!-- <ssg-ssg-icon
+            class="rounded"
+            (click)="goToDownload()"
+            [size]="200"
+            [animated]="false"
+            [flat]="themeIsBw()"
+            [flatColor]="'white'"
+            [title]="'Get ScreenSaverGallery'"
+        ></ssg-ssg-icon> -->
+        <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider>
     </div> <!--end .get-ssg -->
 </div>

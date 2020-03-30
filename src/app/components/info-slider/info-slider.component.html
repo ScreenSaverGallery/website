@@ -1,17 +1,13 @@
 <ng-container *ngIf="messages.length > 0">
     <div class="slider-container">
         <ng-container *ngFor="let message of messages; let i = index">
-            <div class="message" [id]="'m-' + i">
+            <div class="message" fxLayout="column" fxLayoutAlign="center center" [id]="'m-' + i">
                 <ng-container *ngIf="message.url; else nolink">
                     <a [routerLink]="message.url">
                         <span class="link-content">{{message.text}}</span>
                     </a>
                 </ng-container>
                 <ng-template #nolink>{{message.text}}</ng-template>
-                
-                <!-- <div class="message-content">
-                    {{message}}
-                </div> -->
             </div>
         </ng-container>
     </div>

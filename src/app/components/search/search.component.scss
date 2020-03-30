@@ -1,6 +1,10 @@
 :host {
-    display: block;
+    display: inline-block;
     font-family: inherit;
+
+    mat-form-field {
+        width: 100%;
+    }
     input {
         font-family: inherit;
     }

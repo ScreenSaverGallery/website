@@ -1,9 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@include mat-core();
+
+
+$font-primary: 'Jura', sans-serif; /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
+$font-secondary:  'Caudex', serif; /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
+
+$ssg-color-primary: mat-palette($mat-cyan, A100);
+$ssg-color-accent: mat-palette($mat-cyan, A200);
+$ssg-color-theme: mat-dark-theme($ssg-color-primary, $ssg-color-accent);
+
+$ssg-bw-primary: mat-palette($mat-blue-grey, 100);
+$ssg-bw-accent: mat-palette($mat-blue-grey, 50);
+$ssg-bw-theme: mat-dark-theme($ssg-bw-primary, $ssg-bw-accent);
+
+@include angular-material-theme($ssg-color-theme);
+
+
+// custom typography
+$ssg-typography: mat-typography-config(
+    $font-family: $font-primary
+);
+
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($ssg-typography);
+
 
 $space: 24px;
 $dark-color: #14141e;
 $light-color: silver;
-$accent-color: #55b5db;
+$accent-color: #84ffff; // #4fc3f7; // #81d4fa; // #55b5db;
 $warn-color: red;
 
 /* layers */
@@ -29,7 +54,7 @@ $warn-color: red;
 
 html,
 body,
-app-root {
+ssg-root {
     display: block;
     width: 100%;
     min-height: 100%;
@@ -42,14 +67,15 @@ app-root {
 html, body { height: 100%; }
 body {
     margin: 0;
-    font-family: 'Roboto Mono', monospace;
-    font-size: larger;
+    font-family: $font-primary;
+    font-size: x-large;
     line-height: 1.6;
 }
 /* body { margin: 0; font-family: 'Anonymous Pro', monospace; } */
 
 h1, h2, h3, h4 {
-    font-family: 'Russo One', sans-serif;
+    font-family: $font-secondary;
+    // font-size: xx-large;
 }
 
 /* h1, h2, h3, h4 {
@@ -70,10 +96,14 @@ a {
     display: inline-block;
     border: 1px solid transparent;
 
-    .link-content { 
+    .link-content {
+        color: $accent-color;
         display: inline-block;
+        transition: transform .2s ease-in-out;
     }
 }
+
+
 
 a:hover {
     border: 1px solid $accent-color;
@@ -84,9 +114,15 @@ a:hover {
     
 }
 
+// button:hover {
+//     div & {
+//         transform: skew(10deg, 10deg); // wow, it works for parent ;)
+//     } 
+// } 
 
 
-h1 {
+
+.title {
     @include layer-2();
     position: sticky;
     top: 3 * $space;
@@ -99,9 +135,29 @@ img, p {
 
 .mat-drawer-side.mat-drawer-end {
     border-left: none;
+    border-right: none;
 }
 
-app-root {
+article {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+figure {
+    margin: 0;
+    margin-bottom: $space;
+
+    figcaption {
+        font-size: small;
+        margin: ($space / 3) 0;
+    }
+
+    img {
+        margin: 0;
+    }
+}
+
+ssg-root {
     &#mac {
         .win {
             display: none;
@@ -115,7 +171,18 @@ app-root {
     }
 }
 
-app-menu {
+ssg-stars {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    @include layer-0();
+}
+
+ssg-menu {
     color: white;
 
     position: relative;
@@ -123,7 +190,7 @@ app-menu {
     .get {
         .mat-icon-button {
             line-height: .7;
-            app-ssg-icon {
+            ssg-ssg-icon {
                 margin: $space / 12;
             }
         }
@@ -134,23 +201,54 @@ app-menu {
         }
     }
 
+    ssg-button.icon {
+        transform: scale(1.5);
+    }
+
     @include layer-3();
 
     .theme {
         @include layer-3();
     }
 
+    // &.invert {
+    //     
+    // }
+
 }
 
-app-menu {
-    mat-icon {
-        transform: skewY(12deg);
-        text-shadow: 0px 5px 15px $accent-color;
+.cdk-overlay-container {
+    @include layer-3();
+}
+
+.mat-drawer-inner-container {
+    overflow: visible !important;
+}
+
+mat-form-field {
+    * {
+        font-family: inherit;
     }
 }
 
-app-post {
-    border-top: 1px solid $accent-color;
+
+ssg-post {
+    .full {
+        .social {
+            margin-bottom: 2 * $space;
+        }
+    }
+    // .full {
+    //     .social {
+    //         @include layer-2();
+    //         position: sticky;
+    //         top: 6 * $space;
+    //         margin-bottom: 2 * $space;
+    //     }
+    // }
+    // border-top: 1px solid $accent-color;
+    // max-width: 100%;
+    // overflow-x: hidden;
     // HIGHLIGHTED POST
     &.highlight {
         background-color: $accent-color;
@@ -163,7 +261,7 @@ app-post {
             top: 5 * $space;
         }
 
-        .post, app-author, .author {
+        .post, ssg-author, .author {
             a {
                 color: $dark-color; 
             }
@@ -175,7 +273,7 @@ app-post {
 
 }
 
-app-home {
+ssg-home {
     .get-ssg-button.mat-raised-button.mat-primary {
         // font-family: inherit; /* 'Roboto Mono', monospace; */
         background-color: $accent-color;
@@ -190,14 +288,19 @@ app-home {
 
 .download-button {
     display: inline-block;
-    padding: $space / 2;
-    background-color: red;
     color: white;
-    margin-bottom: $space;
-    border-radius: $space / 8;
+    margin: $space 0;
+    // border-radius: $space / 8;
     
-    a .link-content {
-        color: white;
+    a {
+        padding: $space / 2;
+        background-color: red;
+        text-decoration: none;
+        border: none;
+        .link-content {
+            // transform: skew(0deg, 0deg);
+            color: white;
+        }
     }
 }
 
@@ -211,21 +314,45 @@ app-home {
 
 // BW THEME
 .bw-theme {
+    @include angular-material-theme($ssg-bw-theme);
+
     ::selection {
         background-color: white;
         color: $dark-color;
     }
+
+    .mat-drawer-side.mat-drawer-end {
+        border-left: none;
+        border-right: none;
+    }
     // $light-color: white;
-    app-root {
+    ssg-root {
         color: $light-color;
         background-color: $dark-color;
     }
 
     a {
+        color: $light-color;
+
         .link-content {
             color: $light-color;
             text-decoration: underline;
             // text-shadow: 0px 5px 15px $light-color;
+        }
+    }
+
+    .download-button {
+        a {
+            .link-content { 
+                color: white;
+                text-decoration: none;
+            }
+        }
+
+        a:hover {
+            .link-content {
+                color: white;
+            }
         }
     }
 
@@ -238,7 +365,7 @@ app-home {
 
     }
 
-    app-media {
+    ssg-media {
         img {
             filter: grayscale(100%);
             z-index: 0;
@@ -248,11 +375,11 @@ app-home {
 
     
 
-    app-post {
+    ssg-post {
         border-top-color: $light-color;
         &.highlight {
             background-color: white; // $light-color;
-            .post, app-author, .author {
+            .post, ssg-author, .author {
                 a {
                     .link-content {
                         color: $dark-color;
@@ -267,10 +394,10 @@ app-home {
         }
     }
 
-    app-menu {
-        mat-icon {
-            text-shadow: 0px 5px 15px $light-color;
-        }
+    ssg-menu {
+        // mat-icon {
+        //     // text-shadow: 0px 5px 15px $light-color;
+        // }
 
         .mat-raised-button {
             color: $dark-color;
@@ -278,7 +405,7 @@ app-home {
         }
     }
 
-    app-home {
+    ssg-home {
         .get-ssg-button.mat-raised-button.mat-primary {
             font-family: inherit; /* 'Roboto Mono', monospace; */
             background-color: white;

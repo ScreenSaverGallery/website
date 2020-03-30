@@ -19,12 +19,11 @@
             & > div {
                 width: 100%;
             }
-            // .mat-raised-button.mat-primary {
-            //     cursor: pointer;
-            //     background-color: white;
-            //     color: #14141e;
-            // }
 
+            ssg-button {
+                transform: scale(3);
+            }
+            
         }
 
         ssg-ssg-icon {
@@ -41,15 +40,5 @@
             padding: 0;
             display: inline;
         }
-    }
-
-    ssg-stars {
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 0;
     }
 }

@@ -50,12 +50,19 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
 
   private _pausedSlider: boolean = false;
   private _sliderMouseListen: boolean = false;
+  private _sliderContainer: HTMLElement;
+  private _slides: NodeList;
 
   constructor(
     private elm: ElementRef
   ) { }
 
   ngOnInit(): void {
+    window.addEventListener('resize', (e: any) => {
+      this._slides.forEach((s: HTMLElement) => {
+        this._setSizes(this._sliderContainer, s);
+      });
+    });
   }
 
   ngAfterViewInit(): void {
@@ -63,18 +70,19 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
   }
 
   slider(): void {
-
+    this._sliderContainer = this.elm.nativeElement.querySelector('.slider-container');
+    this._slides = this.elm.nativeElement.querySelectorAll('.message');
+    
     const message: Message = this.messages[this.slideIndex];
-    const sliderContainer: HTMLElement = this.elm.nativeElement.querySelector('.slider-container');
     const slide: HTMLElement = this.elm.nativeElement.querySelector(`#m-${this.slideIndex}`);
     const prevSlide: HTMLElement = this.prevSlideIndex != null ? this.elm.nativeElement.querySelector(`#m-${this.prevSlideIndex}`) : null;
-    const slides: NodeList = this.elm.nativeElement.querySelectorAll('.message');
+    
 
     if (!this._sliderMouseListen) {
-      sliderContainer.addEventListener('mouseover', () => {
+      this._sliderContainer.addEventListener('mouseover', () => {
         this._pausedSlider = true;
       });
-      sliderContainer.addEventListener('mouseout', () => {
+      this._sliderContainer.addEventListener('mouseout', () => {
         this._pausedSlider = false;
       });
       this._sliderMouseListen = true;
@@ -82,32 +90,15 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
 
     if (!this._pausedSlider) {
       // set text align to container
-      sliderContainer.style.textAlign = this.align;
-
+      this._sliderContainer.style.textAlign = this.align;
       // add leaving class to previously active
       if (prevSlide && prevSlide.classList.contains('active')) prevSlide.classList.add('leaving'); 
       
-      slides.forEach((s: HTMLElement) => {
+      this._slides.forEach((s: HTMLElement) => {
         s.classList.remove('active');
         if (s !== prevSlide) s.classList.remove('leaving');
         // s.classList.remove('leaving');
-        // set slider max width
-        const sliderContainerRect: any = sliderContainer.getBoundingClientRect();
-        const sliderContainerWidth: number = sliderContainerRect.width;
-        const sliderContainerHeight: number = sliderContainerRect.height;
-        const slideRect: any = s.getBoundingClientRect();
-        const slideWidth: number = slideRect.width;
-        const slideHeight: number = slideRect.height;
-
-        if (slideWidth > sliderContainerWidth) {
-          sliderContainer.style.width = `${slideWidth}px`;
-          // sliderContainer.style.height = `${slideHeight}px`;
-        }
-
-        if (slideHeight > sliderContainerHeight) {
-          sliderContainer.style.height = `${slideHeight}px`;
-        }
-
+        this._setSizes(this._sliderContainer, s);
       });
 
       // if (prevSlide) prevSlide.classList.add('leaving');
@@ -122,6 +113,25 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.slider(); // recursion
     }, message.delay ? message.delay : this.delay);
+  }
+
+  private _setSizes(container: HTMLElement, slide: HTMLElement): void {
+    // set slider max width
+    const sliderContainerRect: any = container.getBoundingClientRect();
+    const sliderContainerWidth: number = sliderContainerRect.width;
+    // const sliderContainerHeight: number = sliderContainerRect.height;
+    const slideRect: any = slide.getBoundingClientRect();
+    const slideWidth: number = slideRect.width;
+    const slideHeight: number = slideRect.height;
+
+    if (slideWidth > sliderContainerWidth) {
+      container.style.width = `${slideWidth}px`;
+      // sliderContainer.style.height = `${slideHeight}px`;
+    }
+
+    // if (slideHeight > sliderContainerHeight) {
+      container.style.height = `${slideHeight}px`;
+    // }
   }
 
   private _includesMessage(message: Message, messages: Message[]): boolean {

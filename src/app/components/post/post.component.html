@@ -1,8 +1,13 @@
 <ng-container *ngIf="post || loadedPost; else loading">
     <ng-container *ngIf="!post; else excerpt">
         <!-- POSTS -->
-        <div class="post">
-            <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
+        <div class="post full">
+            <div class="title">
+                <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
+                <div class="social">
+                    <ssg-social [medias]="social"></ssg-social>
+                </div>
+            </div>
             <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
             <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
                 <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
@@ -14,9 +19,7 @@
                     <ssg-tag [id]="tagId"></ssg-tag>
                 </ng-container>
             </div>
-            <div class="social">
-                <ssg-social [medias]="social"></ssg-social>
-            </div>
+
         </div>
     </ng-container>
     
@@ -65,7 +68,6 @@
                         <ssg-tag [id]="tagId" [dark]="!highlighted"></ssg-tag>
                     </ng-container>
                 </div>
-
                 <div class="social">
                     <ssg-social [medias]="social" [referenceUrl]="getRefUrl()"></ssg-social>
                 </div>

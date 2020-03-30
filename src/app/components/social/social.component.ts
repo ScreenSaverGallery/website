@@ -4,12 +4,10 @@ import {
   Input,
   Output
 } from '@angular/core';
+// models
+import { SocialMedium } from '../../models/social-medium';
 
-interface Medium {
-  name: string,
-  shortcut: string,
-  urlBase: string
-}
+
 
 @Component({
   selector: 'ssg-social',
@@ -18,12 +16,14 @@ interface Medium {
 })
 export class SocialComponent implements OnInit {
 
-  @Input() medias: Medium[] = []; // no medias default ;)
+  @Input() medias: SocialMedium[] = []; // no medias default ;)
   @Input() referenceUrl: string;
+  @Input() share: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
+    // console.log('share', this.share);
     // console.log('medias', this.medias);
     // console.log('referenceUrl', this.referenceUrl);
   }

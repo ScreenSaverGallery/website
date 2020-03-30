@@ -1,44 +1,52 @@
-<div class="controls" fxLayout="row" [fxLayoutAlign]="(!homePage ? 'space-between center' : 'end center')">
+<div class="controls" fxLayout="row" [fxLayoutAlign]="(!homePage ? 'space-between start' : 'end start')">
     <div class="back" *ngIf="!homePage">
-        <button mat-icon-button (click)="goBack()">
+        <ssg-button [type]="'icon'" (click)="goBack()" [colors]="['white']">
             <mat-icon>arrow_back</mat-icon>
-        </button>
+        </ssg-button>
     </div>
     
-    <div class="get" *ngIf="!homePage">
-        <button *ngIf="getPage; else downloadButton" mat-icon-button [routerLink]="homeLink">
-            <app-ssg-icon [flat]="true" [flatColor]="'white'" [size]="36"></app-ssg-icon>
-        </button>
+    <div class="get" *ngIf="!homePage" fxHide fxShow.gt-xs>
+        <ssg-button [type]="'icon'" *ngIf="getPage; else downloadButton" [skew]="false" [routerLink]="homeLink">
+            <ssg-ssg-icon [flat]="true" [flatColor]="'white'" [size]="36"></ssg-ssg-icon>
+        </ssg-button>
+
         <ng-template #downloadButton>
-            <button *ngIf="siteTitle" mat-raised-button [routerLink]="homeLink">Get {{siteTitle}}</button>
+            <ssg-button *ngIf="siteTitle" [type]="'stroked'" [colors]="['white']" [routerLink]="homeLink">Get {{siteTitle}}</ssg-button>
         </ng-template>
     </div>
     
-    <!-- <div class="info" *ngIf="home">
-        <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider>
-    </div> -->
 
     <div class="sandwitch" #sandwitch [ngClass]="{'home': homePage}">
-        <button  mat-icon-button (click)="toggleMenu(drawer.toggle())">
+        <ssg-button [type]="'icon'" (click)="toggleMenu(drawer.toggle())">
             <mat-icon>menu</mat-icon>
-        </button>
+        </ssg-button>
     </div>
 </div>
 
 <div class="theme">
-    <button mat-icon-button (click)="toggleTheme()">
+    <ssg-button [type]="'icon'" (click)="toggleTheme()">
         <mat-icon>invert_colors</mat-icon>
-    </button>
+    </ssg-button>
 </div>
 
 <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer mode="side" position="end" closed>
-        <div class="close-menu">
-            <button mat-icon-button (click)="closeMenu(drawer.close())">
-                <mat-icon>close</mat-icon>
-            </button>
+        <!-- MENU HEADER -->
+        <div class="menu-header" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLaout.lt-md="column" fxLayoutGap="6%">
+            <!-- <div></div> -->
+            <!-- SEARCH -->
+            <div fxFlex="44%" fxFlex.lt-md="100%">
+                <ssg-search (optionSelected)="searchSelected($event, closeMenu(drawer.close()))"></ssg-search>
+            </div>
+            <!-- CLOSE BUTTON -->
+            <div>
+                <ssg-button [type]="'icon'" (click)="closeMenu(drawer.close())">
+                    <mat-icon>close</mat-icon>
+                </ssg-button>
+            </div>
         </div>
-        <ssg-search></ssg-search>
+        
+        <!-- LINKS -->
         <ng-container *ngIf="categories && pages; else loading">
             <nav>
                 <div class="menu-blocks" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
@@ -77,8 +85,8 @@
                     </div>
                 </div>
             </nav>
-            <div>
-                TODO: add social here
+            <div class="social">
+                <ssg-social [share]="false" [medias]="followUs"></ssg-social>
             </div>
         </ng-container>
         

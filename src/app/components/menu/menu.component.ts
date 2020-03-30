@@ -10,7 +10,8 @@ import {
 } from '@angular/core';
 // router
 import { Router, NavigationEnd } from '@angular/router';
-// import * as Warp from 'warpjs';
+// models
+import { SocialMedium } from '../../models/social-medium';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ThemeService } from '../../services/theme/theme.service';
@@ -20,7 +21,7 @@ import { SiteInfoService } from '../../services/site-info/site-info.service';
 
 
 @Component({
-  selector: 'app-menu',
+  selector: 'ssg-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
@@ -38,6 +39,14 @@ export class MenuComponent implements OnInit, AfterViewInit {
   homeLink: string;
   currentShow: any;
   siteTitle: string;
+
+  followUs: SocialMedium[] = [
+    {name: 'facebook', shortcut: 'fb', urlBase: 'https://www.facebook.com/ScreenSaverGallery'},
+    {name: 'twitter', shortcut: 't', urlBase: 'https://twitter.com/ScreenSaverG'},
+    {name: 'instagram', shortcut: 'i', urlBase: 'https://www.instagram.com/screensavergallery/'},
+    {name: 'rss', shortcut: 'rss', urlBase: 'https://screensaver.metazoa.org/feed/'}
+  ];
+
   private _openedMenu: boolean = false;
   private _space: number = 24;
 
@@ -56,7 +65,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
     // home route
     this.router.events.subscribe((res: any) => {
       if (res instanceof NavigationEnd) {
-        console.log('router res', res);
+        // console.log('router res', res);
         if (res && res.url === '/') {
           this.homePage = true;
         } else {
@@ -77,16 +86,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
       if (info) {
         this.siteTitle = info.name;
       }
-      // get name of last screensaver
-      /* this.wpService.getCurrentScreensaver().subscribe((res: any) => {
-        this.currentShow = res.body[0];
-        const currentShowMessage: Message = {
-          text: `Current Show: ${res.body[0].title.rendered}`,
-          delay: 10000,
-          url: res.body[0].slug
-        }
-        this.addMessage = currentShowMessage;
-      }); */
     });
     // get name of last screensaver
     this.wpService.getCurrentScreensaver().subscribe((res: any) => {
@@ -135,6 +134,20 @@ export class MenuComponent implements OnInit, AfterViewInit {
     // console.log('closeMenu');
     this._openedMenu = false;
     this.opened.emit(this._openedMenu);
+  }
+
+  searchSelected(option: any, closeMenuCallback: any): void {
+    // console.log('searchSelected this', this);
+    console.log('searchSelected', option);
+    console.log('slugFromUrl', this._slugFromUrl(option.url));
+    this.router.navigate([this._slugFromUrl(option.url)]);
+  }
+
+  private _slugFromUrl(url: string): string {
+    const domainRegExp = new RegExp('^(http|https)\:\/\/.+?(?=\/)');
+    const slug = url.replace(domainRegExp, '');
+
+    return slug;
   }
 
 
