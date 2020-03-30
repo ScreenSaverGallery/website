@@ -68,7 +68,7 @@ export class WpService {
   /* CATEGORIES */
 
   getAllCategories(): void {
-    this.wpApiService.getCategories('orderby=count&order=desc').subscribe((res: HttpResponse<any>) => {
+    this.wpApiService.getCategories('orderby=count&order=asc').subscribe((res: HttpResponse<any>) => {
       if (res && res.body && res.body.length > 0) {
         const temp: any[] = this._categories;
         const total = Number(res.headers.get('X-WP-Total'));
@@ -87,7 +87,7 @@ export class WpService {
   }
 
   getCategories(page: number): void {
-    this.wpApiService.getCategories(`orderby=count&order=desc&page=${page}`).subscribe((res: HttpResponse<any>) => {
+    this.wpApiService.getCategories(`orderby=count&order=asc&page=${page}`).subscribe((res: HttpResponse<any>) => {
       if (res && res.body && res.body.length > 0) {
         // concat arrays
         const temp: any[] = this._categories;
@@ -199,7 +199,7 @@ export class WpService {
 
   getAllPages(): void {
     // console.log('getAllPages');
-    this.wpApiService.getPages().subscribe((res: HttpResponse<any>) => {
+    this.wpApiService.getPages('order_by=date&order=asc').subscribe((res: HttpResponse<any>) => {
       if (res && res.body && res.body.length > 0) {
         const temp: any[] = this._pages;
         const total = Number(res.headers.get('X-WP-Total'));
