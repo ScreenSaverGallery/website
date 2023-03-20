@@ -52,7 +52,7 @@ export class PostComponent implements OnInit {
         this.randomColor = 'white';
         this.ssgIconColor = 'black';
       } else {
-        this.randomColor = this.colorService.generateHslaColor(100);
+        this.randomColor = this.colorService.generateHslaColors(100)[0];
         this.ssgIconColor = 'red';
       }
       // console.log('theme changed', this.randomColor);

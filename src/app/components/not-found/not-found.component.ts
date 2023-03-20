@@ -16,7 +16,7 @@ export class NotFoundComponent implements OnInit {
   ) { } 
 
   ngOnInit() {
-    this.randomColor = this.colorService.generateHslaColor(100);
+    this.randomColor = this.colorService.generateHslaColors(100)[0];
   }
 
 }

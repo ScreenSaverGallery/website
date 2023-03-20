@@ -50,7 +50,7 @@ export class PostsComponent implements OnInit {
   ngOnInit() {
     this.themeService.bwTheme.subscribe((bw: boolean) => {
       this.bwTheme = bw;
-      this.randomColor = (bw ? 'white' : this.colorService.generateHslaColor(100));
+      this.randomColor = (bw ? 'white' : this.colorService.generateHslaColors(100)[0]);
     });
 
     if (this._postsFrom && this._postsOf) {

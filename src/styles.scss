@@ -2,8 +2,8 @@
 @include mat-core();
 
 
-$font-primary: 'Jura', sans-serif; /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
-$font-secondary:  'Caudex', serif; /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
+$font-primary: Arial, sans-serif; /* 'Jura', sans-serif; */ /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
+$font-secondary:  'Times New Roman', Times, serif; /* 'Caudex', serif; */ /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
 
 $ssg-color-primary: mat-palette($mat-cyan, A100);
 $ssg-color-accent: mat-palette($mat-cyan, A200);
@@ -76,6 +76,9 @@ body {
 h1, h2, h3, h4 {
     font-family: $font-secondary;
     // font-size: xx-large;
+
+    color: white;
+    text-shadow: -3px -3px 0 black, 3px -3px 0 black, -3px 3px 0 #000, 3px 3px 0 #000;
 }
 
 /* h1, h2, h3, h4 {

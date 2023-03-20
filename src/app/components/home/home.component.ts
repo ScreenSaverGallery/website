@@ -6,6 +6,7 @@ import { ThemeService } from '../../services/theme/theme.service';
 import { LinksService } from '../../services/links/links.service';
 import { SiteInfoService } from '../../services/site-info/site-info.service';
 
+
 interface Message {
   text: string,
   delay?: number,
@@ -57,7 +58,6 @@ export class HomeComponent implements OnInit {
         this.addMessage = currentShowMessage;
       });
     });
-
   }
 
   goToDownload(): void {

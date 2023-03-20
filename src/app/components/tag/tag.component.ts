@@ -39,7 +39,7 @@ export class TagComponent implements OnInit {
         if (bw) {
           this.randomColor = (this.dark ? 'silver' : '#14141e');
         } else {
-          this.randomColor = this.colorService.generateHslaColor(100, (this.dark ? 80 : 25));
+          this.randomColor = this.colorService.generateHslaColors(100, (this.dark ? 80 : 25))[0];
         }
       });
       
