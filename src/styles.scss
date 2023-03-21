@@ -1,28 +1,28 @@
-@import '~@angular/material/theming';
-@include mat-core();
+@use '~@angular/material' as mat;
+@include mat.core();
 
 
 $font-primary: Arial, sans-serif; /* 'Jura', sans-serif; */ /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
 $font-secondary:  'Times New Roman', Times, serif; /* 'Caudex', serif; */ /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
 
-$ssg-color-primary: mat-palette($mat-cyan, A100);
-$ssg-color-accent: mat-palette($mat-cyan, A200);
-$ssg-color-theme: mat-dark-theme($ssg-color-primary, $ssg-color-accent);
+$ssg-color-primary: mat.define-palette(mat.$cyan-palette, A100);
+$ssg-color-accent: mat.define-palette(mat.$cyan-palette, A200);
+$ssg-color-theme: mat.define-dark-theme($ssg-color-primary, $ssg-color-accent);
 
-$ssg-bw-primary: mat-palette($mat-blue-grey, 100);
-$ssg-bw-accent: mat-palette($mat-blue-grey, 50);
-$ssg-bw-theme: mat-dark-theme($ssg-bw-primary, $ssg-bw-accent);
+$ssg-bw-primary: mat.define-palette(mat.$blue-grey-palette, 100);
+$ssg-bw-accent: mat.define-palette(mat.$blue-grey-palette, 50);
+$ssg-bw-theme: mat.define-dark-theme($ssg-bw-primary, $ssg-bw-accent);
 
-@include angular-material-theme($ssg-color-theme);
+@include mat.all-component-themes($ssg-color-theme);
 
 
 // custom typography
-$ssg-typography: mat-typography-config(
+$ssg-typography: mat.define-typography-config(
     $font-family: $font-primary
 );
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
-@include angular-material-typography($ssg-typography);
+@include mat.all-component-typographies($ssg-typography);
 
 
 $space: 24px;
@@ -278,7 +278,7 @@ ssg-post {
 
 ssg-home {
     .get-ssg-button.mat-raised-button.mat-primary {
-        // font-family: inherit; /* 'Roboto Mono', monospace; */
+        // font-family: inherit; __<<ngThemingMigrationEscapedComment10>>__
         background-color: $accent-color;
         color: $dark-color;
     }
@@ -317,7 +317,7 @@ ssg-home {
 
 // BW THEME
 .bw-theme {
-    @include angular-material-theme($ssg-bw-theme);
+    @include mat.all-component-themes($ssg-bw-theme);
 
     ::selection {
         background-color: white;
