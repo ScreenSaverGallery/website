@@ -1,5 +1,14 @@
 @use '@angular/material' as mat;
-@include mat.core();
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
+@include mat.all-legacy-component-typographies();
+@include mat.legacy-core();
 
 
 $font-primary: Arial, sans-serif; /* 'Jura', sans-serif; */ /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
@@ -13,16 +22,16 @@ $ssg-bw-primary: mat.define-palette(mat.$blue-grey-palette, 100);
 $ssg-bw-accent: mat.define-palette(mat.$blue-grey-palette, 50);
 $ssg-bw-theme: mat.define-dark-theme($ssg-bw-primary, $ssg-bw-accent);
 
-@include mat.all-component-themes($ssg-color-theme);
+@include mat.all-legacy-component-themes($ssg-color-theme);
 
 
 // custom typography
-$ssg-typography: mat.define-typography-config(
+$ssg-typography: mat.define-legacy-typography-config(
     $font-family: $font-primary
 );
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
-@include mat.all-component-typographies($ssg-typography);
+@include mat.all-legacy-component-typographies($ssg-typography);
 
 
 $space: 24px;
@@ -317,7 +326,7 @@ ssg-home {
 
 // BW THEME
 .bw-theme {
-    @include mat.all-component-themes($ssg-bw-theme);
+    @include mat.all-legacy-component-themes($ssg-bw-theme);
 
     ::selection {
         background-color: white;
