@@ -128,7 +128,7 @@ a:hover {
 .title {
     @include layer-2();
     position: sticky;
-    top: 3 * $space;
+    top: calc(3 * $space);
 }
 
 img, p {
@@ -152,7 +152,7 @@ figure {
 
     figcaption {
         font-size: small;
-        margin: ($space / 3) 0;
+        margin: calc($space / 3) 0;
     }
 
     img {
@@ -194,7 +194,7 @@ ssg-menu {
         .mat-icon-button {
             line-height: .7;
             ssg-ssg-icon {
-                margin: $space / 12;
+                margin: calc($space / 12);
             }
         }
         .mat-raised-button {
@@ -238,7 +238,7 @@ mat-form-field {
 ssg-post {
     .full {
         .social {
-            margin-bottom: 2 * $space;
+            margin-bottom: calc(2 * $space);
         }
     }
     // .full {
@@ -256,12 +256,12 @@ ssg-post {
     &.highlight {
         background-color: $accent-color;
         color: $dark-color;
-        padding: $space / 2;
+        padding: calc($space / 2);
 
         &.pinned {
             @include layer-2();
             position: sticky;
-            top: 5 * $space;
+            top: calc(5 * $space);
         }
 
         .post, ssg-author, .author {
