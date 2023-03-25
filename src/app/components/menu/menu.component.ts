@@ -8,6 +8,8 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
+// material
+import { MatDrawer } from '@angular/material/sidenav';
 // router
 import { Router, NavigationEnd } from '@angular/router';
 // models
@@ -18,7 +20,8 @@ import { ThemeService } from '../../services/theme/theme.service';
 import { LocalStorageService } from 'local-storage';
 import { LinksService } from '../../services/links/links.service';
 import { SiteInfoService } from '../../services/site-info/site-info.service';
-
+import { ColorService } from 'src/app/services/color/color.service';
+import { MenuService } from 'src/app/services/menu/menu.service';
 
 @Component({
   selector: 'ssg-menu',
@@ -27,7 +30,8 @@ import { SiteInfoService } from '../../services/site-info/site-info.service';
 })
 export class MenuComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('sandwitch', {static: false}) sandwitchElm: ElementRef;
+  @ViewChild('sandwitch') sandwitchElm: ElementRef;
+  @ViewChild('drawer') drawer: MatDrawer;
 
   @Input() position: string = 'top-right';
   @Output() opened: EventEmitter<boolean> = new EventEmitter();
@@ -57,7 +61,10 @@ export class MenuComponent implements OnInit, AfterViewInit {
     private themeService: ThemeService,
     private localStorage: LocalStorageService,
     private linksService: LinksService,
-    private siteInfoService: SiteInfoService
+    private siteInfoService: SiteInfoService,
+    private menuService: MenuService,
+    private colorService: ColorService,
+    private elm: ElementRef
   ) { }
 
   ngOnInit() {
@@ -106,10 +113,26 @@ export class MenuComponent implements OnInit, AfterViewInit {
         this.pages = res;
       }
     });
+    // listen to menu actions
+    this.menuService.toggle.subscribe(() => {
+      this.toggleMenu(this.drawer.toggle());
+    });
   }
 
   ngAfterViewInit() {
     this._positionOfSandwitch();
+    // const buttons = this.elm.nativeElement.querySelectorAll('ssg-button');
+    // console.log('buttons', buttons);
+    // this.colorService.animateRandomColor(1, 0, 100, 70, 1.0).subscribe({
+    //   next: (hslaColor: string) => {
+    //     for (const button of buttons) {
+    //       // button.style.backgroundColor = hslaColor;
+    //       button.style.boxShadow = `0 0 24px ${hslaColor}`;
+    //     }
+    //   },
+    //   error: (e: any) => console.log(e)
+    // });
+
     // this._animateIcons();
   }
 

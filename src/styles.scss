@@ -12,7 +12,7 @@
 
 
 $font-primary: Arial, sans-serif; /* 'Jura', sans-serif; */ /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
-$font-secondary:  'Times New Roman', Times, serif; /* 'Caudex', serif; */ /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
+$font-secondary:  'Roboto Mono', monospace; /* 'Times New Roman', Times, serif; */ /* 'Caudex', serif; */ /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
 
 $ssg-color-primary: mat.define-palette(mat.$cyan-palette, A100);
 $ssg-color-accent: mat.define-palette(mat.$cyan-palette, A200);
@@ -87,7 +87,7 @@ h1, h2, h3, h4 {
     // font-size: xx-large;
 
     color: white;
-    text-shadow: -3px -3px 0 black, 3px -3px 0 black, -3px 3px 0 #000, 3px 3px 0 #000;
+    // text-shadow: -3px -3px 0 black, 3px -3px 0 black, -3px 3px 0 #000, 3px 3px 0 #000;
 }
 
 /* h1, h2, h3, h4 {
@@ -118,10 +118,10 @@ a {
 
 
 a:hover {
-    border: 1px solid $accent-color;
+    // border: 1px solid $accent-color;
     .link-content {
         color: $warn-color;
-        transform: skew(10deg, 10deg);
+        // transform: skew(10deg, 10deg);
     }
     
 }
@@ -152,8 +152,14 @@ img, p {
 
 article {
     max-width: 100%;
-    overflow-x: hidden;
+    // overflow-x: hidden;
+    .aligncenter {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
+
 
 figure {
     margin: 0;
@@ -190,8 +196,19 @@ ssg-stars {
     top: 0;
     right: 0;
     bottom: 0;
-    pointer-events: none;
+    // pointer-events: none;
     @include layer-0();
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    
+    html {
+        background-color: transparent;
+        body {
+            background-color: transparent;
+        }
+    }
+
 }
 
 ssg-menu {
@@ -291,6 +308,22 @@ ssg-home {
         background-color: $accent-color;
         color: $dark-color;
     }
+
+    // iframe.app-theme {
+    //     position: absolute;
+    //     @include layer-0();
+    //     width: 100%;
+    //     height: 90%;
+    //     background-color: transparent !important;
+    //     html, body, app-attractor, canvas {
+    //         background-color: transparent !important;
+    //     }
+    //     
+    //     
+    // }
+    // ssg-button {
+    //     margin-bottom: $space;
+    // }
 }
 
 .mat-button-base {
@@ -303,10 +336,13 @@ ssg-home {
     color: white;
     margin: $space 0;
     // border-radius: $space / 8;
+    border-radius: calc($space * 2);
+    box-shadow: 0 0 $space white;
+    background-color: red;
     
     a {
-        padding: $space / 2;
-        background-color: red;
+        padding:  calc($space / 4) $space;
+        // background-color: red;
         text-decoration: none;
         border: none;
         .link-content {
@@ -447,5 +483,26 @@ ssg-home {
 // @keyframes oscill {
 //     100% {
 //         transform: translateY(3px) rotate(0.01deg);
+//     }
+// }
+
+// .fadeInFromNone {
+//     animation: fadeInFromNone 0.5s ease-out;
+// }
+// 
+// @keyframes fadeInFromNone {
+//     0% {
+//         // display: none;
+//         opacity: 0;
+//     }
+// 
+//     1% {
+//         // display: block;
+//         opacity: 0;
+//     }
+// 
+//     100% {
+//         // display: block;
+//         opacity: .5;
 //     }
 // }

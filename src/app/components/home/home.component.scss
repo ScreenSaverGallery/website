@@ -7,6 +7,28 @@
     left: 0;
     overflow: hidden;
 
+    .featured-image-container {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        background-size: cover;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 3s, visibility 3s;
+
+        &.fadeInFromNone {
+            visibility: visible;
+            opacity: .5;
+            transition: opacity 3s, visibility 3s;
+        }
+    }
+
+    
+
     .home {
         width: 100%;
         height: 100%;
@@ -15,15 +37,22 @@
         .get-ssg {
             z-index: 0;
             width: 100%;
+            height: 90%;
+            display: block;
 
             & > div {
                 width: 100%;
             }
 
-            ssg-button {
-                transform: scale(3);
-            }
+            // ssg-button {
+            //     transform: scale(3);
+            // }
             
+        }
+
+        .home-info {
+            width: 100%;
+            height: 10%;
         }
 
         ssg-ssg-icon {

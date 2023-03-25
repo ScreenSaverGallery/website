@@ -6,13 +6,15 @@
     </div>
     
     <div class="get" *ngIf="!homePage" fxHide fxShow.gt-xs>
-        <ssg-button [type]="'icon'" *ngIf="getPage; else downloadButton" [skew]="false" [routerLink]="homeLink">
+        <!-- <ssg-button [type]="'icon'" *ngIf="getPage; else downloadButton" [skew]="false" [routerLink]="homeLink">
             <ssg-ssg-icon [flat]="true" [flatColor]="'white'" [size]="36"></ssg-ssg-icon>
-        </ssg-button>
+        </ssg-button> -->
 
-        <ng-template #downloadButton>
-            <ssg-button *ngIf="siteTitle" [type]="'stroked'" [colors]="['white']" [routerLink]="homeLink">Get {{siteTitle}}</ssg-button>
-        </ng-template>
+        <!-- <ng-template #downloadButton> -->
+            <ssg-button *ngIf="siteTitle && !getPage" [type]="'stroked'" [colors]="['white']" [routerLink]="homeLink">
+                Get {{siteTitle}}
+            </ssg-button>
+        <!-- </ng-template> -->
     </div>
     
 
@@ -23,11 +25,11 @@
     </div>
 </div>
 
-<div class="theme">
+<!-- <div class="theme">
     <ssg-button [type]="'icon'" (click)="toggleTheme()">
         <mat-icon>invert_colors</mat-icon>
     </ssg-button>
-</div>
+</div> -->
 
 <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer mode="side" position="end" closed>

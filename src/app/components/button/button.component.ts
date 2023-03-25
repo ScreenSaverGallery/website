@@ -5,11 +5,15 @@ import {
   Input,
   ElementRef,
   ViewChild,
+  OnDestroy
   // Directive
 } from '@angular/core';
 
 // services
 import { ThemeService } from '../../services/theme/theme.service';
+import { ColorService } from 'src/app/services/color/color.service';
+// rxjs
+import { Subscription } from 'rxjs';
 
 /* @Directive({
   selector: 'ssg-icon-button'
@@ -26,14 +30,15 @@ export class SsgIconButton {
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit, AfterViewInit {
+export class ButtonComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() dark: boolean = true;
   @Input() type: string =  undefined; // default undefined, types: stroked, icon
   @Input() colors: string[] = new Array(3);
-  @Input() skew: boolean = true;
+  @Input() skew: boolean = false;
 
   private _colors: string[];
+  private _animateColorSubscription: Subscription = new Subscription();
 
   get width(): number {
     return this.contentElm.nativeElement.getBoundingClientRect().width;
@@ -47,6 +52,7 @@ export class ButtonComponent implements OnInit, AfterViewInit {
 
   constructor(
     private themeService: ThemeService,
+    private colorService: ColorService,
     private elm: ElementRef
   ) { }
 
@@ -63,6 +69,20 @@ export class ButtonComponent implements OnInit, AfterViewInit {
     this.themeService.bwTheme.subscribe((res: any) => {
       this._applyStyles();
     });
+
+    if (this.type === 'stroked') {
+      this._animateColorSubscription = this.colorService.animateRandomColor(1, this._randomFromTo(0, 100), 100, 70, 1.0).subscribe({
+        next: (hslaColor: string) => {
+          this.elm.nativeElement.style.boxShadow = `0 0 24px ${hslaColor}`;
+          this.elm.nativeElement.style.color = hslaColor;
+        },
+        error: (e: any) => console.log(e)
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this._animateColorSubscription.unsubscribe();
   }
 
   private _applyStyles(): void {
@@ -82,7 +102,7 @@ export class ButtonComponent implements OnInit, AfterViewInit {
     button.classList.remove('icon');
 
     if (this.dark) {
-      console.log('type', this.type);
+      // console.log('type', this.type);
       if (this.type === 'stroked') {
         button.classList.add('stroked');
         // button.style.borderColor = this._colors[0];
@@ -135,6 +155,10 @@ export class ButtonComponent implements OnInit, AfterViewInit {
     }
 
     callback();
+  }
+
+  private _randomFromTo(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
 }

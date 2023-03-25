@@ -1,7 +1,15 @@
 <!-- <ssg-stars [color]="'white'"></ssg-stars> -->
+<!-- <iframe class="app-theme" src="./assets/attractor/index.html" frameborder="0" allowtransparency="true"></iframe> -->
+<!-- featured image -->
+<div class="featured-image-container" #featuredImage></div>
+<!-- site -->
 <div class="home" fxLayout="column" fxLayoutAlign="center center">
     <div class="get-ssg" fxLayout="column" fxLayoutAlign="center center">
-        <ssg-button [type]="'stroked'" routerLink="/get">Get ScreenSaverGallery</ssg-button>
+        <ssg-ssg-icon 
+            [animated]="true"
+            [cursor]="false"
+        ></ssg-ssg-icon>
+        <ssg-button [type]="'stroked'" routerLink="/get">❤️‍🔥👇🏿☞ GET ScreenSaverGallery ☜👇🏿❤️‍🔥</ssg-button>
         <!-- <ssg-ssg-icon
             class="rounded"
             (click)="goToDownload()"
@@ -11,6 +19,9 @@
             [flatColor]="'white'"
             [title]="'Get ScreenSaverGallery'"
         ></ssg-ssg-icon> -->
-        <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider>
+        <!-- <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider> -->
     </div> <!--end .get-ssg -->
+    <div class="home-info">
+        <ssg-info-slider [addMessage]="addMessage" [align]="'center'"></ssg-info-slider>
+    </div>
 </div>

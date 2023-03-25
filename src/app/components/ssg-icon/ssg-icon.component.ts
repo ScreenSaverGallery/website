@@ -16,6 +16,7 @@ export class SsgIconComponent implements OnInit, AfterViewInit {
 
   @Input() size: number = 100;
   @Input() animated: boolean = false;
+  @Input() cursor: boolean = true;
 
   // flat or not flat change
   @Input() set flat( value: boolean ) {
@@ -41,6 +42,7 @@ export class SsgIconComponent implements OnInit, AfterViewInit {
     if (this.animated) {
       this.elm.nativeElement.classList.add('animated');
     }
+    if (!this.cursor) this.elm.nativeElement.style.cursor = 'default';
   }
 
   ngAfterViewInit(): void {

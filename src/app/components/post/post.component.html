@@ -2,11 +2,14 @@
     <ng-container *ngIf="!post; else excerpt">
         <!-- POSTS -->
         <div class="post full">
+            <!-- featured image -->
+            <div class="featured-image-container" #featuredImage></div>
+            <!-- title -->
             <div class="title">
                 <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
-                <div class="social">
-                    <ssg-social [medias]="social"></ssg-social>
-                </div>
+            </div>
+            <div class="social">
+                <ssg-social [medias]="social"></ssg-social>
             </div>
             <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
             <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
@@ -19,7 +22,6 @@
                     <ssg-tag [id]="tagId"></ssg-tag>
                 </ng-container>
             </div>
-
         </div>
     </ng-container>
     

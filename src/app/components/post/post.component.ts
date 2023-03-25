@@ -1,8 +1,11 @@
 import {
   Component,
   OnInit,
+  AfterViewInit,
+  OnDestroy,
   Input,
-  ElementRef
+  ElementRef,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
 // services
@@ -16,7 +19,7 @@ import { LinksService } from '../../services/links/links.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() post: any;
   @Input() highlighted: boolean = false;
@@ -28,10 +31,14 @@ export class PostComponent implements OnInit {
   randomColor: string = 'silver';
   ssgIconColor: string = 'red';
 
+  postClass: string = '';
+
   social: any[] = [
     {name: 'facebook', shortcut: 'fb', urlBase: 'https://facebook.com/sharer/sharer.php?u='},
     {name: 'twitter', shortcut: 't', urlBase: 'https://twitter.com/intent/tweet?text='}
   ];
+
+  @ViewChild('featuredImage') featuredImgContainer: ElementRef;
 
   constructor(
     private wpService: WpService,
@@ -44,6 +51,7 @@ export class PostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // console.log('init post component post', this.post);
     this.downloadLink = this.linksService.downloadLink;
     // THEME
     this.themeService.bwTheme.subscribe((bw: boolean) => {
@@ -72,8 +80,12 @@ export class PostComponent implements OnInit {
         if (pages) {
           // if is page
           this.route.url.subscribe((url: UrlSegment[]) => {
+            // console.log('url changed');
+            if (this.postClass) this.elm.nativeElement.classList.remove(this.postClass); // remove old class
             const slug: string = url[0].path;
             const page: any = this.wpService.getPageBySlug(slug);
+            this.postClass = slug;
+            this.elm.nativeElement.classList.add(this.postClass); // add new class
             // page
             if (page) {
               this.loadedPost = page;
@@ -85,6 +97,7 @@ export class PostComponent implements OnInit {
                 if (res && res.body && res.body.length === 1) {
                   this.loadedPost = res.body[0];
                   // console.log('post', this.loadedPost);
+                  // if (this.loadedPost['featured_media']) this.getFeautredImage(this.loadedPost['featured_media']);
                 } else {
                   // navigate to 404
                   this.router.navigate(['/error/404']);
@@ -101,6 +114,19 @@ export class PostComponent implements OnInit {
       
   }
 
+  ngAfterViewInit(): void {
+    // if (this.loadedPost) {
+    //   console.log('loadedPost after view init', this.loadedPost);
+    // }
+  }
+
+  ngOnDestroy(): void {
+    // console.log('destroy post component');
+    // if (this.postClass) this.elm.nativeElement.classList.remove(this.postClass);
+  }
+
+  
+
   getRefUrl(): string {
     return `${window.location.protocol}//${window.location.host}/${this.post.slug}`;
   }
@@ -108,6 +134,24 @@ export class PostComponent implements OnInit {
   togglePin(): void {
     this.pinned = !this.pinned;
     this.elm.nativeElement.classList.toggle('pinned');
+  }
+
+  private getFeautredImage(id: number): void {
+    // console.log('getFeaturedImage', id);
+    // console.log('featuredImage child', this.featuredImgContainer);
+    this.wpService.getMedia(id).subscribe({
+      next: (media: any) => {
+        // console.log('recieved media', media);
+        if (media.body && media.body.source_url) {
+          const image = new Image();
+          image.onload = () => {
+            this.featuredImgContainer.nativeElement.style.backgroundImage = `url(${image.src})`;
+          }
+          image.src = media.body.source_url;
+        }
+      },
+      error: (e: any) => console.log(e)
+    })
   }
 
 }
