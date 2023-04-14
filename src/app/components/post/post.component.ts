@@ -82,6 +82,7 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
           this.route.url.subscribe((url: UrlSegment[]) => {
             // console.log('url changed');
             if (this.postClass) this.elm.nativeElement.classList.remove(this.postClass); // remove old class
+            if (this.featuredImgContainer && this.featuredImgContainer.nativeElement) this.featuredImgContainer.nativeElement.style.backgroundImage = 'none';
             const slug: string = url[0].path;
             const page: any = this.wpService.getPageBySlug(slug);
             this.postClass = slug;
@@ -96,8 +97,11 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
                 // console.log('post by slug', res);
                 if (res && res.body && res.body.length === 1) {
                   this.loadedPost = res.body[0];
+                  setTimeout(() => {
+                    this._animateImagesColor();
+                  }, 2000);
                   // console.log('post', this.loadedPost);
-                  // if (this.loadedPost['featured_media']) this.getFeautredImage(this.loadedPost['featured_media']);
+                  if (this.loadedPost['featured_media']) this.getFeautredImage(this.loadedPost['featured_media']);
                 } else {
                   // navigate to 404
                   this.router.navigate(['/error/404']);
@@ -115,6 +119,8 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+
+   
     // if (this.loadedPost) {
     //   console.log('loadedPost after view init', this.loadedPost);
     // }
@@ -123,6 +129,18 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     // console.log('destroy post component');
     // if (this.postClass) this.elm.nativeElement.classList.remove(this.postClass);
+  }
+
+
+  private _animateImagesColor(): void {
+    // console.log('elm', this.elm);
+    const images = this.elm.nativeElement.querySelectorAll('img');
+    // console.log('images', images);
+    images.forEach((img: HTMLImageElement) => {
+      this.colorService.animateRandomColor(1, 0, 100, 70, 1.0).subscribe((hsla: string) => {
+        img.style.borderColor = hsla;
+      })
+    });
   }
 
   
@@ -146,8 +164,14 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
           const image = new Image();
           image.onload = () => {
             this.featuredImgContainer.nativeElement.style.backgroundImage = `url(${image.src})`;
+            setTimeout(() => {
+              this.featuredImgContainer.nativeElement.classList.add('fadeInFromNone');
+            }, 1000);
           }
-          image.src = media.body.source_url;
+          setTimeout(function(){
+            image.src = media.body.source_url;         
+        }, 100);
+          
         }
       },
       error: (e: any) => console.log(e)

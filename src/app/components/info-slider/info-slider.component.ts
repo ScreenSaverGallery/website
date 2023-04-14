@@ -59,9 +59,10 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     window.addEventListener('resize', (e: any) => {
-      this._slides.forEach((s: HTMLElement) => {
-        this._setSizes(this._sliderContainer, s);
-      });
+      this._setSizes(this._sliderContainer);
+      // this._slides.forEach((s: HTMLElement) => {
+      //   this._setSizes(this._sliderContainer, s);
+      // });
     });
   }
 
@@ -98,8 +99,10 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
         s.classList.remove('active');
         if (s !== prevSlide) s.classList.remove('leaving');
         // s.classList.remove('leaving');
-        this._setSizes(this._sliderContainer, s);
+        // this._setSizes(this._sliderContainer, s);
       });
+
+      this._setSizes(this._sliderContainer);
 
       // if (prevSlide) prevSlide.classList.add('leaving');
       slide.classList.add('active');
@@ -115,23 +118,37 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
     }, message.delay ? message.delay : this.delay);
   }
 
-  private _setSizes(container: HTMLElement, slide: HTMLElement): void {
+  private _setSizes(container: HTMLElement): void {
     // set slider max width
     const sliderContainerRect: any = container.getBoundingClientRect();
-    const sliderContainerWidth: number = sliderContainerRect.width;
+    // const sliderContainerWidth: number = sliderContainerRect.width;
     // const sliderContainerHeight: number = sliderContainerRect.height;
-    const slideRect: any = slide.getBoundingClientRect();
-    const slideWidth: number = slideRect.width;
-    const slideHeight: number = slideRect.height;
+    // const slideRect: any = slide.getBoundingClientRect();
+    // const slideWidth: number = slideRect.width;
+    // const slideHeight: number = sliderContainerRect.height;
+    const slides = container.querySelectorAll('.message');
 
-    if (slideWidth > sliderContainerWidth) {
-      container.style.width = `${slideWidth}px`;
-      // sliderContainer.style.height = `${slideHeight}px`;
-    }
+    let highestHeight: number = 0;
+
+    slides.forEach((slide: HTMLElement) => {
+      const h = slide.getBoundingClientRect().height;
+      if (h > highestHeight) highestHeight = h;
+    });
+
+    // console.log('height', highestHeight);
+
+    // if (slideWidth > sliderContainerWidth) {
+    //   container.style.width = `${slideWidth}px`;
+    //   // sliderContainer.style.height = `${slideHeight}px`;
+    // }
 
     // if (slideHeight > sliderContainerHeight) {
-      container.style.height = `${slideHeight}px`;
+    container.style.height = `${highestHeight}px`;
     // }
+    // set height to every child of container
+    slides.forEach((slide: HTMLElement) => {
+      slide.style.height = `${highestHeight}px`;
+    });
   }
 
   private _includesMessage(message: Message, messages: Message[]): boolean {

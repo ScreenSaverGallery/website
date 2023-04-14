@@ -48,7 +48,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
     {name: 'facebook', shortcut: 'fb', urlBase: 'https://www.facebook.com/ScreenSaverGallery'},
     {name: 'twitter', shortcut: 't', urlBase: 'https://twitter.com/ScreenSaverG'},
     {name: 'instagram', shortcut: 'i', urlBase: 'https://www.instagram.com/screensavergallery/'},
-    {name: 'rss', shortcut: 'rss', urlBase: 'https://screensaver.metazoa.org/feed/'}
+    {name: 'rss', shortcut: 'rss', urlBase: 'https://screensaver.metazoa.org/feed/'},
+    {name: 'discord', shortcut: 'dc', urlBase: 'https://discord.gg/QJtRUYptRR'}
   ];
 
   private _openedMenu: boolean = false;
@@ -161,8 +162,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   searchSelected(option: any, closeMenuCallback: any): void {
     // console.log('searchSelected this', this);
-    console.log('searchSelected', option);
-    console.log('slugFromUrl', this._slugFromUrl(option.url));
+    // console.log('searchSelected', option);
+    // console.log('slugFromUrl', this._slugFromUrl(option.url));
     this.router.navigate([this._slugFromUrl(option.url)]);
   }
 

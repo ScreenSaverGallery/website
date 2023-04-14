@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
   OS: string = 'Unknown';
 
   private _backgroundColorSubscription: Subscription = new Subscription();
+  private _isMobile = (/Mobile/i.test(navigator.userAgent));
 
   constructor(
     private themeService: ThemeService,
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
     // add os as class
     this.OS = this.getOS();
     this.appElm.nativeElement.setAttribute('id', this.OS.toLowerCase());
+    this.appElm.nativeElement.classList.add(this._isMobile ? 'mobile' : 'desktop');
     // load site info
     this.siteInfoService.getSitInfo();
     // THEME

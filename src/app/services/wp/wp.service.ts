@@ -320,7 +320,7 @@ export class WpService {
   getMedias(): void {
     this.wpApiService.getMedias().subscribe((res: any) => {
       if (res && res.body) {
-        console.log('getMedias', res);
+        // console.log('getMedias', res);
         this._media = res.body;
         this.media.next(res);
       }

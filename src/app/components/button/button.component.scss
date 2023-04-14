@@ -5,6 +5,8 @@ $space: 24px;
     margin: 0;
     cursor: pointer;
     display: none;
+    // max-width: 90%;
+    text-align: center;
 
     &.stroked {
         background-color: transparent;

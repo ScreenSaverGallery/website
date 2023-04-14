@@ -14,7 +14,7 @@ export class DemetazoaPipe implements PipeTransform {
     // console.log(value.match(hrefPattern));
     // let result = value.replace(/\<a\ href\=\"https\:\/\/screensaver\.metazoa\.org/g, replaceHost);
     // result = result.replace(/\<a\ href\=\"http\:\/\/screensaver\.metazoa\.org/g, replaceHost);
-    let result = value.replace(hrefPattern, `href="${replaceHost}`);
+    let result = !value.includes('download') ? value.replace(hrefPattern, `href="${replaceHost}`) : value;
     result = result.replace(linkPattern, '$1<span class="link-content">$2</span>$3'); // wprap lins with link-container
 
     return result;

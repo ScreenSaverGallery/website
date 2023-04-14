@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ThemeService {
 
-  private _bwTheme: boolean = true;
+  private _bwTheme: boolean = false;
   bwTheme: BehaviorSubject<boolean> = new BehaviorSubject(this._bwTheme);
 
   constructor() {}
