@@ -7,8 +7,8 @@
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+// @include mat.legacy-core();
+@include mat.core();
 
 
 $font-primary: Arial, sans-serif; /* 'Jura', sans-serif; */ /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
@@ -18,11 +18,7 @@ $ssg-color-primary: mat.define-palette(mat.$cyan-palette, A100);
 $ssg-color-accent: mat.define-palette(mat.$cyan-palette, A200);
 $ssg-color-theme: mat.define-dark-theme($ssg-color-primary, $ssg-color-accent);
 
-$ssg-bw-primary: mat.define-palette(mat.$blue-grey-palette, 100);
-$ssg-bw-accent: mat.define-palette(mat.$blue-grey-palette, 50);
-$ssg-bw-theme: mat.define-dark-theme($ssg-bw-primary, $ssg-bw-accent);
-
-@include mat.all-legacy-component-themes($ssg-color-theme);
+@include mat.core-theme($ssg-color-theme);
 
 
 // custom typography
@@ -31,7 +27,7 @@ $ssg-typography: mat.define-legacy-typography-config(
 );
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
-@include mat.all-legacy-component-typographies($ssg-typography);
+// @include mat.all-legacy-component-typographies($ssg-typography);
 
 
 $space: 24px;
@@ -92,19 +88,11 @@ body {
     font-size: x-large;
     line-height: 1.6;
 }
-/* body { margin: 0; font-family: 'Anonymous Pro', monospace; } */
 
 h1, h2, h3, h4, h5, h6 {
     font-family: $font-secondary;
-    // font-size: xx-large;
-
     color: white;
-    // text-shadow: -3px -3px 0 black, 3px -3px 0 black, -3px 3px 0 #000, 3px 3px 0 #000;
 }
-
-/* h1, h2, h3, h4 {
-    font-family: 'Alfa Slab One', cursive;
-} */
 
 
 img {
@@ -130,19 +118,10 @@ a {
 
 
 a:hover {
-    // border: 1px solid $accent-color;
     .link-content {
         color: $warn-color;
-        // transform: skew(10deg, 10deg);
     }
-    
 }
-
-// button:hover {
-//     div & {
-//         transform: skew(10deg, 10deg); // wow, it works for parent ;)
-//     } 
-// } 
 
 
 
@@ -317,17 +296,6 @@ ssg-post {
             margin-bottom: calc(2 * $space);
         }
     }
-    // .full {
-    //     .social {
-    //         @include layer-2();
-    //         position: sticky;
-    //         top: 6 * $space;
-    //         margin-bottom: 2 * $space;
-    //     }
-    // }
-    // border-top: 1px solid $accent-color;
-    // max-width: 100%;
-    // overflow-x: hidden;
     // HIGHLIGHTED POST
     &.highlight {
         background-color: $accent-color;
@@ -385,22 +353,6 @@ ssg-home {
         flex-direction: column;
         align-items: center;
     }
-
-    // iframe.app-theme {
-    //     position: absolute;
-    //     @include layer-0();
-    //     width: 100%;
-    //     height: 90%;
-    //     background-color: transparent !important;
-    //     html, body, app-attractor, canvas {
-    //         background-color: transparent !important;
-    //     }
-    //     
-    //     
-    // }
-    // ssg-button {
-    //     margin-bottom: $space;
-    // }
 }
 
 .mat-button-base {
@@ -434,156 +386,6 @@ ssg-home {
     color: $dark-color;
 }
 
-
-
-
-// BW THEME
-.bw-theme {
-    @include mat.all-legacy-component-themes($ssg-bw-theme);
-
-    ::selection {
-        background-color: white;
-        color: $dark-color;
-    }
-
-    .mat-drawer-side.mat-drawer-end {
-        border-left: none;
-        border-right: none;
-    }
-    // $light-color: white;
-    ssg-root {
-        color: $light-color;
-        background-color: $dark-color;
-    }
-
-    a {
-        color: $light-color;
-
-        .link-content {
-            color: $light-color;
-            text-decoration: underline;
-            // text-shadow: 0px 5px 15px $light-color;
-        }
-    }
-
-    .download-button {
-        a {
-            .link-content { 
-                color: white;
-                text-decoration: none;
-            }
-        }
-
-        a:hover {
-            .link-content {
-                color: white;
-            }
-        }
-    }
-
-    a:hover {
-        .link-content {
-            color: $light-color;
-            text-decoration: none;
-        }
-        border-color: $light-color;
-
-    }
-
-    ssg-media {
-        img {
-            filter: grayscale(100%);
-            z-index: 0;
-            position: relative;
-        }
-    }
-
-    
-
-    ssg-post {
-        border-top-color: $light-color;
-        &.highlight {
-            background-color: white; // $light-color;
-            .post, ssg-author, .author {
-                a {
-                    .link-content {
-                        color: $dark-color;
-                    }
-                }
-                a:hover {
-                    .link-content {
-                        color: $dark-color;
-                    }
-                }
-            }
-        }
-    }
-
-    ssg-menu {
-        // mat-icon {
-        //     // text-shadow: 0px 5px 15px $light-color;
-        // }
-
-        .mat-raised-button {
-            color: $dark-color;
-            background-color: white;
-        }
-    }
-
-    ssg-home {
-        .get-ssg-button.mat-raised-button.mat-primary {
-            font-family: inherit; /* 'Roboto Mono', monospace; */
-            background-color: white;
-            color: $dark-color;
-        }
-    }
-
-    /* .download-button {
-        background-color: white;
-        a .link-content {
-            color: $dark-color;
-        }
-    } */
-    
-}
-
-
-
-
-
-/* EFFECTS */
-
-// mat-icon {
-//     animation: oscill 2s ease-in-out infinite alternate;
-// }
-// 
-// @keyframes oscill {
-//     100% {
-//         transform: translateY(3px) rotate(0.01deg);
-//     }
-// }
-
-// .fadeInFromNone {
-//     animation: fadeInFromNone 0.5s ease-out;
-// }
-// 
-// @keyframes fadeInFromNone {
-//     0% {
-//         // display: none;
-//         opacity: 0;
-//     }
-// 
-//     1% {
-//         // display: block;
-//         opacity: 0;
-//     }
-// 
-//     100% {
-//         // display: block;
-//         opacity: .5;
-//     }
-// }
-
 ssg-button {
     &.stroked {
         animation: buttonWheel 10s infinite linear;
@@ -592,7 +394,7 @@ ssg-button {
     
 }
 
-.text-color-whell {
+.text-color-wheel {
     animation: textWheel 20s infinite linear;
     animation-delay: random(5)s;
 }
