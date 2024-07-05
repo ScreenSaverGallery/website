@@ -25,8 +25,8 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
 
   @Input() sliderItems: SliderItem[] = [];
   
-  @Input() set addMessage(item: SliderItem) {
-    console.log('addMessage', item);
+  @Input() set addItem(item: SliderItem) {
+    console.log('addItem', item);
     if (item && !this._includesMessage(item, this.sliderItems)) {
       this.sliderItems.push(item);
       if (this.sliderItems.length === 1) {
