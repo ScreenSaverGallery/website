@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   siteTitle: string = undefined;
   siteDescription: string;
   // infoMessages: Message[] = [];
-  addMessage: SliderItem = undefined;
+  addSliderItem: SliderItem = undefined;
 
   followUs: SocialMedium[] = [
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
@@ -60,11 +60,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (info) {
           this.siteTitle = info.name;
           this.siteDescription = info.description;
-          const descriptionMessage: SliderItem = {
+          const description: SliderItem = {
             text: `🪼 ${info.description} 🪼`,
             // delay: 4000
           };
-          this.addMessage = descriptionMessage;
+          this.addSliderItem = description;
         }
         this._getSiteInfoSub.unsubscribe();
       },
@@ -81,16 +81,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             // console.log('res.body', res.body[0]);
             this.getFeautredImage(res.body[0].featured_media);
           }
-          const currentShowMessage: SliderItem = {
+          const currentShow: SliderItem = {
             emoji: '🌸 Online Now 🌸',
             text: res.body[0].title.rendered,
             // delay: 10000,
             url: res.body[0].slug
           }
-          this.addMessage = currentShowMessage;
+          this.addSliderItem = currentShow;
 
           setTimeout(() => {
-            this.addMessage = {
+            this.addSliderItem = {
               text: 'ScreenSaverGallery',
             };
           }, 1000);
@@ -111,13 +111,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             // console.log('res.body', res.body[0]);
             this.getFeautredImage(res.body[0].featured_media);
           }
-          const currentShowMessage: SliderItem = {
+          const currentShow: SliderItem = {
             emoji: '🪷 Offline Now 🪷',
             text: res.body[0].title.rendered,
             // delay: 10000,
             url: res.body[0].slug
           }
-          this.addMessage = currentShowMessage;
+          this.addSliderItem = currentShow;
         }
         this._getCurrentOfflineSaverSub.unsubscribe();
       },
@@ -144,7 +144,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
               url: news.slug
             }
             // slower adding
-            setTimeout(() => this.addMessage = message, i * 100);
+            setTimeout(() => this.addSliderItem = message, i * 100);
           }
         }
 
