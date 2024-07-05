@@ -23,7 +23,7 @@ export class NotFoundComponent implements OnInit {
 
   openMenu(): void {
     console.log('open menu');
-    this.menuService.toggle.next();
+    this.menuService.toggle.next(null);
   }
 
 }
