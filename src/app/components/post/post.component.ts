@@ -13,30 +13,38 @@ import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
 import { ThemeService } from '../../services/theme/theme.service';
 import { LinksService } from '../../services/links/links.service';
+import { SnackService } from '../../services/snack/snack.service';
+// rxjs
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ssg-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PostComponent implements OnInit, OnDestroy {
 
   @Input() post: any;
   @Input() highlighted: boolean = false;
   pinned: boolean = false;
   loadedPost: any;
+  postType: string = 'post';
 
   downloadLink: string;
 
   randomColor: string = 'silver';
   ssgIconColor: string = 'red';
 
-  postClass: string = '';
+  // postClass: string = '';
 
   social: any[] = [
     {name: 'facebook', shortcut: 'fb', urlBase: 'https://facebook.com/sharer/sharer.php?u='},
-    {name: 'twitter', shortcut: 't', urlBase: 'https://twitter.com/intent/tweet?text='}
+    {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/intent/tweet?text='},
+    {name: 'telegram', shortcut: 'tg', urlBase: 'https://t.me/share/url?url='}
   ];
+
+  routeSubscription: Subscription;
+  wpSubscription: Subscription;
 
   @ViewChild('featuredImage') featuredImgContainer: ElementRef;
 
@@ -47,7 +55,8 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
     private colorService: ColorService,
     private elm: ElementRef,
     private themeService: ThemeService,
-    private linksService: LinksService
+    private linksService: LinksService,
+    private snackService: SnackService
   ) { }
 
   ngOnInit() {
@@ -75,60 +84,86 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     // if not post, get it from url
     if (!this.post) {
-      
-      this.wpService.pages.subscribe((pages: any) => {
-        if (pages) {
-          // if is page
-          this.route.url.subscribe((url: UrlSegment[]) => {
-            // console.log('url changed');
-            if (this.postClass) this.elm.nativeElement.classList.remove(this.postClass); // remove old class
-            if (this.featuredImgContainer && this.featuredImgContainer.nativeElement) this.featuredImgContainer.nativeElement.style.backgroundImage = 'none';
-            const slug: string = url[0].path;
-            const page: any = this.wpService.getPageBySlug(slug);
-            this.postClass = slug;
-            this.elm.nativeElement.classList.add(this.postClass); // add new class
-            // page
-            if (page) {
-              this.loadedPost = page;
-              // console.log('post', this.loadedPost);
-            } else { // page not exists, get post by slug
-              // post
-              this.wpService.getPostBySlug(slug).subscribe((res: any) => {
-                // console.log('post by slug', res);
-                if (res && res.body && res.body.length === 1) {
-                  this.loadedPost = res.body[0];
-                  setTimeout(() => {
-                    this._animateImagesColor();
-                  }, 2000);
-                  // console.log('post', this.loadedPost);
-                  if (this.loadedPost['featured_media']) this.getFeautredImage(this.loadedPost['featured_media']);
-                } else {
-                  // navigate to 404
-                  this.router.navigate(['/error/404']);
-                }
-              });
+      this.routeSubscription = this.route.url.subscribe({
+        next: (url: UrlSegment[]) => {
+          // clean first
+          this._cleanPostElm();
+          // slug
+          const slug: string = url[0].path;
+          // get page first
+          this.wpSubscription = this.wpService.getPageBySlug(slug).subscribe({
+            next: (page: any) => {
+              // console.log('page', page);
+              const pageBody = page.body[0];
+              if (pageBody) {
+                this.loadedPost = pageBody;
+                this._postFeatures(this.loadedPost);
+                this.postType = 'page';
+              } else {
+                // get post if no page by slug
+                this.wpSubscription = this.wpService.getPostBySlug(slug).subscribe({
+                  next: (post: any) => {
+                    const postBody = post.body[0];
+                    // console.log('postBody', postBody);
+                    if (postBody) {
+                      this.loadedPost = postBody;
+                      this._postFeatures(this.loadedPost);
+                      this.postType = 'post';
+                    } else {
+                      // navigate to 404
+                      this.router.navigate(['/error/404']);
+                    }
+                  },
+                  error: (e: any) => {
+                    console.log('error loading post', e);
+                    this.snackService.openSnackBar(e, 'Close');
+                  }
+                });
+              }
+            },
+            error: (e: any) => {
+              console.log('error loading page', e);
+              this.snackService.openSnackBar(e, 'Close');
             }
           });
+        },
+        error: (e: any) => {
+          console.log('route error', e);
+          this.snackService.openSnackBar(e, 'Close');
         }
       });
-    } else {
-      // post is set => listing posts
-      // console.log('post is set', this.post);
     }
       
   }
 
-  ngAfterViewInit(): void {
-
-   
-    // if (this.loadedPost) {
-    //   console.log('loadedPost after view init', this.loadedPost);
-    // }
-  }
+  // ngAfterViewInit(): void {
+// 
+  //  
+  //   // if (this.loadedPost) {
+  //   //   console.log('loadedPost after view init', this.loadedPost);
+  //   // }
+  // }
 
   ngOnDestroy(): void {
+    if (this.routeSubscription) this.routeSubscription.unsubscribe();
+    if (this.wpSubscription) this.wpSubscription.unsubscribe();
     // console.log('destroy post component');
     // if (this.postClass) this.elm.nativeElement.classList.remove(this.postClass);
+  }
+
+  private _postFeatures(post: any): void {
+    console.log('post', post);
+    setTimeout(() => {
+      this._animateImagesColor();
+    }, 2000);
+    if (post['featured_media']) this._getFeautredImage(post['featured_media']);
+    if (post['slug']) this.elm.nativeElement.classList.add(post['slug']);
+  }
+
+  private _cleanPostElm(): void {
+    this.loadedPost = undefined;
+    this.elm.nativeElement.classList.remove(...this.elm.nativeElement.classList);
+    if (this.featuredImgContainer && this.featuredImgContainer.nativeElement) this.featuredImgContainer.nativeElement.style.backgroundImage = 'none';
   }
 
 
@@ -154,13 +189,15 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
     this.elm.nativeElement.classList.toggle('pinned');
   }
 
-  private getFeautredImage(id: number): void {
+  private _getFeautredImage(id: number): void {
     // console.log('getFeaturedImage', id);
     // console.log('featuredImage child', this.featuredImgContainer);
-    this.wpService.getMedia(id).subscribe({
+    let mediaSubscribtion: Subscription;
+    mediaSubscribtion = this.wpService.getMedia(id).subscribe({
       next: (media: any) => {
         // console.log('recieved media', media);
         if (media.body && media.body.source_url) {
+          mediaSubscribtion.unsubscribe();
           const image = new Image();
           image.onload = () => {
             this.featuredImgContainer.nativeElement.style.backgroundImage = `url(${image.src})`;
@@ -174,7 +211,10 @@ export class PostComponent implements OnInit, AfterViewInit, OnDestroy {
           
         }
       },
-      error: (e: any) => console.log(e)
+      error: (e: any) => {
+        console.log(e);
+        this.snackService.openSnackBar(e, 'Close');
+      }
     })
   }
 

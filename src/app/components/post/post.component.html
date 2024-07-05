@@ -4,10 +4,13 @@
         <div class="post full">
             <!-- featured image -->
             <div class="featured-image-container" #featuredImage></div>
+            <!-- date -->
+            <div class="date" *ngIf="postType === 'post'"><small>🔥 {{loadedPost.date | date: 'longDate' }}</small></div>
             <!-- title -->
             <div class="title">
                 <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
             </div>
+            
             <div class="social">
                 <ssg-social [medias]="social"></ssg-social>
             </div>
@@ -16,6 +19,7 @@
                 <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
                 <ssg-author [id]="loadedPost.author" [text]="'posted by'"></ssg-author>
             </div> -->
+            
             <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
             <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="loadedPost.tags && loadedPost.tags.length > 0">
                 <ng-container *ngFor="let tagId of loadedPost.tags">
@@ -29,6 +33,9 @@
         <!-- POST EXCERPT -->
         <ng-container *ngIf="post.title; else subcategory">
             <div [ngClass]="{'post': true, 'excerpt': true}">
+                
+                <div class="date"><small>🔥 {{post.date | date: 'longDate' }}</small></div>
+
                 <div class="post-header" fxLayout="row" fxLayoutAlign="space-between start">
                     <h2 fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start start">
                         <button *ngIf="highlighted" class="get-ssg"  mat-icon-button [routerLink]="downloadLink">
@@ -36,6 +43,8 @@
                         </button>
                         <div><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></div>
                     </h2>
+                    <!-- date -->
+                    
                     <!-- toggle pin if highlighted -->
                     <ng-container *ngIf="highlighted">
                         <button mat-icon-button (click)="togglePin()">
@@ -44,7 +53,7 @@
                         </button>
                     </ng-container>
                 </div>
-
+                
                 <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
                 <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
                     <div class="date">{{post.date | date: 'longDate' }}</div>
@@ -61,7 +70,7 @@
                         <!-- <article fxFlex="65%" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article> -->
                     </ng-container>
                     <ng-template #onlytext>
-                        <article [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
+                        <article [routerLink]="'/' + post.slug" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
                     </ng-template>
                 </div>
 
@@ -89,5 +98,5 @@
 </ng-container>
 
 <ng-template #loading>
-    Loading...
+    <ssg-loading></ssg-loading>
 </ng-template>

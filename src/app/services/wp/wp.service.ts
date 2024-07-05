@@ -36,6 +36,9 @@ export class WpService {
   getCurrentScreensaver(): Observable<any> {
     return this.getPosts('categories=2&orderby=date&per_page=1');
   }
+  getCurrentOfflineScreensaver(): Observable<any> {
+    return this.getPosts('categories=310&orderby=date&per_page=1');
+  }
 
   getPosts(params?: string): Observable<any> {
     return this.wpApiService.getPosts(params ? params : '');
@@ -230,18 +233,22 @@ export class WpService {
     });
   }
 
-  getPageBySlug(slug: string): number {
-    if (this._pages.length > 0) {
-      let i: number = 0;
-      const len: number = this._pages.length;
-      for (i; i < len; i++) {
-        if (this._pages[i].slug === slug) {
-          return this._pages[i];
-        }
-      }
-    }
-    return null;
+  getPageBySlug(slug: string): Observable<HttpResponse<any>> {
+    return this.wpApiService.getPages(`slug=${slug}`);
   }
+
+  // getPageBySlug(slug: string): number {
+  //   if (this._pages.length > 0) {
+  //     let i: number = 0;
+  //     const len: number = this._pages.length;
+  //     for (i; i < len; i++) {
+  //       if (this._pages[i].slug === slug) {
+  //         return this._pages[i];
+  //       }
+  //     }
+  //   }
+  //   return null;
+  // }
 
   /* TAGS */
 

@@ -8,6 +8,7 @@ export class DemetazoaPipe implements PipeTransform {
   transform(value: string): string {
     // console.log('demetazoa value', value);
     const host: any = window.location.hostname;
+    // console.log('demetazoa -> window.location', window.location);
     const replaceHost: string = (host === 'localhost' ? 'http://localhost:4200' : 'https://screensaver.gallery');
     const linkPattern: RegExp = /(\<a[^\>]*>)(.*?)(\<\/a\>)/g;
     const hrefPattern: RegExp = /(href\=\"(http|https)\:\/\/screensaver\.metazoa\.org)/g;

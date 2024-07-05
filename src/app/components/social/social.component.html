@@ -5,13 +5,13 @@
             <div><mat-icon>share</mat-icon></div>
             <ng-container *ngFor="let medium of medias">
                 <div [ngClass]="{'medium': true}">
-                    <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase + getHref())" [title]="'Share this on ' + medium.name">{{medium.name}}</ssg-button>
+                    <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase + getHref())" [title]="'Share this on ' + medium.name">{{medium.shortcut}}</ssg-button>
                 </div>
             </ng-container>
         </ng-container>
         <!-- FEED TEMPLATE -->
         <ng-template #feed>
-            <div><mat-icon>rss_feed</mat-icon></div>
+            <!-- <div><mat-icon>rss_feed</mat-icon></div> -->
             <ng-container *ngFor="let medium of medias">
                 <div class="medium">
                     <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase)" [title]="'Follow ScreenSaverGallery on ' + medium.name">{{medium.name}}</ssg-button>

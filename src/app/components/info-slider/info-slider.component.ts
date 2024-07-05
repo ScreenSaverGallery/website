@@ -25,12 +25,12 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
     if (message && !this._includesMessage(message, this.messages)) {
       this.messages.push(message);
       // console.log('viewInit on push message', this.viewInit);
-      if (!this.sliderStart) {
-        setTimeout(() => {
-          this.slider();
-        }, 400);
-        this.sliderStart = true;
-      }
+      // if (!this.sliderStart) {
+      //   // setTimeout(() => {
+      //     this.slider();
+      //   // }, 400);
+      //   this.sliderStart = true;
+      // }
     }
   }
   @Input() set removeMessage(message: Message) {
@@ -58,15 +58,16 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    
+  }
+
+  ngAfterViewInit(): void {
     window.addEventListener('resize', (e: any) => {
       this._setSizes(this._sliderContainer);
       // this._slides.forEach((s: HTMLElement) => {
       //   this._setSizes(this._sliderContainer, s);
       // });
     });
-  }
-
-  ngAfterViewInit(): void {
     this.viewInit = true;
   }
 
@@ -121,11 +122,7 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
   private _setSizes(container: HTMLElement): void {
     // set slider max width
     const sliderContainerRect: any = container.getBoundingClientRect();
-    // const sliderContainerWidth: number = sliderContainerRect.width;
-    // const sliderContainerHeight: number = sliderContainerRect.height;
-    // const slideRect: any = slide.getBoundingClientRect();
-    // const slideWidth: number = slideRect.width;
-    // const slideHeight: number = sliderContainerRect.height;
+    
     const slides = container.querySelectorAll('.message');
 
     let highestHeight: number = 0;
@@ -134,13 +131,6 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
       const h = slide.getBoundingClientRect().height;
       if (h > highestHeight) highestHeight = h;
     });
-
-    // console.log('height', highestHeight);
-
-    // if (slideWidth > sliderContainerWidth) {
-    //   container.style.width = `${slideWidth}px`;
-    //   // sliderContainer.style.height = `${slideHeight}px`;
-    // }
 
     // if (slideHeight > sliderContainerHeight) {
     container.style.height = `${highestHeight}px`;

@@ -70,15 +70,15 @@ export class ButtonComponent implements OnInit, AfterViewInit, OnDestroy {
       this._applyStyles();
     });
 
-    if (this.type === 'stroked') {
-      this._animateColorSubscription = this.colorService.animateRandomColor(1, this._randomFromTo(0, 100), 100, 70, 1.0).subscribe({
-        next: (hslaColor: string) => {
-          this.elm.nativeElement.style.boxShadow = `0 0 24px ${hslaColor}`;
-          this.elm.nativeElement.style.color = hslaColor;
-        },
-        error: (e: any) => console.log(e)
-      });
-    }
+    // if (this.type === 'stroked') {
+    //   this._animateColorSubscription = this.colorService.animateRandomColor(1, this._randomFromTo(0, 100), 100, 70, 1.0).subscribe({
+    //     next: (hslaColor: string) => {
+    //       this.elm.nativeElement.style.boxShadow = `0 0 24px ${hslaColor}`;
+    //       this.elm.nativeElement.style.color = hslaColor;
+    //     },
+    //     error: (e: any) => console.log(e)
+    //   });
+    // }
   }
 
   ngOnDestroy(): void {

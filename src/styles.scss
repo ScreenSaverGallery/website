@@ -74,6 +74,7 @@ ssg-root {
 }
 
 ssg-root {
+    animation: backgroundWheel 10s infinite linear;
     &.mobile {
         word-break: break-word;
         overflow-x: hidden;
@@ -93,7 +94,7 @@ body {
 }
 /* body { margin: 0; font-family: 'Anonymous Pro', monospace; } */
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
     font-family: $font-secondary;
     // font-size: xx-large;
 
@@ -166,12 +167,16 @@ img {
 }
 
 article {
+    display: block;
     max-width: 100%;
     // overflow-x: hidden;
     .aligncenter {
         display: block;
         margin-left: auto;
         margin-right: auto;
+    }
+    .wp-caption {
+        max-width: 100% !important;
     }
 }
 
@@ -275,6 +280,36 @@ mat-form-field {
     }
 }
 
+ssg-search {
+    mat-form-field {
+        // .mdc-text-field__input {
+        //     
+        // }
+        .mdc-text-field--outlined {
+            --mdc-outlined-text-field-container-shape: 48px;
+        }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+            caret-color: $accent-color;
+        }
+
+        .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+            stroke: $accent-color;
+        }
+
+        /* Change the border focused color */
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+          border-color: $accent-color !important;
+        }
+    }
+}
+
+div.mat-mdc-autocomplete-panel {
+    background-color: $dark-color !important;
+}
+
 
 ssg-post {
     .full {
@@ -343,6 +378,12 @@ ssg-home {
         // font-family: inherit; __<<ngThemingMigrationEscapedComment10>>__
         background-color: $accent-color;
         color: $dark-color;
+    }
+
+    .home {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     // iframe.app-theme {
@@ -542,3 +583,83 @@ ssg-home {
 //         opacity: .5;
 //     }
 // }
+
+ssg-button {
+    &.stroked {
+        animation: buttonWheel 10s infinite linear;
+        animation-delay: random(5)s;
+    }
+    
+}
+
+.text-color-whell {
+    animation: textWheel 20s infinite linear;
+    animation-delay: random(5)s;
+}
+
+ssg-loading {
+    display: block;
+    padding: $space;
+}
+
+@mixin random-color($selector, $hue, $saturation, $lightness, $alpha) {
+    #{$selector}: unquote("hsla(#{$hue}, #{$saturation}%, #{$lightness}%, #{$alpha})");
+}
+
+@mixin random-color-button($hue, $saturation, $lightness, $alpha) {
+    box-shadow: 0 0 24px hsla($hue, $saturation * 1%, $lightness * 1%, $alpha);
+    color: hsla($hue, $saturation * 1%, $lightness * 1%, $alpha);
+}
+
+@keyframes textWheel {
+    0% {
+        color: #84ffff;
+    }
+    10% { @include random-color('color', random(100), 100, 70, 1) }
+    20% { @include random-color('color', random(100), 100, 70, 1) }
+    30% { @include random-color('color', random(100), 100, 70, 1) }
+    40% { @include random-color('color', random(100), 100, 70, 1) }
+    50% { @include random-color('color', random(100), 100, 70, 1) }
+    60% { @include random-color('color', random(100), 100, 70, 1) }
+    70% { @include random-color('color', random(100), 100, 70, 1) }
+    80% { @include random-color('color', random(100), 100, 70, 1) }
+    90% { @include random-color('color', random(100), 100, 70, 1) }
+    to {
+        color: #84ffff;
+    }
+}
+
+@keyframes buttonWheel {
+    0% {
+        box-shadow: 0 0 24px #84ffff;
+        color: #84ffff;
+    }
+    10% { @include random-color-button(random(100), 100, 70, 1); }
+    20% { @include random-color-button(random(100), 100, 70, 1); }
+    30% { @include random-color-button(random(100), 100, 70, 1); }
+    40% { @include random-color-button(random(100), 100, 70, 1); }
+    50% { @include random-color-button(random(100), 100, 70, 1); }
+    60% { @include random-color-button(random(100), 100, 70, 1); }
+    70% { @include random-color-button(random(100), 100, 70, 1); }
+    80% { @include random-color-button(random(100), 100, 70, 1); }
+    90% { @include random-color-button(random(100), 100, 70, 1); }
+    to {
+        box-shadow: 0 0 24px #84ffff;
+        color: #84ffff;
+    }
+}
+
+
+@keyframes backgroundWheel {
+    0% { background-color: #47856c } // start/end color
+    10% { @include random-color('background-color', random(360), 30, 40, 1); }
+    20% { @include random-color('background-color', random(360), 30, 40, 1); }
+    30% { @include random-color('background-color', random(360), 30, 40, 1); }
+    40% { @include random-color('background-color', random(360), 30, 40, 1); }
+    50% { @include random-color('background-color', random(360), 30, 40, 1); }
+    60% { @include random-color('background-color', random(360), 30, 40, 1); }
+    70% { @include random-color('background-color', random(360), 30, 40, 1); }
+    80% { @include random-color('background-color', random(360), 30, 40, 1); }
+    90% { @include random-color('background-color', random(360), 30, 40, 1); }
+    to { background-color: #47856c } // start/end color
+}

@@ -20,7 +20,7 @@
     
     <!-- CATEGORY WITH SUBCATEGORIES -->
     <ng-container *ngIf="children.length > 0">
-        {{log('category', category)}}
+        <!-- {{log('category', category)}} -->
         <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
         <ng-container *ngIf="category.description">
@@ -34,5 +34,5 @@
 </ng-container>
 
 <ng-template #loading>
-    Loading ...
+    <ssg-loading></ssg-loading>
 </ng-template>

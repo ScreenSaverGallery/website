@@ -28,6 +28,8 @@ import { SocialComponent } from './components/social/social.component';
 import { SearchComponent } from './components/search/search.component';
 import { InfoSliderComponent } from './components/info-slider/info-slider.component';
 import { ButtonComponent } from './components/button/button.component';
+import { StatsComponent } from './components/stats/stats.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { ButtonComponent } from './components/button/button.component';
     SocialComponent,
     SearchComponent,
     InfoSliderComponent,
-    ButtonComponent
+    ButtonComponent,
+    StatsComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

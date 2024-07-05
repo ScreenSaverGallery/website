@@ -15,7 +15,7 @@ export class SiteInfoService {
     private wpServices: WpService
   ) { }
 
-  getSitInfo(): void {
+  getSiteInfo(): void {
     this.wpServices.getSiteInfo().subscribe((res: any) => {
       if (res && res.status === 200) {
         this.siteInfo.next(res.body);

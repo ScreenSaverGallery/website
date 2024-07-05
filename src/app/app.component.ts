@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
     this.appElm.nativeElement.setAttribute('id', this.OS.toLowerCase());
     this.appElm.nativeElement.classList.add(this._isMobile ? 'mobile' : 'desktop');
     // load site info
-    this.siteInfoService.getSitInfo();
+    this.siteInfoService.getSiteInfo();
     // THEME
     this.themeService.bwTheme.subscribe((bw: boolean) => {
       this.bwTheme = bw;
@@ -48,13 +48,13 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
       this.themeService.setBwTo(Boolean(isBw));
     }
     // animate background color
-    this._backgroundColorSubscription = this.colorService.animateRandomColor(5, 0, 30, 40, 1.0).subscribe({
-      next: (hslaColor: string) => {
-        // console.log('random color', hslaColor);
-        this.appElm.nativeElement.style.backgroundColor = hslaColor;
-      },
-      error: (e: any) => console.log(e)
-    });
+    // this._backgroundColorSubscription = this.colorService.animateRandomColor(5, 0, 30, 40, 1.0).subscribe({
+    //   next: (hslaColor: string) => {
+    //     // console.log('random color', hslaColor);
+    //     this.appElm.nativeElement.style.backgroundColor = hslaColor;
+    //   },
+    //   error: (e: any) => console.log(e)
+    // });
   }
 
   ngAfterViewInit(): void {

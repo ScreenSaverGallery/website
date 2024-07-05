@@ -1,12 +1,17 @@
-<mat-form-field>
+<mat-form-field appearance="outline">
+    <!-- <mat-label>Search ScreenSaverGallery Web</mat-label> -->
+    <mat-icon matPrefix>search</mat-icon>
     <input
         type="text"
-        placeholder="Search ScreenSaverGallery Web"
+        placeholder="Search web"
         matInput
         [formControl]="searchCtrl"
         [matAutocomplete]="auto"
     >
-    <mat-spinner *ngIf="searching" matSuffix [diameter]="24"></mat-spinner>
+    <mat-icon matSuffix>
+        <mat-spinner *ngIf="searching" [diameter]="24"></mat-spinner>
+    </mat-icon>
+    
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selected($event)">
