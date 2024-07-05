@@ -3,13 +3,17 @@ import {
   OnInit,
   Input,
   ElementRef,
-  AfterViewInit
+  AfterViewInit,
+  ViewChild
 } from '@angular/core';
 
-interface Message {
+export interface SliderItem {
   text: string,
+  emoji?: string,
   delay?: number,
-  url?: string
+  url?: string,
+  active?: boolean,
+  leaving?: boolean
 } 
 
 @Component({
@@ -19,39 +23,39 @@ interface Message {
 })
 export class InfoSliderComponent implements OnInit, AfterViewInit {
 
-  @Input() messages: Message[] = [];
+  @Input() sliderItems: SliderItem[] = [];
   
-  @Input() set addMessage(message: Message) {
-    if (message && !this._includesMessage(message, this.messages)) {
-      this.messages.push(message);
-      // console.log('viewInit on push message', this.viewInit);
-      // if (!this.sliderStart) {
-      //   // setTimeout(() => {
-      //     this.slider();
-      //   // }, 400);
-      //   this.sliderStart = true;
-      // }
+  @Input() set addMessage(item: SliderItem) {
+    console.log('addMessage', item);
+    if (item && !this._includesMessage(item, this.sliderItems)) {
+      this.sliderItems.push(item);
+      if (this.sliderItems.length === 1) {
+        item.active = false;
+      }
+      this._justifySliderHeight();
     }
   }
-  @Input() set removeMessage(message: Message) {
-    if (message && this._includesMessage(message, this.messages)) {
-      this.messages.splice(this._indexOfMessage(message, this.messages), 1);
-      // this.messages.splice(this.messages.indexOf(message), 1);
+  @Input() set removeMessage(item: SliderItem) {
+    if (item && this._includesMessage(item, this.sliderItems)) {
+      this.sliderItems.splice(this._indexOfMessage(item, this.sliderItems), 1);
+      // this.sliderItems.splice(this.sliderItems.indexOf(item), 1);
     }
   }
 
-  @Input() delay: number = 5000; // default
+  @Input() delay: number = 500; // default
   @Input() align: string = 'left'; // default
 
-  sliderStart: boolean = false;
+  @ViewChild('sliderContainer') _sliderContainer!: ElementRef;
+
+  // sliderStart: boolean = false;
   slideIndex: number = 0;
   prevSlideIndex: number = null;
-  viewInit: boolean = false;
+  // viewInit: boolean = false;
 
+  private _activeSlideTime: number = 0;
   private _pausedSlider: boolean = false;
-  private _sliderMouseListen: boolean = false;
-  private _sliderContainer: HTMLElement;
-  private _slides: NodeList;
+  // private _sliderMouseListen: boolean = false;
+  // private _slides: NodeList;
 
   constructor(
     private elm: ElementRef
@@ -63,94 +67,102 @@ export class InfoSliderComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     window.addEventListener('resize', (e: any) => {
-      this._setSizes(this._sliderContainer);
-      // this._slides.forEach((s: HTMLElement) => {
-      //   this._setSizes(this._sliderContainer, s);
-      // });
+      this._justifySliderHeight();
     });
-    this.viewInit = true;
-  }
-
-  slider(): void {
-    this._sliderContainer = this.elm.nativeElement.querySelector('.slider-container');
-    this._slides = this.elm.nativeElement.querySelectorAll('.message');
-    
-    const message: Message = this.messages[this.slideIndex];
-    const slide: HTMLElement = this.elm.nativeElement.querySelector(`#m-${this.slideIndex}`);
-    const prevSlide: HTMLElement = this.prevSlideIndex != null ? this.elm.nativeElement.querySelector(`#m-${this.prevSlideIndex}`) : null;
-    
-
-    if (!this._sliderMouseListen) {
-      this._sliderContainer.addEventListener('mouseover', () => {
+    if (this._sliderContainer) {
+      const container = this._sliderContainer.nativeElement;
+      // styles
+      container.style.textAlign = this.align;
+      // listeners
+      container.addEventListener('mouseover', () => {
         this._pausedSlider = true;
       });
-      this._sliderContainer.addEventListener('mouseout', () => {
+      container.addEventListener('mouseout', () => {
         this._pausedSlider = false;
       });
-      this._sliderMouseListen = true;
+      this._justifySliderHeight();
+      // start slider
+      this.slide();
     }
+    // this.viewInit = true;
+  }
 
-    if (!this._pausedSlider) {
-      // set text align to container
-      this._sliderContainer.style.textAlign = this.align;
-      // add leaving class to previously active
-      if (prevSlide && prevSlide.classList.contains('active')) prevSlide.classList.add('leaving'); 
-      
-      this._slides.forEach((s: HTMLElement) => {
-        s.classList.remove('active');
-        if (s !== prevSlide) s.classList.remove('leaving');
-        // s.classList.remove('leaving');
-        // this._setSizes(this._sliderContainer, s);
+  slide(): void {
+    if (this._sliderContainer) {
+      // const container = this._sliderContainer.nativeElement;      
+      if (this.sliderItems.length && this.sliderItems.length > 1) {
+
+        const slideMessage = this.sliderItems[this.slideIndex];
+        const slideTime = slideMessage.delay ? slideMessage.delay : this.delay;
+        
+        // set active current slide if not already
+        if (!slideMessage.active) {
+          // justify container first
+          this._justifySliderHeight();
+          slideMessage.leaving = false;
+          slideMessage.active = true;
+        }
+
+        // do not count slide time if paused
+        if (!this._pausedSlider) this._activeSlideTime++;
+
+        // slide time ended / next slide, refresh time
+        if (this._activeSlideTime >= slideTime) {
+          // remove leaving in previously leaving slider
+          const prevSlideMessage = this.sliderItems[this.slideIndex - 1 >= 0 ? this.slideIndex - 1 : this.sliderItems.length - 1];
+          prevSlideMessage.leaving = false;
+          // set this slide to leave
+          slideMessage.leaving = true;
+          // set this slide to not active
+          slideMessage.active = false;
+          // next slide
+          this.slideIndex++;
+          if (this.slideIndex === this.sliderItems.length) this.slideIndex = 0; // carousel
+          // refresh time
+          this._activeSlideTime = 0;
+        }
+        
+      }
+      // basic loop
+      requestAnimationFrame(this.slide.bind(this));
+
+    } // else do nothing (slider paused)
+  }
+
+  private _justifySliderHeight(): void {
+    if (this._sliderContainer) {
+      console.log('_justifySliderHeight');
+      const container = this._sliderContainer.nativeElement;
+      // get slides
+      const slides = container.querySelectorAll('.item');
+
+      let highestHeight: number = 0;
+
+      slides.forEach((slide: HTMLElement) => {
+        const h = slide.getBoundingClientRect().height;
+        if (h > highestHeight) highestHeight = h;
       });
 
-      this._setSizes(this._sliderContainer);
-
-      // if (prevSlide) prevSlide.classList.add('leaving');
-      slide.classList.add('active');
-      // set index for next slide
-      this.prevSlideIndex = this.slideIndex;
-      this.slideIndex++;
-      if (this.slideIndex >= this.messages.length) this.slideIndex = 0; // loop
-    } // else do nothing (slider paused)
-    
-
-    setTimeout(() => {
-      this.slider(); // recursion
-    }, message.delay ? message.delay : this.delay);
+      // if (slideHeight > sliderContainerHeight) {
+      container.style.height = `${highestHeight}px`;
+      // }
+      // set height to every child of container
+      slides.forEach((slide: HTMLElement) => {
+        slide.style.height = `${highestHeight}px`;
+      });
+    }
   }
 
-  private _setSizes(container: HTMLElement): void {
-    // set slider max width
-    const sliderContainerRect: any = container.getBoundingClientRect();
-    
-    const slides = container.querySelectorAll('.message');
-
-    let highestHeight: number = 0;
-
-    slides.forEach((slide: HTMLElement) => {
-      const h = slide.getBoundingClientRect().height;
-      if (h > highestHeight) highestHeight = h;
-    });
-
-    // if (slideHeight > sliderContainerHeight) {
-    container.style.height = `${highestHeight}px`;
-    // }
-    // set height to every child of container
-    slides.forEach((slide: HTMLElement) => {
-      slide.style.height = `${highestHeight}px`;
-    });
-  }
-
-  private _includesMessage(message: Message, messages: Message[]): boolean {
+  private _includesMessage(item: SliderItem, messages: SliderItem[]): boolean {
     for (let i = 0; i < messages.length; i++) {
-      if (JSON.stringify(message) === JSON.stringify(messages[i])) return true;
+      if (JSON.stringify(item) === JSON.stringify(messages[i])) return true;
     }
     return false;
   }
 
-  private _indexOfMessage(message: Message, messages: Message[]): number {
+  private _indexOfMessage(item: SliderItem, messages: SliderItem[]): number {
     for (let i = 0; i < messages.length; i++) {
-      if (JSON.stringify(message) === JSON.stringify(messages[i])) return i;
+      if (JSON.stringify(item) === JSON.stringify(messages[i])) return i;
     }
     return -1;
   }

@@ -1,24 +1,22 @@
-<!-- <div class="slider-container">
-    @if(messages.length) {
-        @for(message of messages; track message) {
-
+<div #sliderContainer class="slider-container">
+    @if(sliderItems.length) {
+        @for(item of sliderItems; track item; let i = $index) {
+            <div
+                class="item"
+                [id]="'m-' + i"
+                [ngClass]="{active: item.active, leaving: item.leaving}"
+            >
+                @if(item.emoji) {
+                    <div class="text-color-wheel">{{item.emoji}}</div>
+                }
+                @if(item.url) {
+                    <h5>
+                        <a [routerLink]="item.url"><span class="link-content">{{item.text}}</span></a>
+                    </h5>
+                } @else {
+                    <h5 class="text-color-wheel">{{item.text}}</h5>
+                }
+            </div>
         }
     }
-</div> -->
-
-<ng-container *ngIf="messages.length > 0">
-    <div class="slider-container">
-        <ng-container *ngFor="let message of messages; let i = index">
-            <div class="message" fxLayout="column" fxLayoutAlign="center center" [id]="'m-' + i">
-                <ng-container *ngIf="message.url; else nolink">
-                    <h5 class="text-color-whell">
-                        <a [routerLink]="message.url">
-                            <span class="link-content">{{message.text}}</span>
-                        </a>
-                    </h5>
-                </ng-container>
-                <ng-template #nolink><h5 class="text-color-whell">{{message.text}}</h5></ng-template>
-            </div>
-        </ng-container>
-    </div>
-</ng-container>
+</div>
