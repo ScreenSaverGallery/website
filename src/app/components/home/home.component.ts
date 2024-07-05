@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ElementRef, OnDestroy, ViewChild } fr
 import { Router } from '@angular/router';
 // models
 import { SocialMedium } from '../../models/social-medium';
+import { SliderItem } from '../info-slider/info-slider.component';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ThemeService } from '../../services/theme/theme.service';
@@ -10,12 +11,6 @@ import { SiteInfoService } from '../../services/site-info/site-info.service';
 import { ColorService } from 'src/app/services/color/color.service';
 // rxjs
 import { Subscription } from 'rxjs';
-
-interface Message {
-  text: string,
-  delay?: number,
-  url?: string
-}
 
 @Component({
   selector: 'ssg-home',
@@ -28,7 +23,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   siteTitle: string = undefined;
   siteDescription: string;
   // infoMessages: Message[] = [];
-  addMessage: Message = undefined;
+  addMessage: SliderItem = undefined;
 
   followUs: SocialMedium[] = [
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
@@ -58,10 +53,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.addMessage = {
-      text: 'ScreenSaverGallery',
-      delay: 4000
-    };
     // get site info, current online/offline shows
     this._getSiteInfoSub = this.siteInfoService.siteInfo.subscribe({
       next: (info: any) => {
@@ -69,9 +60,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (info) {
           this.siteTitle = info.name;
           this.siteDescription = info.description;
-          const descriptionMessage: Message = {
+          const descriptionMessage: SliderItem = {
             text: `🪼 ${info.description} 🪼`,
-            delay: 4000
+            // delay: 4000
           };
           this.addMessage = descriptionMessage;
         }
@@ -90,12 +81,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             // console.log('res.body', res.body[0]);
             this.getFeautredImage(res.body[0].featured_media);
           }
-          const currentShowMessage: Message = {
-            text: `🌸 Online Now: ${res.body[0].title.rendered} 🌸`,
-            delay: 10000,
+          const currentShowMessage: SliderItem = {
+            emoji: '🌸 Online Now 🌸',
+            text: res.body[0].title.rendered,
+            // delay: 10000,
             url: res.body[0].slug
           }
           this.addMessage = currentShowMessage;
+
+          setTimeout(() => {
+            this.addMessage = {
+              text: 'ScreenSaverGallery',
+            };
+          }, 1000);
         }
         this._getCurrentSaverSub.unsubscribe();
       },
@@ -107,15 +105,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       next: (res: any) => {
         // this.starsText = res.body[0].title.rendered;
         // console.log('res.body', res.body);
-        console.log('offline res', res);
+        // console.log('offline res', res);
         if (res.body.length) {
           if (res.body[0].featured_media) {
             // console.log('res.body', res.body[0]);
             this.getFeautredImage(res.body[0].featured_media);
           }
-          const currentShowMessage: Message = {
-            text: `🪷 Offline Now: ${res.body[0].title.rendered} 🪷`,
-            delay: 10000,
+          const currentShowMessage: SliderItem = {
+            emoji: '🪷 Offline Now 🪷',
+            text: res.body[0].title.rendered,
+            // delay: 10000,
             url: res.body[0].slug
           }
           this.addMessage = currentShowMessage;
@@ -129,20 +128,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     /* 2 month news (60 days) */
     // https://developer.wordpress.org/rest-api/reference/posts/
     const today = Date.now();
-    const period = 5 * 365 * (24 * 60 * 60 * 1000); // set to 60 days
+    const period = 60 * (24 * 60 * 60 * 1000); // set to 60 days
     const queryDate = new Date(today - period).toISOString();
     console.log('🔥 NEWS 🔥 queryDate', queryDate);
     this._getLastNewsSub = this.wpService.getPosts(`categories=1&orderby=date&per_page=2&after=${queryDate}`).subscribe({
       next: (res: any) => {
         if (res.body && res.body.length) {
           console.log('NEWS res', res);
-          for (const news of res.body) {
-            const message: Message = {
-              text: `🔥 ${news.title.rendered} 🔥`,
-              delay: 10000,
+          for (let i = 0; i < res.body.length; i++) {
+            const news = res.body[i];
+            const message: SliderItem = {
+              emoji: '🦑 🐣 🐍',
+              text: news.title.rendered,
+              // delay: 10000,
               url: news.slug
             }
-            this.addMessage = message;
+            // slower adding
+            setTimeout(() => this.addMessage = message, i * 100);
           }
         }
 
