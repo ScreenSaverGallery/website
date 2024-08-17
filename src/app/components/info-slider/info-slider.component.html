@@ -11,10 +11,10 @@
                 }
                 @if(item.url) {
                     <h5>
-                        <a [routerLink]="item.url"><span class="link-content">{{item.text}}</span></a>
+                        <a [routerLink]="item.url"><span class="link-content" [innerHTML]="item.text | safeHtml"></span></a>
                     </h5>
                 } @else {
-                    <h5 class="text-color-wheel">{{item.text}}</h5>
+                    <h5 class="text-color-wheel" [innerHTML]="item.text | safeHtml"></h5>
                 }
             </div>
         }
