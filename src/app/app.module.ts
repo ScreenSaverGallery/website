@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { TruncatePipe } from './pipes/truncate.pipe';
 import { AppRoutingModule } from './modules/routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { PostComponent } from './components/post/post.component';
@@ -41,6 +42,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     TagComponent,
     MenuComponent,
     SafeHtmlPipe,
+    TruncatePipe,
     MediaComponent,
     TagPostsComponent,
     LoadMoreComponent,
