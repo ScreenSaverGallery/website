@@ -176,16 +176,23 @@ figure {
 
 ssg-root {
     &#mac {
-        .win {
+        .win, .linux {
             display: none;
         }
     }
 
     &#win {
-        .mac {
+        .mac, .linux {
             display: none;
         }
     }
+
+    &#linux {
+        .mac, .win {
+            display: none;
+        }
+    }
+
 }
 
 ssg-stars {

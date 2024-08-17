@@ -90,8 +90,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
 
   private getOS(): string {
     let result: string;
-    const app: string = navigator.appVersion;
-    console.log('navigator.appVersion', navigator.appVersion);
+    const app: string = navigator.userAgent;
+    console.log('navigator.userAgent', navigator.userAgent);
     if (app.indexOf('Win') != -1) result = 'Win';
     if (app.indexOf('Mac') != -1) result = 'Mac';
     if (app.indexOf('iPhone') != -1 || app.indexOf('iPod') != -1 || app.indexOf('iPad') != -1) result = 'iOS';
