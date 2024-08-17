@@ -52,7 +52,8 @@ export class PostsComponent implements OnInit {
       this.bwTheme = bw;
       this.randomColor = (bw ? 'white' : this.colorService.generateHslaColors(100)[0]);
     });
-
+    // console.log('postsFrom', this._postsFrom);
+    // console.log('postsOf', this._postsOf);
     if (this._postsFrom && this._postsOf) {
       this.loadPosts();
     }
