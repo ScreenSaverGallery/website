@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -31,43 +31,36 @@ import { ButtonComponent } from './components/button/button.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { LoadingComponent } from './components/loading/loading.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    PostComponent,
-    HomeComponent,
-    NotFoundComponent,
-    PostsComponent,
-    TagComponent,
-    MenuComponent,
-    SafeHtmlPipe,
-    TruncatePipe,
-    MediaComponent,
-    TagPostsComponent,
-    LoadMoreComponent,
-    AuthorComponent,
-    AuthorPostsComponent,
-    CategoryPostsComponent,
-    DemetazoaPipe,
-    SsgIconComponent,
-    StarsComponent,
-    SocialComponent,
-    SearchComponent,
-    InfoSliderComponent,
-    ButtonComponent,
-    StatsComponent,
-    LoadingComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MaterialModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        PostComponent,
+        HomeComponent,
+        NotFoundComponent,
+        PostsComponent,
+        TagComponent,
+        MenuComponent,
+        SafeHtmlPipe,
+        TruncatePipe,
+        MediaComponent,
+        TagPostsComponent,
+        LoadMoreComponent,
+        AuthorComponent,
+        AuthorPostsComponent,
+        CategoryPostsComponent,
+        DemetazoaPipe,
+        SsgIconComponent,
+        StarsComponent,
+        SocialComponent,
+        SearchComponent,
+        InfoSliderComponent,
+        ButtonComponent,
+        StatsComponent,
+        LoadingComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
