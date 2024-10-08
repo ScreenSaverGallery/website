@@ -9,12 +9,15 @@
         [matAutocomplete]="auto"
     >
     <mat-icon matSuffix>
-        <mat-spinner *ngIf="searching" [diameter]="24"></mat-spinner>
+        @if(searching) {
+            <mat-spinner [diameter]="24"></mat-spinner>
+        }
     </mat-icon>
-    
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option" [innerHtml]="option.title | safeHtml"></mat-option>
+    @for(option of filteredOptions | async; track option.title) {
+        <mat-option [value]="option" [innerHtml]="option.title | safeHtml"></mat-option>
+    }
 </mat-autocomplete>
 

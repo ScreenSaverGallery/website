@@ -1,22 +1,19 @@
-<div class="controls" fxLayout="row" [fxLayoutAlign]="(!homePage ? 'space-between start' : 'end start')">
-    <div class="back" *ngIf="!homePage">
-        <ssg-button [type]="'icon'" (click)="goBack()" [colors]="['white']">
-            <mat-icon>arrow_back</mat-icon>
-        </ssg-button>
-    </div>
-    
-    <div class="get" *ngIf="!homePage" fxHide fxShow.gt-xs>
-        <!-- <ssg-button [type]="'icon'" *ngIf="getPage; else downloadButton" [skew]="false" [routerLink]="homeLink">
-            <ssg-ssg-icon [flat]="true" [flatColor]="'white'" [size]="36"></ssg-ssg-icon>
-        </ssg-button> -->
-
-        <!-- <ng-template #downloadButton> -->
-            <ssg-button *ngIf="siteTitle && !getPage" [type]="'stroked'" [colors]="['white']" [routerLink]="homeLink">
-                Get {{siteTitle}}
+<div class="controls">
+    @if(!homePage) {
+        <div class="back">
+            <ssg-button [type]="'icon'" (click)="goBack()" [colors]="['white']">
+                <mat-icon>arrow_back</mat-icon>
             </ssg-button>
-        <!-- </ng-template> -->
-    </div>
-    
+        </div>
+
+        <div class="get">
+            @if(siteTitle && !getPage) {
+                <ssg-button [type]="'stroked'" [colors]="['white']" [routerLink]="homeLink">
+                    Get {{siteTitle}}
+                </ssg-button>
+            }
+        </div>
+    }
 
     <div class="sandwitch" #sandwitch [ngClass]="{'home': homePage}">
         <ssg-button [type]="'icon'" (click)="toggleMenu(drawer.toggle())">
@@ -34,10 +31,10 @@
 <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer mode="side" position="end" closed>
         <!-- MENU HEADER -->
-        <div class="menu-header" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLaout.lt-md="column" fxLayoutGap="6%">
+        <div class="menu-header">
             <!-- <div></div> -->
             <!-- SEARCH -->
-            <div fxFlex="44%" fxFlex.lt-md="100%">
+            <div class="search">
                 <ssg-search (optionSelected)="searchSelected($event, closeMenu(drawer.close()))"></ssg-search>
             </div>
             <!-- CLOSE BUTTON -->
@@ -49,18 +46,20 @@
         </div>
         
         <!-- LINKS -->
-        <ng-container *ngIf="categories && pages; else loading">
+        @if (categories && pages) {
             <nav>
-                <div class="menu-blocks" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
+                <div class="menu-blocks">
                     <!-- ARCHIVES -->
-                    <div class="archives" fxFlex="44%" fxFlex.lt-md="100%">
+                    <div class="archives">
                         <!-- CURRENT SHOW -->
-                        <p *ngIf="currentShow">
-                            <a [routerLink]="'/' + currentShow.slug" (click)="closeMenu(drawer.close())"><span class="link-content" [innerHtml]="'Current Show'"></span></a>
-                        </p>
-                        <ng-container *ngFor="let cat of categories">
+                        @if(currentShow) {
+                            <p>
+                                <a [routerLink]="'/' + currentShow.slug" (click)="closeMenu(drawer.close())"><span class="link-content" [innerHtml]="'Current Show'"></span></a>
+                            </p>
+                        }
+                        @for(cat of categories; track cat.id) {
                             <!-- TOP CATEGORIES -->
-                            <ng-container *ngIf="cat?.parent === 0">
+                            @if(cat?.parent === 0) {
                                 <p>
                                     <a
                                         [routerLink]="'/archive/' + cat.slug"
@@ -69,33 +68,34 @@
                                         (click)="closeMenu(drawer.close())"
                                     ><span class="link-content" [innerHtml]="cat.name | titlecase | safeHtml"></span></a>
                                 </p>
-                            </ng-container>
-                        </ng-container>
+                            } 
+                        }
                     </div>
 
                     <!-- PAGES -->
-                    <div class="pages" fxFlex="44%" fxFlex.lt-md="100%">
-                        <ng-container *ngFor="let page of pages">
-                            <ng-container *ngIf="page.content.rendered">
+                    <div class="pages">
+                        @for(page of pages; track page.id) {
+                            @if(page.content.rendered) {
                                 <p>
                                     <a
                                         [routerLink]="'/' + page.slug"
                                         (click)="closeMenu(drawer.close())"
-                                    ><span class="link-content" [innerHtml]="page.title.rendered | safeHtml"></span></a></p>
-                            </ng-container>
-                        </ng-container>
+                                    >
+                                        <span class="link-content" [innerHtml]="page.title.rendered | safeHtml"></span>
+                                    </a>
+                                </p>
+                            }
+                        }
                     </div>
                 </div>
             </nav>
             <div class="social">
                 <ssg-social [share]="false" [medias]="followUs"></ssg-social>
             </div>
-        </ng-container>
-        
-        <ng-template #loading>
+        } @else {
             <div>
                 Loading ...
             </div>
-        </ng-template>
+        }
     </mat-drawer>
 </mat-drawer-container>

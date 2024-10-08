@@ -29,6 +29,23 @@ $ssg-typography: mat.define-legacy-typography-config(
 // Override typography for all Angular Material, including mat-base-typography and all components.
 // @include mat.all-legacy-component-typographies($ssg-typography);
 
+/* MIXINS */
+@mixin flex-layout-gap($val: calc($space / 2)) {
+    & > * {
+        margin: $val;
+    }
+}
+
+@mixin random-color($selector, $hue, $saturation, $lightness, $alpha) {
+    #{$selector}: unquote("hsla(#{$hue}, #{$saturation}%, #{$lightness}%, #{$alpha})");
+}
+
+@mixin random-color-button($hue, $saturation, $lightness, $alpha) {
+    box-shadow: 0 0 24px hsla($hue, $saturation * 1%, $lightness * 1%, $alpha);
+    color: hsla($hue, $saturation * 1%, $lightness * 1%, $alpha);
+}
+
+/* VARIABLES */
 
 $space: 24px;
 $dark-color: #14141e;
@@ -223,6 +240,7 @@ ssg-menu {
     position: relative;
 
     .get {
+        display: none;
         .mat-icon-button {
             line-height: .7;
             ssg-ssg-icon {
@@ -246,10 +264,36 @@ ssg-menu {
         @include layer-3();
     }
 
-    // &.invert {
-    //     
-    // }
+    .controls {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between; // if home, than 'end' <- original fxLayout 
+    }
 
+    .menu-header {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        @include flex-layout-gap(6%);
+        .search {
+            flex: 44%;
+        }
+    }
+
+    nav {
+        .menu-blocks {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            @include flex-layout-gap(6%);
+            .archives, .pages {
+                flex: 44%;
+            }
+        }
+    }
 }
 
 .cdk-overlay-container {
@@ -302,6 +346,38 @@ ssg-post {
         .social {
             margin-bottom: calc(2 * $space);
         }
+        .tags {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            @include flex-layout-gap(); // default calc($space / 2)
+        }
+    }
+    .excerpt {
+        .post-header {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            h2 {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: flex-start;
+                @include flex-layout-gap();
+            }
+        }
+        .excerpt-body {
+            display: flex;
+            flex-direction: row;
+            @include flex-layout-gap();
+        }
+        .tags {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            @include flex-layout-gap();
+        }
     }
     // HIGHLIGHTED POST
     &.highlight {
@@ -326,6 +402,32 @@ ssg-post {
     }
 
 }
+
+ssg-posts {
+    .posts-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        @include flex-layout-gap(6%);
+    }
+
+    ssg-post {
+        flex: 44%;
+    }
+}
+
+ssg-social {
+    .social-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        @include flex-layout-gap();
+    }
+}
+
+
 
 .featured-image-container {
     position: fixed;
@@ -359,6 +461,14 @@ ssg-home {
         display: flex;
         flex-direction: column;
         align-items: center;
+        // justify-content: center;
+
+        .get-ssg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     }
 }
 
@@ -409,17 +519,26 @@ ssg-button {
 ssg-loading {
     display: block;
     padding: $space;
+    .loading-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
-@mixin random-color($selector, $hue, $saturation, $lightness, $alpha) {
-    #{$selector}: unquote("hsla(#{$hue}, #{$saturation}%, #{$lightness}%, #{$alpha})");
+ssg-not-found {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-@mixin random-color-button($hue, $saturation, $lightness, $alpha) {
-    box-shadow: 0 0 24px hsla($hue, $saturation * 1%, $lightness * 1%, $alpha);
-    color: hsla($hue, $saturation * 1%, $lightness * 1%, $alpha);
-}
 
+
+/* ANIMATIONS */
 @keyframes textWheel {
     0% {
         color: #84ffff;
@@ -471,4 +590,51 @@ ssg-loading {
     80% { @include random-color('background-color', random(360), 30, 40, 1); }
     90% { @include random-color('background-color', random(360), 30, 40, 1); }
     to { background-color: #47856c } // start/end color
+}
+
+
+/* RESPONSIVE */
+/* flex-layout gt-xs */
+@media only screen and (max-width: 600px) {
+    ssg-menu {
+        .get {
+            display: block;
+        }
+    }
+}
+/* flex-layout lt-md */
+@media only screen and (max-width: 959px) {
+    ssg-menu {
+        .menu-header {
+            flex-direction: column; // check it, was error in original: fxLaout.lt-md="column"
+            .search {
+                flex: 100%;
+            }
+        }
+        nav {
+            .menu-blocks {
+                flex-direction: column; // check it, was error in original: fxLaout.lt-md="column"
+                .archives, .pages {
+                    flex: 100%;
+                }
+                
+            }
+        }
+    }
+
+    ssg-posts {
+        .posts-container {
+            flex-direction: column;
+            ssg-post {
+                flex: 100%;
+            }
+        }
+    }
+
+    ssg-social {
+        .social-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
 }

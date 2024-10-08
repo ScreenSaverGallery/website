@@ -37,7 +37,7 @@ export class WpService {
     return this.getPosts('categories=2&orderby=date&per_page=1');
   }
   getCurrentOfflineScreensaver(): Observable<any> {
-    return this.getPosts('categories=310&orderby=date&per_page=1');
+    return this.getPosts('categories=20&orderby=date&per_page=1&filter[tag]=offline');
   }
 
   getPosts(params?: string): Observable<any> {
@@ -337,5 +337,12 @@ export class WpService {
   getMedia(id: number): Observable<any> {
     return this.wpApiService.getMedia(id);
   }
+
+  /* MENUS */
+  // getMenus(): Observable<any> {
+  //   
+  // }
   // ...
+
+
 }

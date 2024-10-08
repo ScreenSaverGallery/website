@@ -1,5 +1,5 @@
 <h2>
-    <ng-container *ngIf="activeUsers && aliveUsers">
+    @if(activeUsers && aliveUsers) {
         <span>{{aliveUsers}}</span> / <span>{{activeUsers}}</span>
-    </ng-container>
+    }
 </h2>

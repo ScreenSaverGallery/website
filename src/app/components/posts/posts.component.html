@@ -1,43 +1,36 @@
-<ng-container *ngIf="posts && posts.length > 0 || children.length > 0; else loading">
-    <ng-container *ngIf="posts && posts.length > 0">
-        
+@if(posts && posts.length || children.length) {
+    @if(posts && posts.length) {
         <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
-        <ng-container *ngIf="category.description">
+        @if(category.description) {
             <span [innerHTML]="category.description"></span>
-        </ng-container>
-        
-        <div class="posts-container" class="posts-container" fxLayout="row wrap" fxLaout.lt-md="column" fxLayoutGap="6%">
-            <ng-container *ngFor="let post of posts; let i = index">
-                <ng-container *ngIf="slug === 'screensavers' && i === 0; else showpost">
+        }        
+        <div class="posts-container" class="posts-container">
+            @for(post of posts; track post.id; let i = $index) {
+                @if(slug === 'screensavers' && i === 0) {
                     <!-- do not show last show -->
-                </ng-container>
-                <ng-template #showpost>
-                    <ssg-post fxFlex="44%" fxFlex.lt-md="100%" [post]="post"></ssg-post>
-                </ng-template>
-                <!-- {{slug}} {{i}} -->
-                <!-- <ssg-post fxFlex="44%" fxFlex.lt-md="100%" [post]="post" [highlighted]="(slug === 'screensavers' && i === 0)"></ssg-post> -->
-            </ng-container>
+                } @else {
+                    <ssg-post [post]="post"></ssg-post>
+                }
+            }
         </div>
         <!-- TODO LOAD MORE -->
         <ssg-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></ssg-load-more>
-    </ng-container>
-    
+    } 
     <!-- CATEGORY WITH SUBCATEGORIES -->
-    <ng-container *ngIf="children.length > 0">
+    @if(children.length) {
         <!-- {{log('category', category)}} -->
         <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
-        <ng-container *ngIf="category.description">
+         @if(category.description) {
             {{category.description}}
-        </ng-container>
+         }
         <!-- SUBCATEGORIES LINKS -->
-        <ng-container *ngFor="let child of children">
+        @for(child of children; track child.id) {
             <ssg-post [post]="child"></ssg-post>
-        </ng-container>
-    </ng-container>
-</ng-container>
-
-<ng-template #loading>
+        }
+    }
+<!-- LOADING -->
+} @else {
     <ssg-loading></ssg-loading>
-</ng-template>
+}

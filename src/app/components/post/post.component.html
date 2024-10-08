@@ -1,5 +1,5 @@
-<ng-container *ngIf="post || loadedPost; else loading">
-    <ng-container *ngIf="!post; else excerpt">
+@if(post || loadedPost) {
+    @if (!post) {
         <!-- POSTS -->
         <div class="post full">
             <!-- featured image -->
@@ -21,37 +21,38 @@
             </div> -->
             
             <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
-            <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="loadedPost.tags && loadedPost.tags.length > 0">
-                <ng-container *ngFor="let tagId of loadedPost.tags">
-                    <ssg-tag [id]="tagId"></ssg-tag>
-                </ng-container>
-            </div>
+            @if(loadedPost.tags && loadedPost.tags.length) {
+                <div class="tags">
+                    @for(tagId of loadedPost.tags; track tagId) {
+                        <ssg-tag [id]="tagId"></ssg-tag>
+                    }
+                </div>
+            }
+            
         </div>
-    </ng-container>
-    
-    <ng-template #excerpt>
-        <!-- POST EXCERPT -->
-        <ng-container *ngIf="post.title; else subcategory">
+    } @else {
+        @if(post.title) {
+            <!-- POST EXCERPT -->
             <div [ngClass]="{'post': true, 'excerpt': true}">
                 
                 <div class="date"><small>🔥 {{post.date | date: 'longDate' }}</small></div>
 
-                <div class="post-header" fxLayout="row" fxLayoutAlign="space-between start">
-                    <h2 fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start start">
-                        <button *ngIf="highlighted" class="get-ssg"  mat-icon-button [routerLink]="downloadLink">
+                <div class="post-header">
+                    <h2>
+                        <!-- <button *ngIf="highlighted" class="get-ssg"  mat-icon-button [routerLink]="downloadLink">
                             <ssg-ssg-icon [size]="24" [flat]="true" [flatColor]="ssgIconColor" [animated]="true"></ssg-ssg-icon>
-                        </button>
+                        </button> -->
                         <div><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></div>
                     </h2>
                     <!-- date -->
                     
                     <!-- toggle pin if highlighted -->
-                    <ng-container *ngIf="highlighted">
+                    <!-- <ng-container *ngIf="highlighted">
                         <button mat-icon-button (click)="togglePin()">
                             <mat-icon *ngIf="pinned">turned_in</mat-icon>
                             <mat-icon *ngIf="!pinned">turned_in_not</mat-icon>
                         </button>
-                    </ng-container>
+                    </ng-container> -->
                 </div>
                 
                 <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
@@ -60,43 +61,42 @@
                     <ssg-author  [id]="post.author" [text]="'posted by'"></ssg-author >
                 </div> -->
 
-                <div class="excerpt-body" fxLayout="row" fxLayoutGap="12px">
-                    <ng-container *ngIf="post.featured_media; else onlytext">
+                <div class="excerpt-body">
+                    @if(post.featured_media){
                         <div class="featured-media">
                             <a [routerLink]="'/' + post.slug">
                                 <span class="link-content"><ssg-media [id]="post.featured_media"></ssg-media></span>
                             </a>
                         </div>
-                        <!-- <article fxFlex="65%" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article> -->
-                    </ng-container>
-                    <ng-template #onlytext>
+                    } @else {
                         <article [routerLink]="'/' + post.slug" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
-                    </ng-template>
+                    }
                 </div>
-
-                <div class="tags" fxLayout="row wrap" fxLayoutGap="12px" *ngIf="post.tags && post.tags.length > 0">
-                    <ng-container *ngFor="let tagId of post.tags">
-                        <ssg-tag [id]="tagId" [dark]="!highlighted"></ssg-tag>
-                    </ng-container>
-                </div>
+                @if(post.tags && post.tags.length) {
+                    <div class="tags">
+                        @for(tagId of post.tags; track tagId) {
+                            <ssg-tag [id]="tagId" [dark]="true"></ssg-tag>
+                        }
+                    </div>
+                }
                 <div class="social">
                     <ssg-social [medias]="social" [referenceUrl]="getRefUrl()"></ssg-social>
                 </div>
             </div>
-        </ng-container>
-    </ng-template>
-
-    <!-- SUBCATEGORY -->
-    <ng-template #subcategory>
-        <!-- subcategory -->
-        <h2>
-            <a [routerLink]="post.slug"><span class="link-content" [innerHtml]="post.name | titlecase"></span></a>
-        </h2>
-        <!-- description -->
-        <div *ngIf="post.description">{{post.description}}</div>
-    </ng-template>
-</ng-container>
-
-<ng-template #loading>
+        } @else {
+            <!-- SUBCATEGORY -->
+            <!-- subcategory -->
+            <h2>
+                <a [routerLink]="post.slug"><span class="link-content" [innerHtml]="post.name | titlecase"></span></a>
+            </h2>
+            <!-- description -->
+             @if(post.description) {
+                <div>{{post.description}}</div>
+             }
+            
+        }
+    }
+   
+} @else {
     <ssg-loading></ssg-loading>
-</ng-template>
+}

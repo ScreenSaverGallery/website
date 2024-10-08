@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
 export class PostComponent implements OnInit, OnDestroy {
 
   @Input() post: any;
-  @Input() highlighted: boolean = false;
+  // @Input() highlighted: boolean = false;
   pinned: boolean = false;
   loadedPost: any;
   postType: string = 'post';
@@ -76,9 +76,9 @@ export class PostComponent implements OnInit, OnDestroy {
     });
     
     // higlight
-    if (this.highlighted) {
-      this.elm.nativeElement.classList.add('highlight');
-    }
+    // if (this.highlighted) {
+    //   this.elm.nativeElement.classList.add('highlight');
+    // }
     if (this.pinned) {
       this.elm.nativeElement.classList.add('pinned');
     }

@@ -1,8 +1,7 @@
-<ng-container *ngIf="tag; else loading">
+@if(tag) {
     <div class="tag link-container">
         <a [routerLink]="'/tag/' + tag.slug" [ngStyle]="{'color': randomColor}"><span class="link-content">#{{tag.name | lowercase}}</span></a>
     </div>
-</ng-container>
-
-<ng-template #loading>...</ng-template>
-
+} @else {
+    ...
+}

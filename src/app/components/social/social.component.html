@@ -1,22 +1,20 @@
-<ng-container *ngIf="medias && medias.length > 0">
-    <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="12px" fxLayoutAlign="start center" fxLayoutAlign.lt-md="start start">
+@if(medias && medias.length) {
+    <div class="social-container">
         <!-- SHARE TEMPLATE -->
-        <ng-container *ngIf="share; else feed">
+         @if (share) {
             <div><mat-icon>share</mat-icon></div>
-            <ng-container *ngFor="let medium of medias">
+            @for(medium of medias; track medium.name) {
                 <div [ngClass]="{'medium': true}">
                     <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase + getHref())" [title]="'Share this on ' + medium.name">{{medium.shortcut}}</ssg-button>
                 </div>
-            </ng-container>
-        </ng-container>
+            }
         <!-- FEED TEMPLATE -->
-        <ng-template #feed>
-            <!-- <div><mat-icon>rss_feed</mat-icon></div> -->
-            <ng-container *ngFor="let medium of medias">
+        } @else {
+            @for(medium of medias; track medium.name) {
                 <div class="medium">
                     <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase)" [title]="'Follow ScreenSaverGallery on ' + medium.name">{{medium.name}}</ssg-button>
                 </div>
-            </ng-container>
-        </ng-template>
+            }
+        }
     </div>
-</ng-container>
+}
