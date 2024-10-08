@@ -14,15 +14,15 @@
 $font-primary: Arial, sans-serif; /* 'Jura', sans-serif; */ /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
 $font-secondary: 'Roboto Mono', monospace; /* 'Times New Roman', Times, serif; */ /* 'Caudex', serif; */ /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
 
-$ssg-color-primary: mat.define-palette(mat.$cyan-palette, A100);
-$ssg-color-accent: mat.define-palette(mat.$cyan-palette, A200);
-$ssg-color-theme: mat.define-dark-theme($ssg-color-primary, $ssg-color-accent);
+$ssg-color-primary: mat.m2-define-palette(mat.$m2-cyan-palette, A100);
+$ssg-color-accent: mat.m2-define-palette(mat.$m2-cyan-palette, A200);
+$ssg-color-theme: mat.m2-define-dark-theme($ssg-color-primary, $ssg-color-accent);
 
 @include mat.core-theme($ssg-color-theme);
 
 
 // custom typography
-$ssg-typography: mat.define-legacy-typography-config(
+$ssg-typography: mat.m2-define-legacy-typography-config(
     $font-family: $font-primary
 );
 
