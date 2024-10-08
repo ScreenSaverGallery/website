@@ -2,8 +2,6 @@ import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, AfterContentIn
 // services
 import { ThemeService } from './services/theme/theme.service';
 import { SiteInfoService } from './services/site-info/site-info.service';
-// local storage
-import { LocalStorageService } from 'local-storage';
 import { ColorService } from './services/color/color.service';
 // rxjs
 import { Subscription } from 'rxjs';
@@ -24,7 +22,6 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
 
   constructor(
     private themeService: ThemeService,
-    private localStorage: LocalStorageService,
     private siteInfoService: SiteInfoService,
     private colorService: ColorService,
     private appElm: ElementRef
@@ -41,7 +38,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
     this.themeService.bwTheme.subscribe((bw: boolean) => {
       this.bwTheme = bw;
     });
-    const isSsgBw: string =  this.localStorage.getItem('ssgIsBw');
+    const isSsgBw: string = JSON.parse(localStorage.getItem('ssgIsBw'));
     if (isSsgBw !== null) { // item was previously saved
       // saved theme
       const isBw = (isSsgBw === 'true' ? true : false); // <= must be converted to boolean (storage store strings)

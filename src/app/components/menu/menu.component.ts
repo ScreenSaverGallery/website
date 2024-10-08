@@ -17,7 +17,6 @@ import { SocialMedium } from '../../models/social-medium';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ThemeService } from '../../services/theme/theme.service';
-import { LocalStorageService } from 'local-storage';
 import { LinksService } from '../../services/links/links.service';
 import { SiteInfoService } from '../../services/site-info/site-info.service';
 import { ColorService } from 'src/app/services/color/color.service';
@@ -62,7 +61,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
     private wpService: WpService,
     private router: Router,
     private themeService: ThemeService,
-    private localStorage: LocalStorageService,
     private linksService: LinksService,
     private siteInfoService: SiteInfoService,
     private menuService: MenuService,
@@ -146,7 +144,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   toggleTheme(): void {
     this.themeService.toggleBW();
     // save to local storage
-    this.localStorage.setItem('ssgIsBw', this.themeService.isBw());
+    localStorage.setItem('ssgIsBw', JSON.stringify(this.themeService.isBw()));
   }
 
 
