@@ -43,15 +43,16 @@
                         <div class="category-description" [innerHtml]="child.category?.description | safeHtml"></div>
                         <div class="posts-container">
                             <!-- <ssg-post [post]="child.category"></ssg-post> -->
-                            @if(child.posts) {
+                            @if(child.posts && child.posts.length) {
                                 @for(post of child.posts; track post.id; let i = $index) {
                                     <!-- MAX 3 POSTS FROM SUBCATEGORY -->
                                     @if (i <= 3) {
                                         <ssg-post [post]="post"></ssg-post>
                                     }
                                 }
+                            } @else {
+                                <ssg-loading></ssg-loading>
                             }
-                        
                         </div>
                     </div>
                     <!-- GO TO SUBCATEGORY -->
