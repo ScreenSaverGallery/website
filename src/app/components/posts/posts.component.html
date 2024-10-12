@@ -22,15 +22,48 @@
         <!-- {{log('category', category)}} -->
         <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
-         @if(category?.description) {
-            <div class="category-description" [innerHTML]="category.description | safeHtml"></div>
-         }
-        <!-- SUBCATEGORIES LINKS -->
-        <!-- <div class="posts-container"> -->
-            @for(child of children; track child.id) {
-                <ssg-post [post]="child"></ssg-post>
+        @if(category?.description) {
+           <div class="category-description" [innerHTML]="category.description | safeHtml"></div>
+        }
+        <!-- LINKS TO SUBCATEGORIES -->
+        <div class="subcategories-links">
+            @for(subcategory of children; track subcategory.catId) {
+                @if (subcategory.category.count) {
+                    <div><a [routerLink]="['/archive', subcategory.category.slug]" [innerHTML]="subcategory.category.name | titlecase | safeHtml"></a></div>
+                }
             }
-        <!-- </div> -->
+        </div>
+        <!-- SUBCATEGORIES -->
+        <div class="subcategories">
+            @for(child of children; track child.catId) {
+                @if(child.category.count) {
+                    <!-- CONTAINER FOR SUBCATEGORY CONTENT -->
+                    <div class="subcategory-container">
+                        <h2 [innerHtml]="child.category.name | titlecase | safeHtml" class="text-color-wheel"></h2>
+                        <div class="category-description" [innerHtml]="child.category?.description | safeHtml"></div>
+                        <div class="posts-container">
+                            <!-- <ssg-post [post]="child.category"></ssg-post> -->
+                            @if(child.posts) {
+                                @for(post of child.posts; track post.id; let i = $index) {
+                                    <!-- MAX 3 POSTS FROM SUBCATEGORY -->
+                                    @if (i <= 3) {
+                                        <ssg-post [post]="post"></ssg-post>
+                                    }
+                                }
+                            }
+                        
+                        </div>
+                    </div>
+                    <!-- GO TO SUBCATEGORY -->
+                    <div class="more-subcategory">
+                        <ssg-button
+                            type="stroked"
+                            [routerLink]="['/archive', child.category.slug]"
+                        >[...]&nbsp;{{child.category.name | titlecase}}</ssg-button>
+                    </div> 
+                }
+            }
+        </div>
     }
 <!-- LOADING -->
 } @else {

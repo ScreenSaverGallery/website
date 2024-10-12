@@ -1,19 +1,26 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+// router
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
-import { ThemeService } from '../../services/theme/theme.service';
 import { Category, Post, User, Tag } from '@tomaszatoo/ngx-wp-api';
 import { HttpResponse } from '@angular/common/http';
 // rxjs
 import { Subscription } from 'rxjs';
+
+interface CategoryChild {
+  catId: number,
+  category: Category,
+  posts: Post[]
+}
 
 @Component({
   selector: 'ssg-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
 
   @Input() set postsOf(value: string) {
     this._postsOf = value;
@@ -30,9 +37,9 @@ export class PostsComponent implements OnInit {
   private _postsOf: string;
   private _postsFrom: string;
 
-  category: any;
-  children: any[] = [];
-  posts: any[] = [];
+  category: Category;
+  children: CategoryChild[] = [];
+  posts: Post[] = [];
   maxVisiblePosts: number = 30;
   postsPage: number = 1;
   total: number;
@@ -46,10 +53,12 @@ export class PostsComponent implements OnInit {
   // bwTheme: boolean = false;
 
   private getCategoriesSub: Subscription = new Subscription();
+  private routeSub: Subscription = new Subscription();
 
   constructor(
     private wpService: WpService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -58,7 +67,19 @@ export class PostsComponent implements OnInit {
     if (this._postsFrom && this._postsOf && !this.loadingPosts) {
       this.loadPosts();
     }
+
+    this.routeSub = this.route.url.subscribe({
+      next: (segments: UrlSegment[]) => {
+        this.loadingPosts = false;
+        // todo reset content
+      }
+    });
     
+  }
+
+  ngOnDestroy(): void {
+    this.loadingPosts = false;
+    this.routeSub.unsubscribe();
   }
 
   private loadPosts(): void {
@@ -85,7 +106,14 @@ export class PostsComponent implements OnInit {
       if (categories) {
         // console.log('getCategoryPosts -> categories', categories);
         this.category = this.wpService.getCategoryBySlug(categorySlug);
-        this.children = this.wpService.categoryChildren(this.category.id);
+        this.children = this.wpService.categoryChildren(this.category.id).map((child: Category) => {
+          const catChild: CategoryChild = {
+            catId: child.id,
+            category: child,
+            posts: []
+          }
+          return catChild;
+        });
         // console.log('getCategoryPosts category', this.category);
         // console.log('getCategoryPosts children', this.children);
         // set title
@@ -102,6 +130,23 @@ export class PostsComponent implements OnInit {
         } else {
           console.warn('getCategoryPosts -> children', this.children);
           this.loadingPosts = false;
+          for (let i = 0; i < this.children.length; i++) {
+            const child = this.children[i];
+            const getCatPostsSub: Subscription = this.wpService.getCategoryPosts(child.catId, this.postsPage, false).subscribe({
+              next: (posts: Post[]) => {
+                child.posts = posts;
+                if (i === this.children.length - 1) {
+                  this.loadingPosts = false;
+                }
+                console.log(`posts of ${child.category.slug}`, posts);
+                getCatPostsSub.unsubscribe();
+              },
+              error: (e: any) => {
+                console.error(e);
+                getCatPostsSub.unsubscribe();
+              }
+            });
+          }
           // sort children
           // console.log('children', this.children);
           // this.children = this.children.sort((a: any, b: any) => parseFloat(a.id) + parseFloat(b.id) );

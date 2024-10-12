@@ -68,27 +68,7 @@ export class PostComponent implements OnInit, OnDestroy {
     // console.log('init post component post', this.post);
     this.downloadLink = this.linksService.downloadLink;
     this.randomColor = this.colorService.generateHslaColors(100)[0];
-    // console.warn('randomColor', this.randomColor);
-    // THEME
-    // this.themeService.bwTheme.subscribe((bw: boolean) => {
-    //   if (bw) {
-    //     // set random color
-    //     this.randomColor = 'white';
-    //     this.ssgIconColor = 'black';
-    //   } else {
-    //     this.randomColor = this.colorService.generateHslaColors(100)[0];
-    //     this.ssgIconColor = 'red';
-    //   }
-    //   // console.log('theme changed', this.randomColor);
-    // });
     
-    // higlight
-    // if (this.highlighted) {
-    //   this.elm.nativeElement.classList.add('highlight');
-    // }
-    // if (this.pinned) {
-    //   this.elm.nativeElement.classList.add('pinned');
-    // }
     // if not post, get it from url
     if (!this.post) {
       this.hasFeaturedImage = false;

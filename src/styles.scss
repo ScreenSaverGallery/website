@@ -11,8 +11,16 @@
 @include mat.core();
 
 
-$font-primary: Arial, sans-serif; /* 'Jura', sans-serif; */ /* ocr-b-std, monospace; //  *//* 'Roboto Mono', monospace; */
-$font-secondary: 'Roboto Mono', monospace; /* 'Times New Roman', Times, serif; */ /* 'Caudex', serif; */ /* 'Cormorant Garamond', serif; */ /* ocr-a-std, monospace; //  *//* 'Russo One', sans-serif; */
+$font-primary: Arial, sans-serif;
+/* 'Jura', sans-serif; */
+/* ocr-b-std, monospace; //  */
+/* 'Roboto Mono', monospace; */
+$font-secondary: 'Roboto Mono', monospace;
+/* 'Times New Roman', Times, serif; */
+/* 'Caudex', serif; */
+/* 'Cormorant Garamond', serif; */
+/* ocr-a-std, monospace; //  */
+/* 'Russo One', sans-serif; */
 
 // $ssg-color-primary: mat.m2-define-palette(mat.$m2-cyan-palette, A100);
 // $ssg-color-accent: mat.m2-define-palette(mat.$m2-cyan-palette, A200);
@@ -22,23 +30,22 @@ $font-secondary: 'Roboto Mono', monospace; /* 'Times New Roman', Times, serif; *
 
 
 // custom typography
-$ssg-typography: mat.m2-define-legacy-typography-config(
-    $font-family: $font-primary
-);
+$ssg-typography: mat.m2-define-legacy-typography-config($font-family: $font-primary);
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
 // @include mat.all-legacy-component-typographies($ssg-typography);
 
 /* MIXINS */
 @mixin flex-layout-gap($val: calc($space / 2), $direction: row) {
-    & > * {
-        @if $direction == row {
+    &>* {
+        @if $direction ==row {
             margin: 0 $val;
         }
-        @if $direction == column {
+
+        @if $direction ==column {
             margin: $val 0;
         }
-        
+
     }
 }
 
@@ -105,8 +112,17 @@ ssg-root {
     font-size: x-large;
     line-height: 1.6;
 }
-html { height: 100%; }
-body, ssg-root { height: auto; min-height: 100vh; }
+
+html {
+    height: 100%;
+}
+
+body,
+ssg-root {
+    height: auto;
+    min-height: 100vh;
+}
+
 // body {
 //     margin: 0;
 //     
@@ -119,6 +135,7 @@ ssg-root {
     animation: backgroundWheel 10s infinite linear;
     padding: $space;
     padding-top: 3 * $space;
+
     // width: 100%;
     // height: auto;
     // position: absolute;
@@ -131,11 +148,13 @@ ssg-root {
     &.mobile {
         word-break: break-word;
         overflow-x: hidden;
+
         .title {
             position: relative;
             top: 0;
         }
     }
+
     .theme {
         width: 100%;
         height: 100%;
@@ -144,7 +163,12 @@ ssg-root {
 
 
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: $font-secondary;
     color: white;
 }
@@ -174,6 +198,10 @@ a {
 
 a:hover {
     .link-content {
+        &.text-color-wheel {
+            animation: none;
+        }
+
         color: $warn-color;
     }
 }
@@ -186,9 +214,10 @@ a:hover {
     top: calc(3 * $space);
 }
 
-img, p {
+img,
+p {
     margin-top: 0;
-    margin-bottom: $space; 
+    margin-bottom: $space;
 }
 
 img {
@@ -203,12 +232,14 @@ img {
 article {
     display: block;
     max-width: 100%;
+
     // overflow-x: hidden;
     .aligncenter {
         display: block;
         margin-left: auto;
         margin-right: auto;
     }
+
     .wp-caption {
         max-width: 100% !important;
     }
@@ -228,22 +259,29 @@ figure {
         margin: 0;
     }
 }
+
 /* SHOW/HIDE DOWNLOAD BUTTONS FOR SPECIFIC PLATFORMS */
 ssg-root {
     &#mac {
-        .win, .linux {
+
+        .win,
+        .linux {
             display: none;
         }
     }
 
     &#win {
-        .mac, .linux {
+
+        .mac,
+        .linux {
             display: none;
         }
     }
 
     &#linux {
-        .mac, .win {
+
+        .mac,
+        .win {
             display: none;
         }
     }
@@ -256,6 +294,7 @@ ssg-info-slider-horizontal {
     min-height: calc(3 * $space);
     overflow: hidden;
     position: relative;
+
     .slider-container {
         width: auto;
         position: absolute;
@@ -263,15 +302,17 @@ ssg-info-slider-horizontal {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        
+
         &.active {
             animation: positionRightToLeft 30s infinite linear;
         }
+
         .slider-item {
             display: flex;
             flex-direction: row;
             margin-right: calc(2 * $space);
             white-space: nowrap;
+
             .item-emoji {
                 margin-right: $space;
             }
@@ -288,6 +329,7 @@ ssg-info-slider {
     position: relative;
     line-height: inherit;
     width: 100%;
+
     // max-width: 540px;
     // max-width: 90%;
     .item {
@@ -304,28 +346,30 @@ ssg-info-slider {
         // .message-content {
         //     position: relative;
         // }
- 
+
         transform: translateY(100%);
         transition: 0s;
- 
-     &.active {
+
+        &.active {
             transform: translateY(0);
             transition: .2s ease-in;
         }
- 
-     &.leaving {
+
+        &.leaving {
             transform: translateY(-100%);
             transition: .2s ease-in;
         }
- 
-     h5 {
+
+        h5 {
             padding: 0;
             margin: 0;
         }
+
         // right: 0;
         // transform: translateX(100%);
-     }
+    }
 }
+
 ssg-stars {
     display: block;
     position: fixed;
@@ -338,9 +382,10 @@ ssg-stars {
     width: 100%;
     height: 100%;
     background-color: transparent;
-    
+
     html {
         background-color: transparent;
+
         body {
             background-color: transparent;
         }
@@ -361,13 +406,16 @@ ssg-menu {
     pointer-events: none;
 
     .get {
+
         // display: none;
         .mat-icon-button {
             line-height: .7;
+
             ssg-ssg-icon {
                 margin: calc($space / 12);
             }
         }
+
         .mat-raised-button {
             font-family: inherit;
             color: $dark-color;
@@ -383,7 +431,9 @@ ssg-menu {
 
     .controls {
         position: fixed;
-        top: 0; left: 0; right: 0;
+        top: 0;
+        left: 0;
+        right: 0;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -403,10 +453,12 @@ ssg-menu {
             cursor: pointer;
             width: calc(1.5 * $space);
             overflow: hidden;
+
             .no-tracking {
                 white-space: nowrap;
                 animation: textWheel 20s infinite linear;
             }
+
             // .no-tracking {
             //     overflow: hidden;
             //     width: 0;
@@ -426,10 +478,12 @@ ssg-menu {
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
+
         // @include flex-layout-gap(6%);
         ssg-search.search {
             flex: 20%;
         }
+
         ssg-button {
             margin-bottom: $space;
         }
@@ -442,8 +496,10 @@ ssg-menu {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+
             // @include flex-layout-gap(6%);
-            .archives, .pages {
+            .archives,
+            .pages {
                 flex: 44%;
             }
         }
@@ -468,7 +524,7 @@ ssg-menu {
             width: 100%;
             text-align: left;
             // color: #14141e;
-            
+
 
             .menu-blocks {
                 text-align: left;
@@ -510,6 +566,7 @@ ssg-search {
         width: 100%;
         font-family: inherit;
         font-size: inherit;
+
         // .mdc-text-field__input {
         //     
         // }
@@ -529,13 +586,14 @@ ssg-search {
         .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
         .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
         .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
-          border-color: $accent-color !important;
+            border-color: $accent-color !important;
         }
     }
+
     input {
         font-family: inherit;
     }
-    
+
 }
 
 mat-option.mat-mdc-option {
@@ -545,6 +603,7 @@ mat-option.mat-mdc-option {
     padding: calc($space / 1.2);
     // border-bottom: 1px solid rgba(white, .2);
 }
+
 .cdk-overlay-pane {
     height: 100%;
 }
@@ -557,26 +616,36 @@ div.mat-mdc-autocomplete-panel {
 
 ssg-post {
     display: block;
+
     /* center download (get) page */
     &.get {
         // article {
-            text-align: center;
+        text-align: center;
         // }
     }
+
     .post {
         margin-bottom: $space;
     }
+
     .has-featured-image {
         color: white;
     }
+
     .full {
-        .date, .social, article, .tags {
+
+        .date,
+        .social,
+        article,
+        .tags {
             // z-index: 99;
             position: relative;
         }
+
         .social {
             margin-bottom: calc(2 * $space);
         }
+
         .tags {
             display: flex;
             flex-direction: row;
@@ -584,12 +653,14 @@ ssg-post {
             // @include flex-layout-gap(); // default calc($space / 2)
         }
     }
+
     .excerpt {
         .post-header {
             display: flex;
             flex-direction: row;
             align-items: flex-start;
             justify-content: space-between;
+
             h2 {
                 display: flex;
                 flex-direction: row;
@@ -598,11 +669,13 @@ ssg-post {
                 @include flex-layout-gap();
             }
         }
+
         .excerpt-body {
             display: flex;
             flex-direction: row;
             @include flex-layout-gap();
         }
+
         .tags {
             display: flex;
             flex-direction: row;
@@ -610,6 +683,7 @@ ssg-post {
             margin-bottom: $space;
         }
     }
+
     // HIGHLIGHTED POST
     &.highlight {
         background-color: $accent-color;
@@ -622,10 +696,13 @@ ssg-post {
             top: calc(5 * $space);
         }
 
-        .post, ssg-author, .author {
+        .post,
+        ssg-author,
+        .author {
             a {
-                color: $dark-color; 
+                color: $dark-color;
             }
+
             a:hover {
                 border-color: $dark-color;
             }
@@ -642,15 +719,33 @@ ssg-posts {
     display: block;
     width: 100%;
     height: 100%;
+
     .posts-container {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         // @include flex-layout-gap(6%);
     }
+
     .category-description {
         font-size: medium;
         margin-bottom: $space;
+    }
+
+    .subcategories {
+        .subcategory-container {
+            & > h2 {
+                position: sticky;
+                top: calc(6 * $space);
+                @include layer-3();
+            }
+        }
+        
+        .more-subcategory {
+            text-align: center;
+            margin-top: $space;
+            margin-bottom: calc(2 * $space);
+        }
     }
 
     ssg-post {
@@ -666,6 +761,7 @@ ssg-category-posts {
 
 ssg-social {
     display: block;
+
     .social-container {
         display: flex;
         flex-direction: row;
@@ -674,6 +770,7 @@ ssg-social {
         justify-content: flex-start;
         // @include flex-layout-gap();
     }
+
     margin-bottom: $space;
 }
 
@@ -708,12 +805,14 @@ ssg-home {
     display: block;
     width: 100%;
     height: 95vh;
+
     header {
         display: flex;
         flex-direction: row;
         width: 100%;
         align-items: flex-start;
         justify-content: flex-start;
+
         ssg-ssg-icon {
             flex: 20%;
             min-width: 120px;
@@ -721,6 +820,7 @@ ssg-home {
             height: auto;
             margin-right: $space;
         }
+
         h1 {
             // color: transparent;
             // * > span {
@@ -729,13 +829,15 @@ ssg-home {
             animation: textShadowWheel 10s infinite linear;
             padding-right: calc(2 * $space);
             // }
-            
+
         }
     }
+
     .home-buttons {
         // @include flex-layout-gap();
         margin-bottom: $space;
     }
+
     .get-ssg-button.mat-raised-button.mat-primary {
         // font-family: inherit; __<<ngThemingMigrationEscapedComment10>>__
         background-color: $accent-color;
@@ -772,12 +874,13 @@ ssg-home {
     border-radius: calc($space * 2);
     box-shadow: 0 0 $space white;
     background-color: red;
-    
+
     a {
-        padding:  calc($space / 4) $space;
+        padding: calc($space / 4) $space;
         // background-color: red;
         text-decoration: none;
         border: none;
+
         .link-content {
             // transform: skew(0deg, 0deg);
             color: white;
@@ -803,7 +906,7 @@ ssg-button {
 
         .button-content {
             background-color: transparent;
-            padding:   calc($space / 4) $space
+            padding: calc($space / 4) $space
         }
 
         animation: buttonWheel 10s infinite linear;
@@ -814,15 +917,17 @@ ssg-button {
         // background-color: red;
         box-shadow: 0 0 $space red;
         border-color: transparent;
+
         &.stroked {
             -webkit-animation: scale-up-center 1s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite alternate-reverse both;
-                    animation: scale-up-center 1s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite alternate-reverse both;
+            animation: scale-up-center 1s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite alternate-reverse both;
         }
     }
 
     &.icon {
         border-radius: 100%;
         background-color: transparent;
+
         .button-content {
             padding: calc($space / 4);
         }
@@ -837,6 +942,7 @@ ssg-button {
     &:active {
         outline: none;
         border-color: red;
+
         .button-content {
             outline: none;
             // background-color: red !important;
@@ -860,7 +966,7 @@ ssg-button {
         justify-content: center;
         transition: transform .2s ease-in-out;
 
-        > * {
+        >* {
             display: block;
         }
     }
@@ -870,7 +976,7 @@ ssg-button {
      * Licensed under FreeBSD License.
      * See http://animista.net/license for more info. 
      * w: http://animista.net, t: @cssanimista
-     * ---------------------------------------------- */    
+     * ---------------------------------------------- */
 
     /**
      * ----------------------------------------
@@ -878,26 +984,29 @@ ssg-button {
      * ----------------------------------------
      */
     @-webkit-keyframes scale-up-center {
-      0% {
-        -webkit-transform: scale(0.9);
-                transform: scale(0.9);
-      }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-      }
+        0% {
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
     }
+
     @keyframes scale-up-center {
-      0% {
-        -webkit-transform: scale(0.9);
-                transform: scale(0.9);
-      }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-      }
+        0% {
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
     }
-    
+
 }
 
 .text-color-wheel {
@@ -908,6 +1017,7 @@ ssg-button {
 ssg-loading {
     display: block;
     padding: $space;
+
     .loading-page {
         display: flex;
         flex-direction: column;
@@ -931,37 +1041,70 @@ ssg-not-found {
 }
 
 .wavy {
-  animation-name: wavy;
-  animation-duration: 20s;
-  animation-timing-function: ease;
-  animation-iteration-count: infinite;
-  position: relative;
-  top: 0;
-  left: 0;
-  display: inline-block;
+    animation-name: wavy;
+    animation-duration: 20s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: inline-block;
 }
 
 
 
 /* ANIMATIONS */
 @keyframes positionRightToLeft {
-    from { left: 150%; }
-    to { left: -150%; } 
+    from {
+        left: 150%;
+    }
+
+    to {
+        left: -150%;
+    }
 }
 
 @keyframes textWheel {
     0% {
         color: #84ffff;
     }
-    10% { @include random-color('color', random(100), 100, 70, 1) }
-    20% { @include random-color('color', random(100), 100, 70, 1) }
-    30% { @include random-color('color', random(100), 100, 70, 1) }
-    40% { @include random-color('color', random(100), 100, 70, 1) }
-    50% { @include random-color('color', random(100), 100, 70, 1) }
-    60% { @include random-color('color', random(100), 100, 70, 1) }
-    70% { @include random-color('color', random(100), 100, 70, 1) }
-    80% { @include random-color('color', random(100), 100, 70, 1) }
-    90% { @include random-color('color', random(100), 100, 70, 1) }
+
+    10% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    20% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    30% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    40% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    50% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    60% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    70% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    80% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
+    90% {
+        @include random-color('color', random(100), 100, 70, 1)
+    }
+
     to {
         color: #84ffff;
     }
@@ -972,17 +1115,21 @@ ssg-not-found {
         // top: 0px;
         transform: skew(0);
     }
+
     25% {
         transform: skew(-10deg, -10deg);
     }
+
     50% {
-      // top: -($space);
-      transform: skew(0);
+        // top: -($space);
+        transform: skew(0);
     }
+
     75% {
-      // top: 0px;
-      transform: skew(10deg, 10deg);
+        // top: 0px;
+        transform: skew(10deg, 10deg);
     }
+
     100% {
         transform: skew(0);
     }
@@ -993,15 +1140,43 @@ ssg-not-found {
         box-shadow: 0 0 24px #84ffff;
         color: #84ffff;
     }
-    10% { @include random-color-button(random(100), 100, 70, 1); }
-    20% { @include random-color-button(random(100), 100, 70, 1); }
-    30% { @include random-color-button(random(100), 100, 70, 1); }
-    40% { @include random-color-button(random(100), 100, 70, 1); }
-    50% { @include random-color-button(random(100), 100, 70, 1); }
-    60% { @include random-color-button(random(100), 100, 70, 1); }
-    70% { @include random-color-button(random(100), 100, 70, 1); }
-    80% { @include random-color-button(random(100), 100, 70, 1); }
-    90% { @include random-color-button(random(100), 100, 70, 1); }
+
+    10% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    20% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    30% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    40% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    50% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    60% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    70% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    80% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
+    90% {
+        @include random-color-button(random(100), 100, 70, 1);
+    }
+
     to {
         box-shadow: 0 0 24px #84ffff;
         color: #84ffff;
@@ -1013,15 +1188,43 @@ ssg-not-found {
         text-shadow: 0 0 24px #84ffff;
         color: #84ffff;
     }
-    10% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    20% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    30% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    40% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    50% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    60% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    70% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    80% { @include random-color-shadow-text(random(100), 100, 70, 1); }
-    90% { @include random-color-shadow-text(random(100), 100, 70, 1); }
+
+    10% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    20% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    30% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    40% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    50% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    60% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    70% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    80% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
+    90% {
+        @include random-color-shadow-text(random(100), 100, 70, 1);
+    }
+
     to {
         text-shadow: 0 0 24px #84ffff;
         color: #84ffff;
@@ -1030,17 +1233,52 @@ ssg-not-found {
 
 
 @keyframes backgroundWheel {
-    0% { background-color: #47856c } // start/end color
-    10% { @include random-color('background-color', random(360), 30, 40, 1); }
-    20% { @include random-color('background-color', random(360), 30, 40, 1); }
-    30% { @include random-color('background-color', random(360), 30, 40, 1); }
-    40% { @include random-color('background-color', random(360), 30, 40, 1); }
-    50% { @include random-color('background-color', random(360), 30, 40, 1); }
-    60% { @include random-color('background-color', random(360), 30, 40, 1); }
-    70% { @include random-color('background-color', random(360), 30, 40, 1); }
-    80% { @include random-color('background-color', random(360), 30, 40, 1); }
-    90% { @include random-color('background-color', random(360), 30, 40, 1); }
-    to { background-color: #47856c } // start/end color
+    0% {
+        background-color: #47856c
+    }
+
+    // start/end color
+    10% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    20% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    30% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    40% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    50% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    60% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    70% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    80% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    90% {
+        @include random-color('background-color', random(360), 30, 40, 1);
+    }
+
+    to {
+        background-color: #47856c
+    }
+
+    // start/end color
 }
 
 
@@ -1052,17 +1290,21 @@ ssg-not-found {
             flex-direction: column; // check it, was error in original: fxLaout.lt-md="column"
             flex-wrap: nowrap;
             align-items: flex-end;
+
             ssg-search.search {
                 flex: 100%;
             }
         }
+
         nav {
             .menu-blocks {
                 flex-direction: column; // check it, was error in original: fxLaout.lt-md="column"
-                .archives, .pages {
+
+                .archives,
+                .pages {
                     flex: 100%;
                 }
-                
+
             }
         }
     }
@@ -1070,6 +1312,7 @@ ssg-not-found {
     ssg-posts {
         .posts-container {
             flex-direction: column;
+
             ssg-post {
                 flex: 100%;
             }
@@ -1078,11 +1321,14 @@ ssg-not-found {
 
     ssg-home {
         header {
-            h1 { font-size: 8vh; }
+            h1 {
+                font-size: 8vh;
+            }
         }
-        
+
     }
 }
+
 /* flex-layout gt-xs */
 @media only screen and (max-width: 600px) {
     ssg-menu {
@@ -1090,17 +1336,21 @@ ssg-not-found {
             display: none;
         }
     }
+
     ssg-home {
         .home {
             height: auto;
+
             header {
                 flex-direction: column;
                 align-items: center;
+
                 h1 {
                     font-size: 5vh;
                     padding-right: 0;
                 }
             }
+
             .home-buttons {
                 display: flex;
                 flex-direction: column;
@@ -1108,7 +1358,7 @@ ssg-not-found {
                 @include flex-layout-gap(calc($space / 2), column);
             }
         }
-        
-        
+
+
     }
 }
