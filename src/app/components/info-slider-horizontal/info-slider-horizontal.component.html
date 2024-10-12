@@ -1,0 +1,16 @@
+<div class="slider-container active">
+    @for(item of sliderItems; let i = $index; track i) {
+        <div class="slider-item">
+            @if(item.emoji) {
+                <div class="item-emoji" [innerHTML]="item.emoji"></div>
+            }
+            @if(item.url) {
+                <a [routerLink]="[item.url]">
+                    <div class="item-text" [innerHTML]="item.text"></div>
+                </a>
+            } @else {
+                <div class="item-text" [innerHTML]="item.text"></div>
+            }
+        </div>
+    } 
+</div>
