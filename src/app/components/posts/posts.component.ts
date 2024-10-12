@@ -100,7 +100,8 @@ export class PostsComponent implements OnInit {
             getCatPostsSub.unsubscribe();
           });
         } else {
-          console.warn('getCategoryPosts -> children', this.children)
+          console.warn('getCategoryPosts -> children', this.children);
+          this.loadingPosts = false;
           // sort children
           // console.log('children', this.children);
           // this.children = this.children.sort((a: any, b: any) => parseFloat(a.id) + parseFloat(b.id) );
