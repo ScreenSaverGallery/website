@@ -49,10 +49,12 @@ export class WpService {
   /* POSTS */
 
   getCurrentScreensaver(): Observable<Post[] | HttpResponse<any>> {
-    return this.getPosts('categories=2&orderby=date&per_page=1');
+    const onlineCategoryId: number = 323;
+    return this.getPosts(`categories=${onlineCategoryId}&orderby=date&per_page=1`);
   }
   getCurrentOfflineScreensaver(): Observable<Post[] | HttpResponse<any>> {
-    return this.getPosts('categories=20&orderby=date&per_page=1&filter[tag]=offline');
+    const offlineCategoryId: number = 324;
+    return this.getPosts(`categories=${offlineCategoryId}&orderby=date&per_page=1&filter[tag]=offline`);
   }
 
   getPosts(params?: string): Observable<Post[] | HttpResponse<any>> {
