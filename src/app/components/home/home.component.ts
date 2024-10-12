@@ -11,6 +11,7 @@ import { SiteInfoService } from '../../services/site-info/site-info.service';
 import { ColorService } from 'src/app/services/color/color.service';
 // rxjs
 import { Subscription } from 'rxjs';
+import { Post, Media } from '@tomaszatoo/ngx-wp-api';
 
 @Component({
   selector: 'ssg-home',
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private _getLastNewsSub: Subscription = new Subscription();
 
   @ViewChild('featuredImage') featuredImgContainer: ElementRef;
+  @ViewChild('waving') wavingElm!: ElementRef;
 
   constructor(
     private router: Router,
@@ -60,11 +62,28 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (info) {
           this.siteTitle = info.name;
           this.siteDescription = info.description;
-          const description: SliderItem = {
-            text: `🪼 ${info.description} 🪼`,
-            // delay: 4000
-          };
-          this.addSliderItem = description;
+          // const description: SliderItem = {
+          //   text: `🪼 ${info.description} 🪼`,
+          //   // delay: 4000
+          // };
+          // this.addSliderItem = description;
+          setTimeout(() => {
+            console.log('waving elm', this.wavingElm);
+            if (this.wavingElm) {
+              const delay = 200;
+              const dom = this.wavingElm.nativeElement;
+              dom.innerHTML = dom.innerText.split('')
+              .map((char: string) => `<span>${char}</span>`)
+              .join('');
+
+              Array.from(this.wavingElm.nativeElement.children).forEach((span: HTMLElement, index: number) => {
+                setTimeout(() => {
+                  span.classList.add("wavy");
+                }, index * 60 + delay);
+              })
+            }
+          }, 100);
+          
         }
         this._getSiteInfoSub.unsubscribe();
       },
@@ -73,27 +92,28 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // get name of last screensaver
     this._getCurrentSaverSub = this.wpService.getCurrentScreensaver().subscribe({
-      next: (res: any) => {
+      next: (posts: Post[]) => {
         // this.starsText = res.body[0].title.rendered;
         // console.log('res.body', res.body);
-        if (res.body && res.body.length) {
-          if (res.body[0] && res.body[0].featured_media) {
+        if (posts && posts.length) {
+          const post = posts[0];
+          if (post.featured_media) {
             // console.log('res.body', res.body[0]);
-            this.getFeautredImage(res.body[0].featured_media);
+            this.getFeautredImage(post.featured_media);
           }
           const currentShow: SliderItem = {
-            emoji: '🌸 Online Now 🌸',
-            text: res.body[0].title.rendered,
+            emoji: '🌸 Online Now ',
+            text: post.title.rendered,
             // delay: 10000,
-            url: res.body[0].slug
+            url: post.slug
           }
           this.addSliderItem = currentShow;
 
-          setTimeout(() => {
-            this.addSliderItem = {
-              text: 'ScreenSaverGallery',
-            };
-          }, 1000);
+          // setTimeout(() => {
+          //   this.addSliderItem = {
+          //     text: 'ScreenSaverGallery',
+          //   };
+          // }, 1000);
         }
         this._getCurrentSaverSub.unsubscribe();
       },
@@ -102,20 +122,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // get name of last offline screensaver
     this._getCurrentOfflineSaverSub = this.wpService.getCurrentOfflineScreensaver().subscribe({
-      next: (res: any) => {
+      next: (posts: Post[]) => {
         // this.starsText = res.body[0].title.rendered;
         // console.log('res.body', res.body);
         // console.log('offline res', res);
-        if (res.body.length) {
-          if (res.body[0].featured_media) {
-            // console.log('res.body', res.body[0]);
-            this.getFeautredImage(res.body[0].featured_media);
-          }
+        if (posts.length) {
+          const post = posts[0];
+          // if (post.featured_media) {
+          //   // console.log('res.body', res.body[0]);
+          //   this.getFeautredImage(post.featured_media);
+          // }
           const currentShow: SliderItem = {
-            emoji: '🪷 Offline Now 🪷',
-            text: res.body[0].title.rendered,
+            emoji: '🪷 Offline Now ',
+            text: post.title.rendered,
             // delay: 10000,
-            url: res.body[0].slug
+            url: post.slug
           }
           this.addSliderItem = currentShow;
         }
@@ -132,13 +153,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const queryDate = new Date(today - period).toISOString();
     console.log('🔥 NEWS 🔥 queryDate', queryDate);
     this._getLastNewsSub = this.wpService.getPosts(`categories=1&orderby=date&per_page=2&after=${queryDate}`).subscribe({
-      next: (res: any) => {
-        if (res.body && res.body.length) {
-          console.log('NEWS res', res);
-          for (let i = 0; i < res.body.length; i++) {
-            const news = res.body[i];
+      next: (posts: Post[]) => {
+        if (posts.length) {
+          console.log('NEWS res', posts);
+          for (let i = 0; i < posts.length; i++) {
+            const news = posts[i];
             const message: SliderItem = {
-              emoji: '🦑 🐣 🐍',
+              emoji: '🐣 Hot News ', // '🦑 🐣 🐍',
               text: news.title.rendered,
               // delay: 10000,
               url: news.slug
@@ -184,13 +205,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.themeService.isBw();
   }
 
+  setWavy(event: any): void {
+    console.log('setWavy', event);
+  }
+
   private getFeautredImage(id: number): void {
     // console.log('getFeaturedImage', id);
     // console.log('featuredImage child', this.featuredImgContainer);
-    this.wpService.getMedia(id).subscribe({
-      next: (media: any) => {
+    const getMediaSub: Subscription = this.wpService.getMedia(id).subscribe({
+      next: (media: Media) => {
         // console.log('recieved media', media);
-        if (media.body && media.body.source_url) {
+        if (media && media.source_url) {
           const image = new Image();
           image.onload = () => {
             this.featuredImgContainer.nativeElement.style.backgroundImage = `url(${image.src})`;
@@ -199,10 +224,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             }, 1000);
           }
           setTimeout(function(){
-            image.src = media.body.source_url;         
+            image.src = media.source_url;         
         }, 100);
           
         }
+        getMediaSub.unsubscribe();
       },
       error: (e: any) => console.log(e)
     })

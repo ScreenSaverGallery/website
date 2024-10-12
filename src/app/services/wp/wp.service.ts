@@ -1,12 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // services
-import { WpApiLibService } from 'wp-api-lib';
+// import { WpApiLibService } from 'wp-api-lib';
+// import { ErrorService } from '../error/error.service';
+import {
+  NgxWpApiService,
+  Post,
+  Category,
+  User,
+  Tag,
+  Media,
+  Page,
+  Menu
+} from '@tomaszatoo/ngx-wp-api';
 // rxjs
 import {
   BehaviorSubject,
   Observable,
-  Subject
+  Subject,
+  Subscription
 } from 'rxjs';
 
 @Injectable({
@@ -20,58 +32,61 @@ export class WpService {
   private _tags: any[] = [];
   private _media: any[] = [];
 
-  categories: BehaviorSubject<any> = new BehaviorSubject(null);
-  users: BehaviorSubject<HttpResponse<any>> = new BehaviorSubject(null);
-  pages: BehaviorSubject<any> = new BehaviorSubject(null);
-  tags: BehaviorSubject<HttpResponse<any>> = new BehaviorSubject(null);
-  media: BehaviorSubject<HttpResponse<any>> = new BehaviorSubject(null);
+  categories: BehaviorSubject<Category[] | null> = new BehaviorSubject(null);
+  users: BehaviorSubject<User[] | null> = new BehaviorSubject(null);
+  pages: BehaviorSubject<Page[] | null> = new BehaviorSubject(null);
+  tags: BehaviorSubject<Tag[] | null> = new BehaviorSubject(null);
+  media: BehaviorSubject<Media[] | null> = new BehaviorSubject(null);
 
 
   constructor(
-    private wpApiService: WpApiLibService
-  ) { }
+    private wpApiService: NgxWpApiService
+  ) {
+    this.getAllCategories();
+    this.getAllPages();
+  }
 
   /* POSTS */
 
-  getCurrentScreensaver(): Observable<any> {
+  getCurrentScreensaver(): Observable<Post[] | HttpResponse<any>> {
     return this.getPosts('categories=2&orderby=date&per_page=1');
   }
-  getCurrentOfflineScreensaver(): Observable<any> {
+  getCurrentOfflineScreensaver(): Observable<Post[] | HttpResponse<any>> {
     return this.getPosts('categories=20&orderby=date&per_page=1&filter[tag]=offline');
   }
 
-  getPosts(params?: string): Observable<any> {
+  getPosts(params?: string): Observable<Post[] | HttpResponse<any>> {
     return this.wpApiService.getPosts(params ? params : '');
   }
 
-  getPostBySlug(slug: string): Observable<HttpResponse<any>> {
+  getPostBySlug(slug: string): Observable<Post[] | HttpResponse<any>> {
     return this.wpApiService.getPosts(`slug=${slug}`);
   }
 
-  getPostsByTag(tag: number, page: number = 1): Observable<HttpResponse<any>> {
-    return this.wpApiService.getPosts(`tags=${tag}&orderby=date&page=${page}`);
+  getPostsByTag(tag: number, page: number = 1, observeResponse: boolean = false): Observable<Post[] | HttpResponse<any>> {
+    return this.wpApiService.getPosts(`tags=${tag}&orderby=date&page=${page}`, observeResponse);
   }
 
-  getPostsByAuthor(authorId: number, page: number = 1): Observable<HttpResponse<any>> {
+  getPostsByAuthor(authorId: number, page: number = 1): Observable<Post[] | HttpResponse<any>> {
     return this.wpApiService.getPosts(`author=${authorId}&orderby=date&page=${page}`);
   }
 
-  getCategoryPosts(id: number, page: number = 1): Observable<HttpResponse<any>> {
-    return this.wpApiService.getPosts(`categories=${id}&orderby=date&page=${page}`);
+  getCategoryPosts(id: number, page: number = 1, observeResponse: boolean = false): Observable<Post[] | HttpResponse<any>> {
+    return this.wpApiService.getPosts(`categories=${id}&orderby=date&page=${page}`, observeResponse);
   }
 
-  search(query: string, page: number = 1) : Observable<HttpResponse<any>> {
+  search(query: string, page: number = 1) : Observable<any> {
     return this.wpApiService.search(`${query}&page=${page}`);
   }
 
-  getSiteInfo(): Observable<HttpResponse<any>> {
+  getSiteInfo(): Observable<any> {
     return this.wpApiService.getSiteInfo();
   }
 
   /* CATEGORIES */
 
   getAllCategories(): void {
-    this.wpApiService.getCategories('orderby=count&order=asc').subscribe((res: HttpResponse<any>) => {
+    this.wpApiService.getCategories('orderby=count&order=asc&per_page=100', true).subscribe((res: HttpResponse<any>) => {
       if (res && res.body && res.body.length > 0) {
         const temp: any[] = this._categories;
         const total = Number(res.headers.get('X-WP-Total'));
@@ -86,21 +101,25 @@ export class WpService {
           }
         }
       }
+
     });
   }
 
   getCategories(page: number): void {
-    this.wpApiService.getCategories(`orderby=count&order=asc&page=${page}`).subscribe((res: HttpResponse<any>) => {
-      if (res && res.body && res.body.length > 0) {
+    console.warn('getCategories ...pageNum', page);
+    const getCategoriesSub: Subscription = this.wpApiService.getCategories(`orderby=count&order=asc&page=${page}`).subscribe((categories: Category[]) => {
+      if (categories && categories.length > 0) {
         // concat arrays
         const temp: any[] = this._categories;
-        this._categories = temp.concat(res.body);
+        this._categories = temp.concat(categories);
         this.categories.next(this._categories);
+        // unsubscribe
+        getCategoriesSub.unsubscribe();
       }
     });
   }
 
-  getCategoryBySlug(slug: string): any {
+  getCategoryBySlug(slug: string): Category {
     if (this._categories.length > 0) {
       let i: number = 0;
       const len: number = this._categories.length;
@@ -113,10 +132,10 @@ export class WpService {
     return null;
   }
 
-  categoryChildren(id: number): number[] {
+  categoryChildren(id: number): Category[] {
     let i = 0;
     const len = this._categories.length;
-    const result: number[] = [];
+    const result: Category[] = [];
     for (i; i < len; i++) {
       const cat: any = this._categories[i];
       if (cat.parent === id) {
@@ -133,17 +152,19 @@ export class WpService {
   /* USERS */
 
   getUsers(): void {
-    this.wpApiService.getUsers(`orderby=name`).subscribe((res: any) => {
-      if (res && res.body) {
+    const getUsersSub: Subscription = this.wpApiService.getUsers(`orderby=name`).subscribe((users: User[]) => {
+      if (users && users.length) {
         // console.log('getUsers', res);
-        this._users = res.body;
-        this.users.next(res);
+        this._users = users;
+        this.users.next(users);
+        // unsubscribe
+        getUsersSub.unsubscribe();
       }
     });
   }
 
-  getUser(id: number): Observable<any> {
-    const subject: Subject<any> = new Subject();
+  getUser(id: number): Observable<User> {
+    const subject: Subject<User> = new Subject();
     let user: any = this.getLoadedUser(id);
     if (user) {
       setTimeout(() => {
@@ -151,12 +172,14 @@ export class WpService {
         subject.complete();
       }, 100);
     } else {
-      this.wpApiService.getUser(id).subscribe((res: any) => {
-        if (res.status === 200) {
-          user = res.body;
+      const getUserSub: Subscription = this.wpApiService.getUser(id).subscribe((u: User) => {
+        if (u) {
+          user = u;
           this._users.push(user);
           subject.next(user);
           subject.complete();
+          // unsubscribe
+          getUserSub.unsubscribe();
         }
       });
     }
@@ -164,8 +187,8 @@ export class WpService {
     return subject;
   }
 
-  getUserBySlug(slug: string): Observable<any> {
-    const subject: Subject<any> = new Subject();
+  getUserBySlug(slug: string): Observable<User> {
+    const subject: Subject<User> = new Subject();
     let user: any = this.getLoadedUser(null, slug);
     if (user) {
       setTimeout(() => {
@@ -173,20 +196,22 @@ export class WpService {
         subject.complete();
       }, 10);
     } else {
-      this.wpApiService.getUsers(`slug=${slug}`).subscribe((res: any) => {
+      const getUsersSub: Subscription = this.wpApiService.getUsers(`slug=${slug}`).subscribe((users: User[]) => {
         // console.log('getUsers by slug', res);
-        if (res.status === 200) {
-          user = res.body[0];
+        if (users && users.length) {
+          user = users[0];
           this._users.push(user);
           subject.next(user);
           subject.complete();
+          // unsubscribe
+          getUsersSub.unsubscribe();
         }
       });
     }
     return subject;
   }
 
-  private getLoadedUser(id?: number, slug?: string): any {
+  private getLoadedUser(id?: number, slug?: string): User | null {
     let i: number = 0;
     const len: number = this._users.length;
     for (i; i < len; i++) {
@@ -202,7 +227,7 @@ export class WpService {
 
   getAllPages(): void {
     // console.log('getAllPages');
-    this.wpApiService.getPages('order_by=date&order=asc').subscribe((res: HttpResponse<any>) => {
+    const getPagesSub: Subscription = this.wpApiService.getPages('order_by=date&order=asc', true).subscribe((res: HttpResponse<any>) => {
       if (res && res.body && res.body.length > 0) {
         const temp: any[] = this._pages;
         const total = Number(res.headers.get('X-WP-Total'));
@@ -217,23 +242,26 @@ export class WpService {
             this.getPages(i);
           }
         }
-
+        // unsubscribe
+        getPagesSub.unsubscribe();
       }
     });
   }
 
   getPages(pageNumber: number = 1): void {
-    this.wpApiService.getPages(`page=${pageNumber}`).subscribe((res: HttpResponse<any>) => {
-      if (res && res.body && res.body.length > 0) {
+    const getPagesSub: Subscription = this.wpApiService.getPages(`page=${pageNumber}`).subscribe((pages: Page[]) => {
+      if (pages && pages.length) {
         // console.log('getPages', res);
         const temp: any[] = this._pages;
-        this._pages = temp.concat(res.body);
+        this._pages = temp.concat(pages);
         this.pages.next(this._pages);
       }
+      // unsubscribe
+      getPagesSub.unsubscribe();
     });
   }
 
-  getPageBySlug(slug: string): Observable<HttpResponse<any>> {
+  getPageBySlug(slug: string): Observable<Page[] | HttpResponse<any>> {
     return this.wpApiService.getPages(`slug=${slug}`);
   }
 
@@ -252,7 +280,7 @@ export class WpService {
 
   /* TAGS */
 
-  // getTags(): void {
+  // getTags(): Observable<HttpResponse<any>> {
   //   this.wpApiService.getTags(`orderby=name`).subscribe((res: any) => {
   //     if (res && res.body) {
   //       // console.log('getTags', res);
@@ -263,8 +291,8 @@ export class WpService {
   // }
 
   // TODO: OPTIMIZE LOADING ONCE ONLY
-  getTag(id: number): Observable<any> {
-    const subject: Subject<any> = new Subject();
+  getTag(id: number): Observable<Tag> {
+    const subject: Subject<Tag> = new Subject();
     const tag = this.getLoadedTag(id);
     if (tag) {
       setTimeout(() => {
@@ -272,21 +300,22 @@ export class WpService {
         subject.complete();
       }, 10);
     } else {
-      this.wpApiService.getTag(id).subscribe((res: any) => {
-        if (res.status === 200) {
+      const getTagSub: Subscription = this.wpApiService.getTag(id).subscribe((tag: Tag) => {
+        if (tag) {
           // console.log(res.body);
-          this._tags.push(res.body);
-          subject.next(res.body);
+          this._tags.push(tag);
+          subject.next(tag);
           subject.complete();
         }
-        
+        // unsubscribe
+        getTagSub.unsubscribe();
       });
     }
     return subject;
   }
 
-  getTagBySlug(slug: string): Observable<any> {
-    const subject: Subject<any> = new Subject();
+  getTagBySlug(slug: string): Observable<Tag> {
+    const subject: Subject<Tag> = new Subject();
     const tag = this.getLoadedTag(null, slug);
     if (tag) {
       setTimeout(() => {
@@ -294,12 +323,13 @@ export class WpService {
         subject.complete();
       }, 10);
     } else {
-      this.wpApiService.getTags(`slug=${slug}`).subscribe((res: any) => {
-        if (res.status === 200) {
+      const getTagsSub: Subscription = this.wpApiService.getTags(`slug=${slug}`).subscribe((tags: Tag[]) => {
+        if (tags) {
           // console.log(res.body);
-          this._tags.push(res.body[0]);
-          subject.next(res.body[0]);
+          this._tags.push(tags[0]);
+          subject.next(tags[0]);
           subject.complete();
+          getTagsSub.unsubscribe();
         }
         
       });
@@ -308,7 +338,7 @@ export class WpService {
     // return this.wpApiService.getTags(`slug=${slug}`);
   }
 
-  private getLoadedTag(id?: number, slug?: string): any {
+  private getLoadedTag(id?: number, slug?: string): Tag | null{
     for (let i = 0; i < this._tags.length; i++) {
       const tag = this._tags[i];
       if (id && id === tag.id || slug && slug === tag.slug) {
@@ -318,30 +348,39 @@ export class WpService {
     return null;
   }
 
-  getTagPosts(id: number): Observable<any> {
+  getTagPosts(id: number): Observable<Post[] | HttpResponse<any>> {
     return this.wpApiService.getPosts(`tags=${id}`);
   }
 
   /* MEDIAS */
 
-  getMedias(): void {
-    this.wpApiService.getMedias().subscribe((res: any) => {
-      if (res && res.body) {
-        // console.log('getMedias', res);
-        this._media = res.body;
-        this.media.next(res);
-      }
-    });
+  getMedias(): Observable<Media[] | HttpResponse<any>> {
+    return this.wpApiService.getMedias();
+    // TODO: getMeidas only return...
+    // this.wpApiService.getMedias().subscribe((medias: Media[]) => {
+    //   if (medias && medias.length) {
+    //     // console.log('getMedias', res);
+    //     this._media = medias;
+    //     this.media.next(medias);
+    //   }
+    // });
   }
 
-  getMedia(id: number): Observable<any> {
+  getMedia(id: number): Observable<Media> {
     return this.wpApiService.getMedia(id);
   }
 
   /* MENUS */
-  // getMenus(): Observable<any> {
-  //   
-  // }
+  getMenus(): Observable<Menu[]> {
+    return this.wpApiService.getMenus();
+  }
+
+  getMenuById(id: number): Observable<Menu> {
+    return this.wpApiService.getMenu(id);
+  }
+  getMenuBySlug(slug: string): Observable<Menu> {
+    return this.wpApiService.getMenu(slug);
+  }
   // ...
 
 

@@ -1,7 +1,7 @@
 @if(post || loadedPost) {
     @if (!post) {
         <!-- POSTS -->
-        <div class="post full">
+        <div [ngClass]="{'post': true, 'full': true, 'has-featured-image': hasFeaturedImage }">
             <!-- featured image -->
             <div class="featured-image-container" #featuredImage></div>
             <!-- date -->
@@ -91,7 +91,7 @@
             </h2>
             <!-- description -->
              @if(post.description) {
-                <div>{{post.description}}</div>
+                <div class="category-description" [innerHTML]="post.description | safeHtml"></div>
              }
             
         }

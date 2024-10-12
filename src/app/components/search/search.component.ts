@@ -60,8 +60,9 @@ export class SearchComponent implements OnInit {
       this.searching = true;
       return this.wpService.search(value.toLowerCase()).pipe(
         map(result => {
+          console.log('wpService.search result', result);
           this.searching = false;
-          return result.body
+          return result
         }),
         catchError(_ => {
           this.searching = false;

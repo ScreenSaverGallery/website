@@ -5,21 +5,25 @@
 <!-- site -->
 <div class="home">
     <!-- <h5 class="text-colored">{{siteDescription}}</h5> -->
-    <div class="get-ssg">
-        <ssg-ssg-icon 
-            [animated]="true"
-            [cursor]="false"
+    <header>
+        <ssg-ssg-icon
+            [animated]="!siteTitle ? true : false"
+            [cursor]="true"
+            [routerLink]="['/get']"
         ></ssg-ssg-icon>
-        <!-- <h3>ScreenSaverGallery</h3> -->
-        <ssg-button [type]="'stroked'" routerLink="/get">❤️‍🔥&nbsp;Download&nbsp;❤️‍🔥<!-- <span fxHide fxShow.gt-xs>❤️‍🔥👇🏿☞ </span>GET&nbsp;ScreenSaverGallery<span fxHide fxShow.gt-xs> ☜👇🏿❤️‍🔥</span> --></ssg-button>
-       <!-- <ssg-stats></ssg-stats> -->
-    </div> <!--end .get-ssg -->
-    <!-- <div class="home-info"> -->
-        <!-- TODO: improve sliding -->
-        <ssg-info-slider [addItem]="addSliderItem" [align]="'center'"></ssg-info-slider>
-    <!-- </div> -->
-    <!-- TODO: this site use no cookies !!! and does not collect any data -->
-    <!-- <div class="social">
-        <ssg-social [share]="false" [medias]="followUs"></ssg-social>
-    </div> -->
+        @if(siteTitle && siteDescription) {
+            <h1 #waving>{{siteTitle}} ✨ {{siteDescription}}</h1>
+        }
+    </header>
+    <div class="home-buttons">
+        @if(siteTitle) {
+            <ssg-button type="stroked" routerLink="/about">About</ssg-button>
+            <ssg-button [type]="'stroked'" routerLink="/get">❤️‍🔥&nbsp;Get&nbsp;{{siteTitle}}&nbsp;❤️‍🔥</ssg-button>
+        }
+    </div>
+    <span class="flex-spacer"></span>
+    <!-- <ssg-info-slider [addItem]="addSliderItem" [align]="'center'"></ssg-info-slider> -->
+    <ssg-info-slider-horizontal [addItem]="addSliderItem"></ssg-info-slider-horizontal>
+    
+    
 </div>

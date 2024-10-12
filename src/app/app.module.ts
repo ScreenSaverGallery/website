@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// ngx-wp-api
+import { NgxWpApiModule } from '@tomaszatoo/ngx-wp-api';
 
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { AppRoutingModule } from './modules/routing/app-routing.module';
@@ -30,37 +32,48 @@ import { InfoSliderComponent } from './components/info-slider/info-slider.compon
 import { ButtonComponent } from './components/button/button.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { InfoSliderHorizontalComponent } from './components/info-slider-horizontal/info-slider-horizontal.component';
 
-@NgModule({ declarations: [
-        AppComponent,
-        PostComponent,
-        HomeComponent,
-        NotFoundComponent,
-        PostsComponent,
-        TagComponent,
-        MenuComponent,
-        SafeHtmlPipe,
-        TruncatePipe,
-        MediaComponent,
-        TagPostsComponent,
-        LoadMoreComponent,
-        AuthorComponent,
-        AuthorPostsComponent,
-        CategoryPostsComponent,
-        DemetazoaPipe,
-        SsgIconComponent,
-        StarsComponent,
-        SocialComponent,
-        SearchComponent,
-        InfoSliderComponent,
-        ButtonComponent,
-        StatsComponent,
-        LoadingComponent
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    PostComponent,
+    HomeComponent,
+    NotFoundComponent,
+    PostsComponent,
+    TagComponent,
+    MenuComponent,
+    SafeHtmlPipe,
+    TruncatePipe,
+    MediaComponent,
+    TagPostsComponent,
+    LoadMoreComponent,
+    AuthorComponent,
+    AuthorPostsComponent,
+    CategoryPostsComponent,
+    DemetazoaPipe,
+    SsgIconComponent,
+    StarsComponent,
+    SocialComponent,
+    SearchComponent,
+    InfoSliderComponent,
+    ButtonComponent,
+    StatsComponent,
+    LoadingComponent,
+    InfoSliderHorizontalComponent
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    NgxWpApiModule.forRoot({
+      wpRootUrl: 'https://screensaver.metazoa.org'
+    })
+  ], 
+  providers: [provideHttpClient(withInterceptorsFromDi())]
+})
 export class AppModule { }

@@ -2,11 +2,11 @@
     @if(posts && posts.length) {
         <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
-        @if(category.description) {
-            <span [innerHTML]="category.description"></span>
+        @if(category?.description) {
+            <div class="category-description" [innerHTML]="category.description | safeHtml"></div>
         }        
-        <div class="posts-container" class="posts-container">
-            @for(post of posts; track post.id; let i = $index) {
+        <div class="posts-container">
+            @for(post of posts; let i = $index; track i) {
                 @if(slug === 'screensavers' && i === 0) {
                     <!-- do not show last show -->
                 } @else {
@@ -22,13 +22,15 @@
         <!-- {{log('category', category)}} -->
         <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
-         @if(category.description) {
-            {{category.description}}
+         @if(category?.description) {
+            <div class="category-description" [innerHTML]="category.description | safeHtml"></div>
          }
         <!-- SUBCATEGORIES LINKS -->
-        @for(child of children; track child.id) {
-            <ssg-post [post]="child"></ssg-post>
-        }
+        <!-- <div class="posts-container"> -->
+            @for(child of children; track child.id) {
+                <ssg-post [post]="child"></ssg-post>
+            }
+        <!-- </div> -->
     }
 <!-- LOADING -->
 } @else {

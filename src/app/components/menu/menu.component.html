@@ -1,3 +1,4 @@
+<!-- MENU CONTROLS (SITE HEADER) -->
 <div class="controls">
     @if(!homePage) {
         <div class="back">
@@ -5,51 +6,50 @@
                 <mat-icon>arrow_back</mat-icon>
             </ssg-button>
         </div>
-
+        <span class="flex-spacer"></span>
         <div class="get">
             @if(siteTitle && !getPage) {
                 <ssg-button [type]="'stroked'" [colors]="['white']" [routerLink]="homeLink">
-                    Get {{siteTitle}}
+                    ❤️‍🔥&nbsp;Get&nbsp;{{siteTitle}}&nbsp;❤️‍🔥
                 </ssg-button>
             }
         </div>
     }
-
-    <div class="sandwitch" #sandwitch [ngClass]="{'home': homePage}">
+    <span class="flex-spacer"></span>
+    <!-- <div class="sandwitch" #sandwitch [ngClass]="{'home': homePage}"> -->
+    <div class="sandwitch" #sandwitch>
+        <!-- <div class="cookies">
+            <div class="privacy">🔒</div>
+            <div class="no-tracking "><small>This site does not track you.</small></div>
+        </div> -->
         <ssg-button [type]="'icon'" (click)="toggleMenu(drawer.toggle())">
             <mat-icon>menu</mat-icon>
         </ssg-button>
     </div>
 </div>
 
-<!-- <div class="theme">
-    <ssg-button [type]="'icon'" (click)="toggleTheme()">
-        <mat-icon>invert_colors</mat-icon>
-    </ssg-button>
-</div> -->
-
+<!-- FULL SCREEN MENU (TOGGLE) -->
 <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer mode="side" position="end" closed>
         <!-- MENU HEADER -->
         <div class="menu-header">
             <!-- <div></div> -->
             <!-- SEARCH -->
-            <div class="search">
-                <ssg-search (optionSelected)="searchSelected($event, closeMenu(drawer.close()))"></ssg-search>
-            </div>
+            <ssg-search class="search" (optionSelected)="searchSelected($event, closeMenu(drawer.close()))"></ssg-search>
+            <span class="flex-spacer"></span>
             <!-- CLOSE BUTTON -->
-            <div>
-                <ssg-button [type]="'icon'" (click)="closeMenu(drawer.close())">
-                    <mat-icon>close</mat-icon>
-                </ssg-button>
-            </div>
+            <ssg-button [type]="'icon'" (click)="closeMenu(drawer.close())">
+                <mat-icon>close</mat-icon>
+            </ssg-button>
         </div>
         
-        <!-- LINKS -->
-        @if (categories && pages) {
-            <nav>
-                <div class="menu-blocks">
-                    <!-- ARCHIVES -->
+        <!-- NAV -->
+        <nav>
+            @if(!categoriesMenu && !pagesMenu) {
+                <ssg-loading></ssg-loading>
+            }
+            <div class="menu-blocks">
+                @if(categoriesMenu) {
                     <div class="archives">
                         <!-- CURRENT SHOW -->
                         @if(currentShow) {
@@ -57,45 +57,44 @@
                                 <a [routerLink]="'/' + currentShow.slug" (click)="closeMenu(drawer.close())"><span class="link-content" [innerHtml]="'Current Show'"></span></a>
                             </p>
                         }
-                        @for(cat of categories; track cat.id) {
-                            <!-- TOP CATEGORIES -->
-                            @if(cat?.parent === 0) {
-                                <p>
-                                    <a
-                                        [routerLink]="'/archive/' + cat.slug"
-                                        [state]="{type: 'category'}"
-                                        routerLinkActive="active"
-                                        (click)="closeMenu(drawer.close())"
-                                    ><span class="link-content" [innerHtml]="cat.name | titlecase | safeHtml"></span></a>
-                                </p>
-                            } 
+                        <!-- MENU ITEMS -->
+                        <!-- CATEGORIES -->
+                        @for(item of categoriesMenu.items; track item.ID) {
+                            <p>
+                                <a
+                                    [routerLink]="['archive', item.slug]"
+                                    [state]="{type: 'category'}"
+                                    routerLinkActive="active"
+                                    (click)="closeMenu(drawer.close())"
+                                >
+                                <span class="link-content" [innerHtml]="item.title | titlecase | safeHtml"></span>
+                                </a>
+                            </p>
                         }
                     </div>
-
-                    <!-- PAGES -->
+                }
+                @if(pagesMenu) {
                     <div class="pages">
-                        @for(page of pages; track page.id) {
-                            @if(page.content.rendered) {
-                                <p>
-                                    <a
-                                        [routerLink]="'/' + page.slug"
-                                        (click)="closeMenu(drawer.close())"
-                                    >
-                                        <span class="link-content" [innerHtml]="page.title.rendered | safeHtml"></span>
-                                    </a>
-                                </p>
-                            }
+                        <!-- PAGES -->
+                        @for(item of pagesMenu.items; track item.ID) {
+                            <p>
+                                <a
+                                    [routerLink]="['/', item.slug]"
+                                    [state]="{type: 'category'}"
+                                    routerLinkActive="active"
+                                    (click)="closeMenu(drawer.close())"
+                                >
+                                <span class="link-content" [innerHtml]="item.title | titlecase | safeHtml"></span>
+                                </a>
+                            </p>
                         }
                     </div>
-                </div>
-            </nav>
-            <div class="social">
-                <ssg-social [share]="false" [medias]="followUs"></ssg-social>
+                }
             </div>
-        } @else {
-            <div>
-                Loading ...
-            </div>
-        }
+        </nav>
+        <span class="flex-spacer"></span>
+        <div class="social">
+            <ssg-social [share]="false" [medias]="followUs"></ssg-social>
+        </div>
     </mat-drawer>
 </mat-drawer-container>

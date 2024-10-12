@@ -3,6 +3,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
 import { ThemeService } from '../../services/theme/theme.service';
+import { Category, Post, User, Tag } from '@tomaszatoo/ngx-wp-api';
+import { HttpResponse } from '@angular/common/http';
+// rxjs
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ssg-posts',
@@ -17,7 +21,7 @@ export class PostsComponent implements OnInit {
     this.posts = [];
     this.postsPage = 1;
     this.slug = value;
-    this.loadPosts();
+    if (!this.loadingPosts) this.loadPosts();
   };
   @Input() set postsFrom(value: string) {
     this._postsFrom = value;
@@ -33,28 +37,25 @@ export class PostsComponent implements OnInit {
   postsPage: number = 1;
   total: number;
   totalPages: number;
-  loadingPosts: boolean = false;
+  private loadingPosts: boolean = false;
 
   title: string;
   slug: string;
   randomColor: string = 'silver';
 
-  bwTheme: boolean = false;
+  // bwTheme: boolean = false;
+
+  private getCategoriesSub: Subscription = new Subscription();
 
   constructor(
     private wpService: WpService,
-    private colorService: ColorService,
-    private themeService: ThemeService
+    private colorService: ColorService
   ) { }
 
   ngOnInit() {
-    this.themeService.bwTheme.subscribe((bw: boolean) => {
-      this.bwTheme = bw;
-      this.randomColor = (bw ? 'white' : this.colorService.generateHslaColors(100)[0]);
-    });
-    // console.log('postsFrom', this._postsFrom);
-    // console.log('postsOf', this._postsOf);
-    if (this._postsFrom && this._postsOf) {
+    this.randomColor = this.colorService.generateHslaColors(100)[0];
+    // load posts (page 1)
+    if (this._postsFrom && this._postsOf && !this.loadingPosts) {
       this.loadPosts();
     }
     
@@ -62,6 +63,9 @@ export class PostsComponent implements OnInit {
 
   private loadPosts(): void {
     // console.log('postsFrom', this._postsFrom);
+    if (!this._postsFrom) return; // return if not set from what to load
+    // start loading
+    this.loadingPosts = true;
     switch (this._postsFrom) {
       case 'archive':
         this.getCategoryPosts(this._postsOf);
@@ -75,55 +79,73 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  getCategoryPosts(categorySlug: string): void {
-    this.wpService.categories.subscribe((res: any) => {
-      if (res) {
+  /* GET CATEGORY POSTS */
+  private getCategoryPosts(categorySlug: string): void {
+    this.getCategoriesSub = this.wpService.categories.subscribe((categories: Category[]) => {
+      if (categories) {
+        // console.log('getCategoryPosts -> categories', categories);
         this.category = this.wpService.getCategoryBySlug(categorySlug);
         this.children = this.wpService.categoryChildren(this.category.id);
+        // console.log('getCategoryPosts category', this.category);
+        // console.log('getCategoryPosts children', this.children);
         // set title
         this.title = this.category.name;
         // console.log('children', this.children);
+        // no children
         if (this.children.length === 0) {
-          this.loadingPosts = true;
-          this.wpService.getCategoryPosts(this.category.id, this.postsPage).subscribe((res: any) => {
+          // this.loadingPosts = true;
+          const getCatPostsSub: Subscription = this.wpService.getCategoryPosts(this.category.id, this.postsPage, true).subscribe((res: HttpResponse<any>) => {
             this.recievePosts(res);
+            // unsubscribe
+            getCatPostsSub.unsubscribe();
           });
         } else {
+          console.warn('getCategoryPosts -> children', this.children)
           // sort children
           // console.log('children', this.children);
           // this.children = this.children.sort((a: any, b: any) => parseFloat(a.id) + parseFloat(b.id) );
           // console.log('sorted children', this.children);
         }
+        this.getCategoriesSub.unsubscribe();
       }
     });
   }
 
-  getAuthorPosts(authorSlug: string): void {
-    this.wpService.getUserBySlug(authorSlug).subscribe((res: any) => {
-      if (res) {
-        const author = res;
+  /* GET AUTHOR POSTS (not used) */
+  private getAuthorPosts(authorSlug: string): void {
+    const getUserBySlugSub: Subscription = this.wpService.getUserBySlug(authorSlug).subscribe((user: User) => {
+      if (user) {
+        const author = user;
         this.title = (author.name === '&amp;' ? '&' : author.name);
-        this.wpService.getPostsByAuthor(author.id, this.postsPage).subscribe((r: any) => {
+        const getPostsByAuthorSub: Subscription = this.wpService.getPostsByAuthor(author.id, this.postsPage).subscribe((r: any) => {
           this.recievePosts(r);
+          // unsubscribe
+          getPostsByAuthorSub.unsubscribe();
         });
       }
+      getUserBySlugSub.unsubscribe();
     });
   }
 
-  getTagPosts(tagSlug: string): void {
-    this.wpService.getTagBySlug(tagSlug).subscribe((res: any) => {
-      if (res) {
-        const tag = res;
+  /* GET TAG POSTS */
+  private getTagPosts(tagSlug: string): void {
+    // console.log('getTagPosts', tagSlug);
+    const getTagSub: Subscription = this.wpService.getTagBySlug(tagSlug).subscribe((tag: Tag) => {
+      if (tag) {
+        // const tag = res;
         this.title = tag.name;
-        this.wpService.getPostsByTag(tag.id, this.postsPage).subscribe((r: any) => {
-          this.recievePosts(r);
+        const getPostsSub: Subscription = this.wpService.getPostsByTag(tag.id, this.postsPage, true).subscribe((res: HttpResponse<any>) => {
+          this.recievePosts(res);
+          getPostsSub.unsubscribe();
         });
+        getTagSub.unsubscribe();
       }
     });
     
   }
 
-  private recievePosts(res: any): void {
+  /* RECIVE POSTS FROM TAXONOMY */
+  private recievePosts(res: HttpResponse<any>): void {
     if (res && res.body && res.body.length > 0) {
       this.loadingPosts = false;
       const temp: any[] = this.posts;
@@ -133,11 +155,13 @@ export class PostsComponent implements OnInit {
         this.posts = temp.concat(res.body);
       }
       // load more posts
+      // console.log('shouldLoadMore?', this.shouldLoadMore());
       if (this.shouldLoadMore()) {
         this.postsPage++;
       } 
     }
   }
+
 
   shouldLoadMore(): boolean {
     if (this.total > this.posts.length && this.postsPage < this.totalPages + 1) {

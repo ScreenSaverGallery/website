@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { User } from '@tomaszatoo/ngx-wp-api';
 // services
 import { WpService } from '../../services/wp/wp.service';
+// rxjs
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ssg-author',
@@ -19,10 +22,11 @@ export class AuthorComponent implements OnInit {
 
   ngOnInit() {
     if (this.id) {
-      this.wpService.getUser(this.id).subscribe((res: any) => {
-        if (res) {
-          this.author = res;
+      const getUserSub: Subscription = this.wpService.getUser(this.id).subscribe((user: User) => {
+        if (user) {
+          this.author = user;
         }
+        getUserSub.unsubscribe();
       });
     }
   }

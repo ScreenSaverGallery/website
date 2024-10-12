@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 // services
-import { ThemeService } from './services/theme/theme.service';
-import { SiteInfoService } from './services/site-info/site-info.service';
-import { ColorService } from './services/color/color.service';
+// import { ThemeService } from './services/theme/theme.service';
+// import { SiteInfoService } from './services/site-info/site-info.service';
+// import { ColorService } from './services/color/color.service';
+import { SnackService } from './services/snack/snack.service';
 // rxjs
 import { Subscription } from 'rxjs';
 
@@ -11,19 +12,20 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 
   title: string = 'Screensaver';
   bwTheme: boolean = false;
   OS: string = 'Unknown';
 
-  private _backgroundColorSubscription: Subscription = new Subscription();
+  // private _backgroundColorSubscription: Subscription = new Subscription();
   private _isMobile = (/Mobile/i.test(navigator.userAgent));
 
   constructor(
-    private themeService: ThemeService,
-    private siteInfoService: SiteInfoService,
-    private colorService: ColorService,
+    // private themeService: ThemeService,
+    // private siteInfoService: SiteInfoService,
+    // private colorService: ColorService,
+    private snackService: SnackService,
     private appElm: ElementRef
   ){}
 
@@ -32,48 +34,12 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit, On
     this.OS = this.getOS();
     this.appElm.nativeElement.setAttribute('id', this.OS.toLowerCase());
     this.appElm.nativeElement.classList.add(this._isMobile ? 'mobile' : 'desktop');
-    // load site info
-    this.siteInfoService.getSiteInfo();
-    // THEME
-    this.themeService.bwTheme.subscribe((bw: boolean) => {
-      this.bwTheme = bw;
-    });
-    const isSsgBw: string = JSON.parse(localStorage.getItem('ssgIsBw'));
-    if (isSsgBw !== null) { // item was previously saved
-      // saved theme
-      const isBw = (isSsgBw === 'true' ? true : false); // <= must be converted to boolean (storage store strings)
-      this.themeService.setBwTo(Boolean(isBw));
-    }
-    // animate background color
-    // this._backgroundColorSubscription = this.colorService.animateRandomColor(5, 0, 30, 40, 1.0).subscribe({
-    //   next: (hslaColor: string) => {
-    //     // console.log('random color', hslaColor);
-    //     this.appElm.nativeElement.style.backgroundColor = hslaColor;
-    //   },
-    //   error: (e: any) => console.log(e)
-    // });
-  }
-
-  ngAfterViewInit(): void {
-    
-  }
-
-  ngAfterContentInit(): void {
-    // const buttons = this.appElm.nativeElement.querySelectorAll('ssg-button.stroked');
-    // console.log('buttons', buttons);
-    // this.colorService.animateRandomColor(1, 0, 100, 70, 1.0).subscribe({
-    //   next: (hslaColor: string) => {
-    //     for (const button of buttons) {
-    //       button.style.backgroundColor = hslaColor;
-    //     }
-    //   },
-    //   error: (e: any) => console.log(e)
-    // });
+    this.snackService.openSnackBar('🔒 This site does not track you.', 'Close');
   }
 
   ngOnDestroy(): void {
-    this.colorService.destroyAnimations();
-    this._backgroundColorSubscription.unsubscribe();
+    // this.colorService.destroyAnimations();
+    // this._backgroundColorSubscription.unsubscribe();
   }
 
   menuAction(open: boolean): void {

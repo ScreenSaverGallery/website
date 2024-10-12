@@ -66,9 +66,9 @@ export class ButtonComponent implements OnInit, AfterViewInit, OnDestroy {
     // this._inheritColorsFromBody();
     this._applyStyles();
     
-    this.themeService.bwTheme.subscribe((res: any) => {
-      this._applyStyles();
-    });
+    // this.themeService.bwTheme.subscribe((res: any) => {
+    //   this._applyStyles();
+    // });
 
     // if (this.type === 'stroked') {
     //   this._animateColorSubscription = this.colorService.animateRandomColor(1, this._randomFromTo(0, 100), 100, 70, 1.0).subscribe({

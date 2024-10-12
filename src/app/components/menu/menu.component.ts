@@ -6,10 +6,12 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  ElementRef
+  ElementRef,
+  OnDestroy
 } from '@angular/core';
 // material
 import { MatDrawer } from '@angular/material/sidenav';
+import { Menu, Post, MenuItem } from '@tomaszatoo/ngx-wp-api';
 // router
 import { Router, NavigationEnd } from '@angular/router';
 // models
@@ -21,13 +23,25 @@ import { LinksService } from '../../services/links/links.service';
 import { SiteInfoService } from '../../services/site-info/site-info.service';
 import { ColorService } from 'src/app/services/color/color.service';
 import { MenuService } from 'src/app/services/menu/menu.service';
+// rxjs
+import { Subscription } from 'rxjs';
+
+interface MenuExtended extends Omit<Menu, 'items'> {
+  items: MenuItemExtended[];
+}
+
+interface MenuItemExtended extends MenuItem {
+  slug: string;
+}
+
+
 
 @Component({
   selector: 'ssg-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit, AfterViewInit {
+export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('sandwitch') sandwitchElm: ElementRef;
   @ViewChild('drawer') drawer: MatDrawer;
@@ -35,13 +49,19 @@ export class MenuComponent implements OnInit, AfterViewInit {
   @Input() position: string = 'top-right';
   @Output() opened: EventEmitter<boolean> = new EventEmitter();
 
-  categories: any[];
-  pages: any[];
+  // categories: any[];
+  // pages: any[];
+
+  categoriesMenu: MenuExtended | null = null;
+  pagesMenu: MenuExtended | null = null;
+
   homePage: boolean = false;
   getPage: boolean = false;
   homeLink: string;
   currentShow: any;
   siteTitle: string;
+
+  private routerSub: Subscription = new Subscription();
 
   followUs: SocialMedium[] = [
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
@@ -55,6 +75,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   private _openedMenu: boolean = false;
   private _space: number = 24;
+
+  private menuToggleSub: Subscription = new Subscription();
 
 
   constructor(
@@ -71,7 +93,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.homeLink = this.linksService.homeLink;
     // home route
-    this.router.events.subscribe((res: any) => {
+    this.routerSub = this.router.events.subscribe((res: any) => {
       if (res instanceof NavigationEnd) {
         // console.log('router res', res);
         if (res && res.url === '/') {
@@ -87,35 +109,68 @@ export class MenuComponent implements OnInit, AfterViewInit {
           this.getPage = false;
           this.homeLink = this.linksService.downloadLink;
         }
+        // routerSub.unsubscribe();
       }
     });
     // site info
-    this.siteInfoService.siteInfo.subscribe((info: any) => {
-      if (info) {
-        this.siteTitle = info.name;
+    const siteInfoSub: Subscription = this.siteInfoService.siteInfo.subscribe({
+      next: (info: any) => {
+        console.log('get siteInfo', info);
+        if (info) {
+          this.siteTitle = info.name;
+          siteInfoSub.unsubscribe();
+        }
+      },
+      error: (e: any) => {
+        console.error(e);
+        siteInfoSub.unsubscribe();
       }
     });
     // get name of last screensaver
-    this.wpService.getCurrentScreensaver().subscribe((res: any) => {
-      this.currentShow = res.body[0];
+    const lastCurrentSSSub: Subscription = this.wpService.getCurrentScreensaver().subscribe((posts: Post[]) => {
+      this.currentShow = posts[0];
+      lastCurrentSSSub.unsubscribe();
     });
     // get all pages and categories
-    this.wpService.getAllCategories();
-    this.wpService.getAllPages();
-    // subscribe categories
-    this.wpService.categories.subscribe((res: any) => {
-      if (res) {
-        this.categories = res;
+    // this.wpService.getAllCategories();
+    // this.wpService.getAllPages();
+    // // subscribe categories
+    // this.wpService.categories.subscribe((res: any) => {
+    //   if (res) {
+    //     this.categories = res;
+    //   }
+    // });
+    // get menus
+    // categories menu
+    const categoriesMenuSub: Subscription = this.wpService.getMenuBySlug('categories').subscribe({
+      next: (menu: Menu | null) => {
+        // console.log('🐹🐹🐹🐹 get menu categories', menu);
+        if (menu) this.categoriesMenu = menu as MenuExtended;
+        categoriesMenuSub.unsubscribe();
+      },
+      error: (e: any) => {
+        console.error(e);
+        categoriesMenuSub.unsubscribe();
       }
     });
+    // pages menu
+    const pagesMenuSub: Subscription = this.wpService.getMenuBySlug('pages').subscribe({
+      next: (menu: Menu | null) => {
+        if (menu) this.pagesMenu = menu as MenuExtended;
+        pagesMenuSub.unsubscribe();
+      },
+      error: (e: any) => {
+        pagesMenuSub.unsubscribe();
+      }
+    })
     // subscribe pages
-    this.wpService.pages.subscribe((res: any) => {
-      if (res) {
-        this.pages = res;
-      }
-    });
+    // this.wpService.pages.subscribe((res: any) => {
+    //   if (res) {
+    //     this.pages = res;
+    //   }
+    // });
     // listen to menu actions
-    this.menuService.toggle.subscribe(() => {
+    this.menuToggleSub = this.menuService.toggle.subscribe(() => {
       this.toggleMenu(this.drawer.toggle());
     });
   }
@@ -135,6 +190,11 @@ export class MenuComponent implements OnInit, AfterViewInit {
     // });
 
     // this._animateIcons();
+  }
+
+  ngOnDestroy(): void {
+    this.menuToggleSub.unsubscribe();
+    this.routerSub.unsubscribe();
   }
 
   goBack(): void {

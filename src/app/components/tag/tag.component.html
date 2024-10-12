@@ -3,5 +3,5 @@
         <a [routerLink]="'/tag/' + tag.slug" [ngStyle]="{'color': randomColor}"><span class="link-content">#{{tag.name | lowercase}}</span></a>
     </div>
 } @else {
-    ...
+    <span class="three-dots">...</span>
 }

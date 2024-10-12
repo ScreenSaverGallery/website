@@ -8,12 +8,15 @@ import {
   ViewChild
 } from '@angular/core';
 import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
+import { Page, Post } from '@tomaszatoo/ngx-wp-api';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
-import { ThemeService } from '../../services/theme/theme.service';
+// import { ThemeService } from '../../services/theme/theme.service';
 import { LinksService } from '../../services/links/links.service';
 import { SnackService } from '../../services/snack/snack.service';
+// interfaces
+import { Media } from '@tomaszatoo/ngx-wp-api';
 // rxjs
 import { Subscription } from 'rxjs';
 
@@ -35,6 +38,8 @@ export class PostComponent implements OnInit, OnDestroy {
   randomColor: string = 'silver';
   ssgIconColor: string = 'red';
 
+  hasFeaturedImage: boolean = false;
+
   // postClass: string = '';
 
   social: any[] = [
@@ -44,7 +49,7 @@ export class PostComponent implements OnInit, OnDestroy {
   ];
 
   routeSubscription: Subscription;
-  wpSubscription: Subscription;
+  // wpSubscription: Subscription;
 
   @ViewChild('featuredImage') featuredImgContainer: ElementRef;
 
@@ -54,7 +59,7 @@ export class PostComponent implements OnInit, OnDestroy {
     private router: Router,
     private colorService: ColorService,
     private elm: ElementRef,
-    private themeService: ThemeService,
+    // private themeService: ThemeService,
     private linksService: LinksService,
     private snackService: SnackService
   ) { }
@@ -62,28 +67,31 @@ export class PostComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // console.log('init post component post', this.post);
     this.downloadLink = this.linksService.downloadLink;
+    this.randomColor = this.colorService.generateHslaColors(100)[0];
+    // console.warn('randomColor', this.randomColor);
     // THEME
-    this.themeService.bwTheme.subscribe((bw: boolean) => {
-      if (bw) {
-        // set random color
-        this.randomColor = 'white';
-        this.ssgIconColor = 'black';
-      } else {
-        this.randomColor = this.colorService.generateHslaColors(100)[0];
-        this.ssgIconColor = 'red';
-      }
-      // console.log('theme changed', this.randomColor);
-    });
+    // this.themeService.bwTheme.subscribe((bw: boolean) => {
+    //   if (bw) {
+    //     // set random color
+    //     this.randomColor = 'white';
+    //     this.ssgIconColor = 'black';
+    //   } else {
+    //     this.randomColor = this.colorService.generateHslaColors(100)[0];
+    //     this.ssgIconColor = 'red';
+    //   }
+    //   // console.log('theme changed', this.randomColor);
+    // });
     
     // higlight
     // if (this.highlighted) {
     //   this.elm.nativeElement.classList.add('highlight');
     // }
-    if (this.pinned) {
-      this.elm.nativeElement.classList.add('pinned');
-    }
+    // if (this.pinned) {
+    //   this.elm.nativeElement.classList.add('pinned');
+    // }
     // if not post, get it from url
     if (!this.post) {
+      this.hasFeaturedImage = false;
       this.routeSubscription = this.route.url.subscribe({
         next: (url: UrlSegment[]) => {
           // clean first
@@ -91,19 +99,19 @@ export class PostComponent implements OnInit, OnDestroy {
           // slug
           const slug: string = url[0].path;
           // get page first
-          this.wpSubscription = this.wpService.getPageBySlug(slug).subscribe({
-            next: (page: any) => {
+          const getPageSub: Subscription = this.wpService.getPageBySlug(slug).subscribe({
+            next: (pages: Page[]) => {
               // console.log('page', page);
-              const pageBody = page.body[0];
+              const pageBody = pages[0];
               if (pageBody) {
                 this.loadedPost = pageBody;
                 this._postFeatures(this.loadedPost);
                 this.postType = 'page';
               } else {
                 // get post if no page by slug
-                this.wpSubscription = this.wpService.getPostBySlug(slug).subscribe({
-                  next: (post: any) => {
-                    const postBody = post.body[0];
+                const getPostSub: Subscription = this.wpService.getPostBySlug(slug).subscribe({
+                  next: (posts: Post[]) => {
+                    const postBody = posts[0];
                     // console.log('postBody', postBody);
                     if (postBody) {
                       this.loadedPost = postBody;
@@ -113,6 +121,8 @@ export class PostComponent implements OnInit, OnDestroy {
                       // navigate to 404
                       this.router.navigate(['/error/404']);
                     }
+                    getPostSub.unsubscribe();
+
                   },
                   error: (e: any) => {
                     console.log('error loading post', e);
@@ -120,6 +130,7 @@ export class PostComponent implements OnInit, OnDestroy {
                   }
                 });
               }
+              getPageSub.unsubscribe();
             },
             error: (e: any) => {
               console.log('error loading page', e);
@@ -146,7 +157,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.routeSubscription) this.routeSubscription.unsubscribe();
-    if (this.wpSubscription) this.wpSubscription.unsubscribe();
+    // if (this.wpSubscription) this.wpSubscription.unsubscribe();
     // console.log('destroy post component');
     // if (this.postClass) this.elm.nativeElement.classList.remove(this.postClass);
   }
@@ -172,8 +183,10 @@ export class PostComponent implements OnInit, OnDestroy {
     const images = this.elm.nativeElement.querySelectorAll('img');
     // console.log('images', images);
     images.forEach((img: HTMLImageElement) => {
-      this.colorService.animateRandomColor(1, 0, 100, 70, 1.0).subscribe((hsla: string) => {
-        img.style.borderColor = hsla;
+      this.colorService.animateRandomColor(1, 0, 100, 70, 1.0).subscribe({
+        next: (hsla: string) => {
+          img.style.borderColor = hsla;
+        }
       })
     });
   }
@@ -192,28 +205,30 @@ export class PostComponent implements OnInit, OnDestroy {
   private _getFeautredImage(id: number): void {
     // console.log('getFeaturedImage', id);
     // console.log('featuredImage child', this.featuredImgContainer);
-    let mediaSubscribtion: Subscription;
-    mediaSubscribtion = this.wpService.getMedia(id).subscribe({
-      next: (media: any) => {
+    const mediaSubscribtion: Subscription = this.wpService.getMedia(id).subscribe({
+      next: (media: Media) => {
         // console.log('recieved media', media);
-        if (media.body && media.body.source_url) {
-          mediaSubscribtion.unsubscribe();
+        if (media && media.source_url) {
+          
           const image = new Image();
           image.onload = () => {
+            this.hasFeaturedImage = true;
             this.featuredImgContainer.nativeElement.style.backgroundImage = `url(${image.src})`;
             setTimeout(() => {
               this.featuredImgContainer.nativeElement.classList.add('fadeInFromNone');
             }, 1000);
           }
           setTimeout(function(){
-            image.src = media.body.source_url;         
+            image.src = media.source_url;         
         }, 100);
           
         }
+        mediaSubscribtion.unsubscribe();
       },
       error: (e: any) => {
         console.log(e);
         this.snackService.openSnackBar(e, 'Close');
+        mediaSubscribtion.unsubscribe();
       }
     })
   }

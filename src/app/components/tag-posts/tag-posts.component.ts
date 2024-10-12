@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
+// rxjs
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -7,17 +9,19 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
   templateUrl: './tag-posts.component.html',
   styleUrls: ['./tag-posts.component.scss']
 })
-export class TagPostsComponent implements OnInit {
+export class TagPostsComponent implements OnInit, OnDestroy {
 
   postsOf: string;
   postsFrom: string;
+
+  private routeSub: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.route.url.subscribe((url: UrlSegment[]) => {
+    this.routeSub = this.route.url.subscribe((url: UrlSegment[]) => {
       if (url.length > 0) {
         // console.log('url', url);
         const lastUrlIndex: number = url.length - 1;
@@ -25,6 +29,10 @@ export class TagPostsComponent implements OnInit {
         this.postsFrom = url[0].path;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub.unsubscribe();
   }
 
 }

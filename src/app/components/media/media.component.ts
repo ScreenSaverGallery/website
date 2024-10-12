@@ -1,17 +1,26 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   Input
 } from '@angular/core';
 // services
 import { WpService } from '../../services/wp/wp.service';
+// interfaces
+import { Media } from '@tomaszatoo/ngx-wp-api';
+// rxjs
+import { Subscription } from 'rxjs';
+
+// interface MediaExtended extends Media {
+//   media_details: { width: number, height: number, sizes: any }
+// }
 
 @Component({
   selector: 'ssg-media',
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.scss']
 })
-export class MediaComponent implements OnInit {
+export class MediaComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
 
@@ -20,26 +29,32 @@ export class MediaComponent implements OnInit {
   title: string;
   imageDetails: any;
 
+  private getMediaSub: Subscription = new Subscription();
+
   constructor(
     private wpService: WpService
   ) { }
 
   ngOnInit() {
     if (this.id) {
-      this.wpService.getMedia(this.id).subscribe((res: any) => {
+      this.getMediaSub = this.wpService.getMedia(this.id).subscribe((media: Media) => {
         // console.log('media res', res);
-        if (res.status === 200 && res.body.source_url) {
-          this.mediaType = res.body.media_type;
-          this.title = res.body.title.rendered;
+        if (media && media.source_url) {
+          this.mediaType = media.media_type;
+          this.title = media.title.rendered;
           // console.log('title', this.title);
-          this.imageDetails = res.body.media_details;
+          this.imageDetails = media.media_details;
           // console.log('imageDetails', this.imageDetails);
-
           // should be last
-          this.url = res.body.source_url;
+          this.url = media.source_url;
+          this.getMediaSub.unsubscribe();
         }
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.getMediaSub.unsubscribe();
   }
 
   getImageSrcset(): string {

@@ -15,7 +15,17 @@ import {
 export class SsgIconComponent implements OnInit, AfterViewInit {
 
   @Input() size: number = 100;
-  @Input() animated: boolean = false;
+  @Input() set animated(animated: boolean) {
+    if (this.elm) {
+      if (animated) {
+        this.elm.nativeElement.classList.add('animated');
+      } else {
+        this.elm.nativeElement.classList.remove('animated');
+      }
+    }
+    
+  }
+  // @Input() animated: boolean = false;
   @Input() cursor: boolean = true;
 
   // flat or not flat change
@@ -39,9 +49,7 @@ export class SsgIconComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.elm.nativeElement.style.width = `${this.size}px`;
-    if (this.animated) {
-      this.elm.nativeElement.classList.add('animated');
-    }
+    
     if (!this.cursor) this.elm.nativeElement.style.cursor = 'default';
   }
 
