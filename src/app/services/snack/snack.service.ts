@@ -12,11 +12,11 @@ export class SnackService {
     private _snackBar: MatSnackBar
   ) { }
 
-  openSnackBar(message: string, action: string): void {
-    this._snackBar.open(message, action, {
+  openSnackBar(message: string, actionLabel: string, duration: number = this.duration): void {
+    this._snackBar.open(message, actionLabel, {
       verticalPosition: 'top',
       horizontalPosition: 'center',
-      duration: this.duration * 1000
+      duration: duration * 1000
     });
   }
 }
