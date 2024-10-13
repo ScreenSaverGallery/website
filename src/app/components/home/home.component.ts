@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 // models
 import { SocialMedium } from '../../models/social-medium';
@@ -8,7 +8,6 @@ import { WpService } from '../../services/wp/wp.service';
 import { ThemeService } from '../../services/theme/theme.service';
 import { LinksService } from '../../services/links/links.service';
 import { SiteInfoService } from '../../services/site-info/site-info.service';
-import { ColorService } from 'src/app/services/color/color.service';
 // rxjs
 import { Subscription } from 'rxjs';
 import { Post, Media } from '@tomaszatoo/ngx-wp-api';
@@ -18,7 +17,7 @@ import { Post, Media } from '@tomaszatoo/ngx-wp-api';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
 
   starsText: string;
   siteTitle: string = undefined;
@@ -49,9 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private wpService: WpService,
     private themeService: ThemeService,
     private linksService: LinksService,
-    private siteInfoService: SiteInfoService,
-    private colorService: ColorService,
-    private elm: ElementRef
+    private siteInfoService: SiteInfoService
   ) { }
 
   ngOnInit(): void {
@@ -62,13 +59,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (info) {
           this.siteTitle = info.name;
           this.siteDescription = info.description;
-          // const description: SliderItem = {
-          //   text: `🪼 ${info.description} 🪼`,
-          //   // delay: 4000
-          // };
-          // this.addSliderItem = description;
+          
           setTimeout(() => {
-            console.log('waving elm', this.wavingElm);
+            // console.log('waving elm', this.wavingElm);
             if (this.wavingElm) {
               const delay = 200;
               const dom = this.wavingElm.nativeElement;
@@ -108,13 +101,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             url: post.slug
           }
           this.addSliderItem = currentShow;
-
-          // setTimeout(() => {
-          //   this.addSliderItem = {
-          //     text: 'ScreenSaverGallery',
-          //   };
-          // }, 1000);
         }
+
         this._getCurrentSaverSub.unsubscribe();
       },
       error: (e: any) => console.error(e)
@@ -123,22 +111,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // get name of last offline screensaver
     this._getCurrentOfflineSaverSub = this.wpService.getCurrentOfflineScreensaver().subscribe({
       next: (posts: Post[]) => {
-        // this.starsText = res.body[0].title.rendered;
-        // console.log('res.body', res.body);
-        // console.log('offline res', res);
         if (posts.length) {
           const post = posts[0];
-          // if (post.featured_media) {
-          //   // console.log('res.body', res.body[0]);
-          //   this.getFeautredImage(post.featured_media);
-          // }
-          const currentShow: SliderItem = {
+          const currentOfflineShow: SliderItem = {
             emoji: '🪷 Offline Now ',
             text: post.title.rendered,
             // delay: 10000,
             url: post.slug
           }
-          this.addSliderItem = currentShow;
+          this.addSliderItem = currentOfflineShow;
         }
         this._getCurrentOfflineSaverSub.unsubscribe();
       },
@@ -174,20 +155,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       error: (e: any) => console.error(e)
     });
     
-  }
-
-  ngAfterViewInit(): void {
-    // const buttons = this.elm.nativeElement.querySelectorAll('ssg-button');
-    // console.log('buttons', buttons);
-    // this.colorService.animateRandomColor(1, 0, 100, 70, 1.0).subscribe({
-    //   next: (hslaColor: string) => {
-    //     for (const button of buttons) {
-    //       // button.style.backgroundColor = hslaColor;
-    //       button.style.boxShadow = `0 0 24px ${hslaColor}`;
-    //     }
-    //   },
-    //   error: (e: any) => console.log(e)
-    // });
   }
 
   ngOnDestroy(): void {
