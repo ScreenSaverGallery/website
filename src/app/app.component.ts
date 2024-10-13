@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.OS = this.getOS();
     this.appElm.nativeElement.setAttribute('id', this.OS.toLowerCase());
     this.appElm.nativeElement.classList.add(this._isMobile ? 'mobile' : 'desktop');
-    this.snackService.openSnackBar('🔒 This site does not track you.', 'Close');
+    this.snackService.openSnackBar('This site does not track you.', '🥰 Ok');
   }
 
   ngOnDestroy(): void {
