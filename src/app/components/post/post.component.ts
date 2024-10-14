@@ -44,7 +44,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   social: any[] = [
     {name: 'facebook', shortcut: 'fb', urlBase: 'https://facebook.com/sharer/sharer.php?u='},
-    {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/intent/tweet?text='},
+    // {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/intent/tweet?text='},
     {name: 'telegram', shortcut: 'tg', urlBase: 'https://t.me/share/url?url='}
   ];
 

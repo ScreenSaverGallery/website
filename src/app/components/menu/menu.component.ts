@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
     {name: 'discord', shortcut: 'dc', urlBase: 'https://discord.gg/QJtRUYptRR'},
     {name: 'rss', shortcut: 'rss', urlBase: 'https://screensaver.metazoa.org/feed/'},
-    {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/ScreenSaverG'},
+    // {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/ScreenSaverG'},
     {name: 'instagram', shortcut: 'i', urlBase: 'https://www.instagram.com/screensavergallery/'},
     {name: 'facebook', shortcut: 'fb', urlBase: 'https://www.facebook.com/ScreenSaverGallery'},
     {name: 'github', shortcut: 'git', urlBase: 'https://github.com/ScreenSaverGallery'}
