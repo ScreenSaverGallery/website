@@ -153,6 +153,10 @@ ssg-root {
             position: relative;
             top: 0;
         }
+        /* hide download buttons for mobile devices */
+        ssg-button.get {
+            display: none !important;
+        }
     }
 
     .theme {
@@ -808,7 +812,7 @@ ssg-ssg-icon {
 ssg-home {
     display: block;
     width: 100%;
-    height: 95vh;
+    height: calc(95vh - (3 * $space));
     @include layer-2();
     header {
         display: flex;
@@ -1330,7 +1334,6 @@ ssg-not-found {
                 font-size: 8vh;
             }
         }
-
     }
 }
 
