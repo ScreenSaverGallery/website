@@ -15,6 +15,10 @@ interface CategoryChild {
   posts: Post[]
 }
 
+interface UserExt extends User {
+  description: string;
+}
+
 @Component({
   selector: 'ssg-posts',
   templateUrl: './posts.component.html',
@@ -38,6 +42,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   private _postsFrom: string;
 
   category: Category;
+  author: UserExt;
   children: CategoryChild[] = [];
   posts: Post[] = [];
   maxVisiblePosts: number = 30;
@@ -65,6 +70,8 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.randomColor = this.colorService.generateHslaColors(100)[0];
     // load posts (page 1)
     if (this._postsFrom && this._postsOf && !this.loadingPosts) {
+      // console.log('postsFrom', this._postsFrom);
+      // console.log('postsOf', this._postsOf);
       this.loadPosts();
     }
 
@@ -161,9 +168,11 @@ export class PostsComponent implements OnInit, OnDestroy {
   private getAuthorPosts(authorSlug: string): void {
     const getUserBySlugSub: Subscription = this.wpService.getUserBySlug(authorSlug).subscribe((user: User) => {
       if (user) {
-        const author = user;
-        this.title = (author.name === '&amp;' ? '&' : author.name);
-        const getPostsByAuthorSub: Subscription = this.wpService.getPostsByAuthor(author.id, this.postsPage).subscribe((r: any) => {
+        // const author = user;
+        this.author = user as UserExt;
+        console.log('author', user);
+        this.title = (this.author.name === '&amp;' ? '&' : this.author.name);
+        const getPostsByAuthorSub: Subscription = this.wpService.getPostsByAuthor(this.author.id, this.postsPage, true).subscribe((r: any) => {
           this.recievePosts(r);
           // unsubscribe
           getPostsByAuthorSub.unsubscribe();

@@ -69,8 +69,8 @@ export class WpService {
     return this.wpApiService.getPosts(`tags=${tag}&orderby=date&page=${page}`, observeResponse);
   }
 
-  getPostsByAuthor(authorId: number, page: number = 1): Observable<Post[] | HttpResponse<any>> {
-    return this.wpApiService.getPosts(`author=${authorId}&orderby=date&page=${page}`);
+  getPostsByAuthor(authorId: number, page: number = 1, observeResponse: boolean = false): Observable<Post[] | HttpResponse<any>> {
+    return this.wpApiService.getPosts(`author=${authorId}&orderby=date&page=${page}`, observeResponse);
   }
 
   getCategoryPosts(id: number, page: number = 1, observeResponse: boolean = false): Observable<Post[] | HttpResponse<any>> {

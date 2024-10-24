@@ -4,7 +4,11 @@
         <!-- CATEGORY DESCRIPTION -->
         @if(category?.description) {
             <div class="category-description" [innerHTML]="category.description | safeHtml"></div>
-        }        
+        }
+        <!-- AUTHOR DESCRIPTION -->
+        @if(author?.description) {
+            <div class="author-description" [innerHtml]="author.description | safeHtml"></div>
+        }     
         <div class="posts-container">
             @for(post of posts; let i = $index; track i) {
                 @if(slug === 'screensavers' && i === 0) {
@@ -29,7 +33,7 @@
         <div class="subcategories-links">
             @for(subcategory of children; track subcategory.catId) {
                 @if (subcategory.category.count) {
-                    <div><a [routerLink]="['/archive', subcategory.category.slug]" [innerHTML]="subcategory.category.name | titlecase | safeHtml"></a></div>
+                    <div>🦥 <a [routerLink]="['/archive', subcategory.category.slug]" [innerHTML]="subcategory.category.name | titlecase | safeHtml"></a></div>
                 }
             }
         </div>

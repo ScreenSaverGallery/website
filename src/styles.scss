@@ -735,9 +735,19 @@ ssg-posts {
         // @include flex-layout-gap(6%);
     }
 
-    .category-description {
+    .category-description, .author-description {
         font-size: medium;
         margin-bottom: $space;
+        color: whitesmoke;
+    }
+
+    .subcategories-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        & > * {
+            margin-right: $space;
+        }
     }
 
     .subcategories {

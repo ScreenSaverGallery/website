@@ -27,6 +27,8 @@ export class AuthorPostsComponent implements OnInit, OnDestroy {
         const lastUrlIndex: number = url.length - 1;
         this.postsOf = url[lastUrlIndex].path;
         this.postsFrom = url[0].path;
+        console.log('postsOf', this.postsOf);
+        console.log('postsFrom', this.postsFrom);
       }
     });
   }
