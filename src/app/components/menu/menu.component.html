@@ -84,7 +84,14 @@
                                     routerLinkActive="active"
                                     (click)="closeMenu(drawer.close())"
                                 >
-                                <span class="link-content" [innerHtml]="item.title | titlecase | safeHtml"></span>
+                                <!-- do not titlecase ScreenSaverGallery! -->
+                                @if(item.title.includes('ScreenSaverGallery')) {
+                                    <span class="link-content" [innerHtml]="item.title | safeHtml"></span>
+                                <!-- titlecase everyone else -->
+                                } @else {
+                                    <span class="link-content" [innerHtml]="item.title | titlecase | safeHtml"></span>
+                                }
+                                
                                 </a>
                             </p>
                         }
