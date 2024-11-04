@@ -145,6 +145,7 @@ export class PostsComponent implements OnInit, OnDestroy {
                 if (i === this.children.length - 1) {
                   this.loadingPosts = false;
                 }
+                console.log('child', child);
                 console.log(`posts of ${child.category.slug}`, posts);
                 getCatPostsSub.unsubscribe();
               },

@@ -64,8 +64,9 @@
                     <div class="more-subcategory">
                         <ssg-button
                             type="stroked"
+                            [badge]="child.category.count"
                             [routerLink]="['/archive', child.category.slug]"
-                        >[...]&nbsp;{{child.category.name | titlecase}}</ssg-button>
+                        >More from {{child.category.name | titlecase}} <!-- [...]&nbsp;{{child.category.name | titlecase}} --></ssg-button>
                     </div> 
                 }
             }

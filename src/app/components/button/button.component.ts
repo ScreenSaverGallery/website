@@ -35,7 +35,8 @@ export class ButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() dark: boolean = true;
   @Input() type: string =  undefined; // default undefined, types: stroked, icon
   @Input() colors: string[] = new Array(3);
-  @Input() skew: boolean = false;
+  @Input() badge: number = 0;
+  // @Input() skew: boolean = false;
 
   private _colors: string[];
   private _animateColorSubscription: Subscription = new Subscription();
@@ -51,14 +52,14 @@ export class ButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content', {static: false}) contentElm: ElementRef;
 
   constructor(
-    private themeService: ThemeService,
-    private colorService: ColorService,
+    // private themeService: ThemeService,
+    // private colorService: ColorService,
     private elm: ElementRef
   ) { }
 
   ngOnInit(): void {
     this._colors = this.colors.map(color => color);
-    if (this.skew) this.elm.nativeElement.classList.add('skew');
+    // if (this.skew) this.elm.nativeElement.classList.add('skew');
     // console.log('colors', this._colors);
   }
 

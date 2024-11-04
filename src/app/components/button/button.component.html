@@ -1,1 +1,7 @@
-<div #content class="button-content"><ng-content></ng-content></div>
+
+<div #content class="button-content">
+    <ng-content></ng-content>
+    @if(badge) {
+        <div class="badge">{{badge}}</div>
+    }
+</div>
