@@ -64,6 +64,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
   private routerSub: Subscription = new Subscription();
 
   followUs: SocialMedium[] = [
+    {name: 'signal', shortcut: 'signal', urlBase: 'https://signal.group/#CjQKIHzeKjxDhPsOkmyVBuDyY4UfRo5aboltmuM6_DvKTmquEhD75Gre_8iJg4UB7zW6AhMY'},
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
     {name: 'discord', shortcut: 'dc', urlBase: 'https://discord.gg/QJtRUYptRR'},
     {name: 'rss', shortcut: 'rss', urlBase: 'https://screensaver.metazoa.org/feed/'},
