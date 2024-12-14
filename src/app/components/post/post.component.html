@@ -11,8 +11,13 @@
                 <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
             </div>
             
-            <div class="social">
-                <ssg-social [medias]="social"></ssg-social>
+            <div class="post-controls">
+                <div class="social">
+                    <ssg-social [medias]="social"></ssg-social>
+                </div>
+                <div class="sponsor">
+                    <ssg-social [medias]="sponsor" [share]="false" [sponsor]="true"></ssg-social>
+                </div>
             </div>
             <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
             <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">

@@ -1,21 +1,37 @@
 @if(medias && medias.length) {
     <div class="social-container">
-        <!-- SHARE TEMPLATE -->
-         @if (share) {
-            <!-- <div><mat-icon>share</mat-icon></div> -->
-            <!-- <div></div> -->
-            @for(medium of medias; track medium.name) {
-                <div [ngClass]="{'medium': true}">
-                    <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase + getHref())" [title]="'Share this on ' + medium.name">🫧 {{medium.shortcut}}</ssg-button>
-                </div>
-            }
-        <!-- FEED TEMPLATE -->
-        } @else {
+        <!-- SPONSOR TEPLATE -->
+        @if (sponsor) {
             @for(medium of medias; track medium.name) {
                 <div class="medium">
-                    <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase)" [title]="'Follow ScreenSaverGallery on ' + medium.name">{{medium.name}} 💨</ssg-button>
+                    <ssg-button type="stroked" (click)="openHref(medium.urlBase)" [title]="'Sponsor ScreenSaverGallery' + (medium.name ? ' on ' + medium.name : '')">
+                        @if(medium.name) {
+                            ♥️ Sponsor on {{medium.name}}
+                        } @else {
+                            Sponsor ♥️
+                        }
+                    </ssg-button>
                 </div>
             }
+        } @else {
+            <!-- SHARE TEMPLATE -->
+            @if (share) {
+                <!-- <div><mat-icon>share</mat-icon></div> -->
+                <!-- <div></div> -->
+                @for(medium of medias; track medium.name) {
+                    <div [ngClass]="{'medium': true}">
+                        <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase + getHref())" [title]="'Share this on ' + medium.name">🫧 {{medium.shortcut}}</ssg-button>
+                    </div>
+                }
+            <!-- FEED TEMPLATE -->
+            } @else {
+                @for(medium of medias; track medium.name) {
+                    <div class="medium">
+                        <ssg-button [type]="'stroked'" (click)="openHref(medium.urlBase)" [title]="'Follow ScreenSaverGallery on ' + medium.name">{{medium.name}} 💨</ssg-button>
+                    </div>
+                }
+            }
         }
+        
     </div>
 }

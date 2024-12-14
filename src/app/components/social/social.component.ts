@@ -19,6 +19,7 @@ export class SocialComponent implements OnInit {
   @Input() medias: SocialMedium[] = []; // no medias default ;)
   @Input() referenceUrl: string;
   @Input() share: boolean = true;
+  @Input() sponsor: boolean = false;
 
   constructor() { }
 

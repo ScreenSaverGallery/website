@@ -650,10 +650,17 @@ ssg-post {
             position: relative;
         }
 
-        .social {
+        .post-controls {
             margin-bottom: calc(2 * $space);
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-between;
         }
-
+        
+        // .social {
+        //     margin-bottom: calc(2 * $space);
+        // }
         .tags {
             display: flex;
             flex-direction: row;
@@ -1400,6 +1407,15 @@ ssg-not-found {
             }
         }
 
+    }
 
+    ssg-post {
+        .full {
+            .post-controls {
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+        }
+        
     }
 }

@@ -17,6 +17,7 @@ import { LinksService } from '../../services/links/links.service';
 import { SnackService } from '../../services/snack/snack.service';
 // interfaces
 import { Media } from '@tomaszatoo/ngx-wp-api';
+import { SocialMedium } from 'src/app/models/social-medium';
 // rxjs
 import { Subscription } from 'rxjs';
 
@@ -42,11 +43,15 @@ export class PostComponent implements OnInit, OnDestroy {
 
   // postClass: string = '';
 
-  social: any[] = [
+  social: SocialMedium[] = [
     {name: 'facebook', shortcut: 'fb', urlBase: 'https://facebook.com/sharer/sharer.php?u='},
     // {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/intent/tweet?text='},
     {name: 'telegram', shortcut: 'tg', urlBase: 'https://t.me/share/url?url='}
   ];
+
+  sponsor: SocialMedium[] = [
+    { name: '', shortcut: 'oc', urlBase: 'https://opencollective.com/screensavergallery/donate?interval=oneTime&amount=20'}
+  ] 
 
   routeSubscription: Subscription;
   // wpSubscription: Subscription;
