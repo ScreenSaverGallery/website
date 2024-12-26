@@ -8,10 +8,11 @@ import { PostComponent } from '../../components/post/post.component';
 import { TagPostsComponent } from '../../components/tag-posts/tag-posts.component';
 import { AuthorPostsComponent } from '../../components/author-posts/author-posts.component';
 import { CategoryPostsComponent } from '../../components/category-posts/category-posts.component';
-
+import { FeedComponent } from 'src/app/components/feed/feed.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  // { path: 'feed', component: FeedComponent }, // <-- not works as xml result :/
   { path: ':name', component: PostComponent },
   { path: 'archive/:name', component: CategoryPostsComponent },
   { path: 'archive/:name/:subarchive', component: CategoryPostsComponent },

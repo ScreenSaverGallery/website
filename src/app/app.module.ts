@@ -33,6 +33,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { InfoSliderHorizontalComponent } from './components/info-slider-horizontal/info-slider-horizontal.component';
+import { FeedComponent } from './components/feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { InfoSliderHorizontalComponent } from './components/info-slider-horizont
     ButtonComponent,
     StatsComponent,
     LoadingComponent,
-    InfoSliderHorizontalComponent
+    InfoSliderHorizontalComponent,
+    FeedComponent
   ],
   bootstrap: [AppComponent],
   imports: [
