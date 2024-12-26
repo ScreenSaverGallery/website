@@ -65,6 +65,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   followUs: SocialMedium[] = [
     {name: 'signal', shortcut: 'signal', urlBase: 'https://signal.group/#CjQKIHzeKjxDhPsOkmyVBuDyY4UfRo5aboltmuM6_DvKTmquEhD75Gre_8iJg4UB7zW6AhMY'},
+    {name: 'mastodon', shortcut: 'mastodon', urlBase: 'https://tldr.nettime.org/@screensavergallery'},
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
     {name: 'discord', shortcut: 'dc', urlBase: 'https://discord.gg/QJtRUYptRR'},
     {name: 'rss', shortcut: 'rss', urlBase: 'https://screensaver.metazoa.org/feed/'},
