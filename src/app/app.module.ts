@@ -73,7 +73,7 @@ import { FeedComponent } from './components/feed/feed.component';
     BrowserAnimationsModule,
     MaterialModule,
     NgxWpApiModule.forRoot({
-      wpRootUrl: 'https://screensaver.metazoa.org'
+      wpRootUrl: 'https://sleep.screensaver.gallery'
     })
   ], 
   providers: [provideHttpClient(withInterceptorsFromDi())]

@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FeedService {
 
-  private FEED_URL: string = 'https://screensaver.metazoa.org/feed/';
+  private FEED_URL: string = 'https://sleep.screensaver.gallery/feed/';
   FEED: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(
@@ -19,7 +19,7 @@ export class FeedService {
   getFeed(): void {
     const getFeedSub = this.http.get(this.FEED_URL, { responseType: 'text'}).subscribe({
       next: (feed: string) => {
-        if (feed) this.FEED.next(feed.replace(this.FEED_URL, 'https://screensaver.gallery/feed/'));
+        if (feed) this.FEED.next(feed.replace(this.FEED_URL, 'https://sleep.screensaver.galleryd/'));
         getFeedSub.unsubscribe();
       },
       error: (e: any) => {
