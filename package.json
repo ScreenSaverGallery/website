@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-prod": "ng build --aot --configuration=production && npm run push-dist",
-    "push-dist": "cd dist && git add -A && git commit -m 'rebuild' && git push && cd ..",
+    "push-dist": "cd dist && git pull && git add -A && git commit -m 'rebuild' && git push && cd ..",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
