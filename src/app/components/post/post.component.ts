@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
-import { Page, Post } from '@tomaszatoo/ngx-wp-api';
+import { Category, Page, Post } from '@tomaszatoo/ngx-wp-api';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
@@ -40,6 +40,8 @@ export class PostComponent implements OnInit, OnDestroy {
   ssgIconColor: string = 'red';
 
   hasFeaturedImage: boolean = false;
+
+  categories: Category[] = [];
 
   // postClass: string = '';
 
@@ -130,7 +132,26 @@ export class PostComponent implements OnInit, OnDestroy {
         }
       });
     }
-      
+
+    if (this.post && this.post.categories.length && this.post.categories.includes(324)) {
+      // TODO: if in category offline (id 324)
+      console.log('is OFFLINE');
+    }
+    // this.wpService.categories.subscribe({
+    //   next: (categories: Category[]) => {
+    //     this.categories = categories;
+    //     if (this.post.categories.length) { // post has categories
+    //       for (const categoryId of this.post.categories) {
+    //         console.log('post catId', categoryId);
+    //         const category = this.categories.find((c) => c.id === categoryId);
+    //         console.log('category', category);
+    // 
+    //       }
+    //     }
+    //   }
+    // })
+    // console.log('post', this.post);
+    
   }
 
   // ngAfterViewInit(): void {
@@ -149,7 +170,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   private _postFeatures(post: any): void {
-    console.log('post', post);
+    // console.log('post', post);
     setTimeout(() => {
       this._animateImagesColor();
     }, 2000);

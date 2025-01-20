@@ -1,9 +1,9 @@
 # TODO
 
-- check subscribtions without unsubscribes
+x check subscribtions without unsubscribes
 
 
-- bug: (Failed to load resource: the server responded with a status of 404 (Not Found): https://screensaver.metazoa.org/wp-json/categories?orderby=count&order=asc&page=2) <- it seems no category asked :/
+x bug: (Failed to load resource: the server responded with a status of 404 (Not Found): https://screensaver.metazoa.org/wp-json/categories?orderby=count&order=asc&page=2) <- it seems no category asked :/
 
 
 x color service rainbow only css (viz. https://stackoverflow.com/questions/54702124/rainbow-text-animation-using-only-css)
