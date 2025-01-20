@@ -22,7 +22,7 @@
         <ssg-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></ssg-load-more>
     } 
     <!-- CATEGORY WITH SUBCATEGORIES -->
-    @if(children.length) {
+    @if(children.length && slug !== 'screensavers') {
         <!-- {{log('category', category)}} -->
         <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->

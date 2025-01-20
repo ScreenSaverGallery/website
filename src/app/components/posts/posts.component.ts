@@ -126,8 +126,9 @@ export class PostsComponent implements OnInit, OnDestroy {
         // set title
         this.title = this.category.name;
         // console.log('children', this.children);
+        // console.log('categorySlug', categorySlug);
         // no children
-        if (this.children.length === 0) {
+        if (this.children.length === 0 || categorySlug === 'screensavers') {
           // this.loadingPosts = true;
           const getCatPostsSub: Subscription = this.wpService.getCategoryPosts(this.category.id, this.postsPage, true).subscribe((res: HttpResponse<any>) => {
             this.recievePosts(res);
