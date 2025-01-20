@@ -34,8 +34,24 @@ export class SocialComponent implements OnInit {
     return window.location.href;
   }
 
-  openHref(href: string): void {
-    window.open(href, '_blank');
+  openHref(base: string, href: string): void {
+    if (!base) { // if base === undefined, it is Mastodon :/ not wel figured
+      let instance: string = '';
+      if (localStorage.getItem('mastodon-instance')) {
+        instance = localStorage.getItem('mastodon-instance');
+      } else {
+        instance = window.prompt(
+          'Please tell me your Mastodon instance'
+        );
+        if (instance) localStorage.setItem('mastodon-instance', instance);
+      }
+      if (instance) {
+        window.open(`https://${instance}/share?text=${encodeURIComponent(href)}`, '_blank');
+      }
+      return;
+    }
+    // otherwise
+    window.open(`${base}${href}`, '_blank');
   }
 
 }
