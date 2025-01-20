@@ -4,7 +4,7 @@ import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 // import { SiteInfoService } from './services/site-info/site-info.service';
 // import { ColorService } from './services/color/color.service';
 import { SnackService } from './services/snack/snack.service';
-import { FeedService } from './services/feed/feed.service';
+// import { FeedService } from './services/feed/feed.service';
 // rxjs
 import { Subscription } from 'rxjs';
 
@@ -27,13 +27,13 @@ export class AppComponent implements OnInit, OnDestroy {
     // private siteInfoService: SiteInfoService,
     // private colorService: ColorService,
     private snackService: SnackService,
-    private feedService: FeedService,
+    // private feedService: FeedService,
     private appElm: ElementRef
   ){}
 
   ngOnInit(): void {
     // get rss feed
-    this.feedService.getFeed();
+    // this.feedService.getFeed();
     // add os as class
     this.OS = this.getOS();
     this.appElm.nativeElement.setAttribute('id', this.OS.toLowerCase());
