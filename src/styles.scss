@@ -131,6 +131,10 @@ small {
     font-size: medium;
 }
 
+// .print-icon {
+//     display: none !important;
+// }
+
 ssg-root {
     animation: backgroundWheel 10s infinite linear;
     padding: $space;
@@ -226,6 +230,11 @@ p {
 
 img {
     border: 6px solid aquamarine;
+}
+figure.no-frame {
+    img {
+        border: none;
+    }
 }
 
 .mat-drawer-side.mat-drawer-end {
@@ -1328,6 +1337,24 @@ ssg-not-found {
     }
 
     // start/end color
+}
+
+/* PRINT */
+@media print {
+    .get, .sandwitch, .back {
+        display: none;
+    }
+    // .print-icon {
+    //     display: block;
+    // }
+    ssg-menu {
+        .controls {
+            position: relative;
+        }
+    }
+    ssg-root {
+        padding-top: calc($space * 6);
+    }
 }
 
 

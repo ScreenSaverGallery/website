@@ -5,11 +5,32 @@ $space: 24px;
     width: auto;
     height: auto;
     // margin: $space / 4;
+    &.print-icon {
+      display: none;
+    }
 
     &.animated {
         animation: blink-animation .8s steps(5, start) infinite;
     }
 }
+
+@media print {
+  :host {
+    &.print-icon {
+      display: inline-block;
+      position: absolute;
+      top: calc($space * 1);
+      right: $space;
+    }
+  }
+}
+// @media print {
+//   :host {
+//     &.print-icon {
+//       display: inline-block;
+//     }
+//   }
+// }
 
 @keyframes blink-animation {
   to {

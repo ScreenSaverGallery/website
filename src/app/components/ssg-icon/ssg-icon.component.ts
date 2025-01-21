@@ -28,6 +28,8 @@ export class SsgIconComponent implements OnInit, AfterViewInit {
   // @Input() animated: boolean = false;
   @Input() cursor: boolean = true;
 
+  @Input() circle: boolean = false;
+
   // flat or not flat change
   @Input() set flat( value: boolean ) {
     this._flat = value;
