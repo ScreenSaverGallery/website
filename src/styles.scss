@@ -1344,6 +1344,10 @@ ssg-not-found {
     .get, .sandwitch, .back {
         display: none;
     }
+    .title {
+        position: relative;
+        top: 0; // calc($space);
+    }
     // .print-icon {
     //     display: block;
     // }
