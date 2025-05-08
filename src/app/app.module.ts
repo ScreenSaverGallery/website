@@ -5,6 +5,8 @@ import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // ngx-wp-api
 import { NgxWpApiModule } from '@tomaszatoo/ngx-wp-api';
+// environments
+import { environment } from 'src/environments/environment';
 
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { AppRoutingModule } from './modules/routing/app-routing.module';
@@ -73,7 +75,7 @@ import { FeedComponent } from './components/feed/feed.component';
     BrowserAnimationsModule,
     MaterialModule,
     NgxWpApiModule.forRoot({
-      wpRootUrl: 'https://sleep.screensaver.gallery'
+      wpRootUrl: environment.wpRootUrl
     })
   ], 
   providers: [provideHttpClient(withInterceptorsFromDi())]
