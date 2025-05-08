@@ -1,0 +1,42 @@
+stages: 
+  - build
+  - deploy
+  - release
+
+variables:
+  ANGULAR_IMAGE: node:20
+
+build_app:
+  stage: build
+  image: $ANGULAR_IMAGE
+  before_script:
+    - mkdir -p src/environments
+    - echo "$ENVIRONMENT_PROD_TS" | sed 's/\\n/\n/g' > src/environments/environment.production.ts
+    - | 
+      echo 'export const environment = { production: false };' > src/environments/environment.development.ts
+    - npm ci
+  script:
+    - npx ng build --configuration=production
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+  only:
+    - tags
+
+deploy:
+  stage: release
+  image: debian:bullseye
+  needs:
+    - job: build_app
+      artifacts: true
+  before_script:
+    - apt update && apt install -y openssh-client
+    - mkdir -p ~/.ssh
+    - cp "$CANIS_DEPLOY_KEY" ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - echo "$CANIS_KNOWN_HOSTS" > ~/.ssh/known_hosts
+  script:
+    - scp -r dist/* "$CANIS_DEPLOY_USER@$CANIS_DEPLOY_HOST:$CANIS_SSG_WEB_DEPLOY_PATH"
+  only:
+    - tags
