@@ -11,8 +11,8 @@
             [cursor]="true"
             [routerLink]="['/get']"
         ></ssg-ssg-icon>
-        @if(siteTitle && siteDescription) {
-            <h1 #waving>{{siteTitle}} ✨ {{siteDescription}}</h1>
+        @if(siteTitle && siteDescriptions.length) {
+            <h1 #waving><!-- {{siteTitle}}  -->✨ {{chooseRandomHeadline(siteDescriptions)}}</h1>
         }
     </header>
     <div class="home-buttons">
