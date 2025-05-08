@@ -12,9 +12,13 @@
             [routerLink]="['/get']"
         ></ssg-ssg-icon>
         @if(siteTitle && siteDescriptions.length) {
-            <h1 #waving><!-- {{siteTitle}}  -->✨ {{chooseRandomHeadline(siteDescriptions)}}</h1>
+            <div>
+                <!-- <h1>{{siteTitle}}</h1> -->
+                <h2 #waving>✨ {{chooseRandomHeadline(siteDescriptions)}}</h2>
+            </div>
         }
     </header>
+    <span class="flex-spacer"></span>
     <div class="home-buttons">
         @if(siteTitle) {
             <ssg-button type="stroked" routerLink="/about">About</ssg-button>

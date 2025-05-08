@@ -861,10 +861,10 @@ ssg-home {
             margin-right: $space;
         }
 
-        h1 {
+        h1, h2 {
             // color: transparent;
             // * > span {
-            font-size: 10vh;
+            font-size: 5vh;
             text-shadow: 0 0 24px white;
             animation: textShadowWheel 10s infinite linear;
             padding-right: calc(2 * $space);

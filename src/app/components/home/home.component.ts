@@ -67,7 +67,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               const delay = 200;
               const dom = this.wavingElm.nativeElement;
               dom.innerHTML = dom.innerText.split('')
-              .map((char: string) => `<span>${char}</span>`)
+              .map((char: string) => {
+                return `<span>${char === ' ' ? '&nbsp;' : char}</span>`;
+              })
               .join('');
 
               Array.from(this.wavingElm.nativeElement.children).forEach((span: HTMLElement, index: number) => {
