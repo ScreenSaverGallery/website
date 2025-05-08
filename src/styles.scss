@@ -302,7 +302,9 @@ ssg-root {
 }
 
 ssg-info-slider-horizontal {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
     width: 100%;
     min-height: calc(3 * $space);
     overflow: hidden;
