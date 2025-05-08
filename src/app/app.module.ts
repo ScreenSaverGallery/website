@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // ngx-wp-api
 import { NgxWpApiModule } from '@tomaszatoo/ngx-wp-api';
 // environments
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.production';
 
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { AppRoutingModule } from './modules/routing/app-routing.module';
