@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         // console.log('site info', info);
         if (info) {
           this.siteTitle = info.name;
-          this.siteDescriptions = info.description.split(', ');
+          this.siteDescriptions = info.description.split('; ');
           console.log('siteDescriptions', this.siteDescriptions);
           
           setTimeout(() => {
