@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   starsText: string;
   siteTitle: string = undefined;
-  siteDescription: string;
+  siteDescriptions: string[];
   // infoMessages: Message[] = [];
   addSliderItem: SliderItem = undefined;
 
@@ -58,7 +58,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         // console.log('site info', info);
         if (info) {
           this.siteTitle = info.name;
-          this.siteDescription = info.description;
+          this.siteDescriptions = info.description.split(', ');
+          console.log('siteDescriptions', this.siteDescriptions);
           
           setTimeout(() => {
             // console.log('waving elm', this.wavingElm);
@@ -174,6 +175,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   setWavy(event: any): void {
     console.log('setWavy', event);
+  }
+
+  chooseRandomHeadline(descriptions: string[]): string {
+    return descriptions[Math.floor(Math.random() * descriptions.length)];
   }
 
   private getFeautredImage(id: number): void {
