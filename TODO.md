@@ -1,5 +1,7 @@
 # TODO
 
+- implement sponsorshipt to download page (see eg https://www.blender.org/thanks/)
+
 x check subscribtions without unsubscribes
 
 
