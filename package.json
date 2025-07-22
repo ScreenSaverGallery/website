@@ -5,9 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build --aot --configuration=production",
-    "push-dist": "cd dist && git pull && git add -A && git commit -m 'rebuild' && git push && cd ..",
-    "deploy": "npm run build-prod && npm run push-dist",
+    "deploy:patch": "npx ng build --configuration=production && npm version patch && git push --follow-tags",
+    "deploy:minor": "npx ng build --configuration=production && npm version minor && git push --follow-tags",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
