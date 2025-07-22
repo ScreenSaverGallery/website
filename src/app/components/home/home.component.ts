@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   siteTitle: string = undefined;
   siteDescriptions: string[];
   // infoMessages: Message[] = [];
-  addSliderItem: SliderItem = undefined;
+  // addSliderItem: SliderItem = undefined;
 
   followUs: SocialMedium[] = [
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private _getSiteInfoSub: Subscription = new Subscription();
   private _getCurrentSaverSub: Subscription = new Subscription();
-  private _getCurrentOfflineSaverSub: Subscription = new Subscription();
-  private _getLastNewsSub: Subscription = new Subscription();
+  // private _getCurrentOfflineSaverSub: Subscription = new Subscription();
+  // private _getLastNewsSub: Subscription = new Subscription();
 
   @ViewChild('featuredImage') featuredImgContainer: ElementRef;
   @ViewChild('waving') wavingElm!: ElementRef;
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       error: (e: any) => console.error(e)
     });
 
-    // get name of last screensaver
+    // // get name of last screensaver
     this._getCurrentSaverSub = this.wpService.getCurrentScreensaver().subscribe({
       next: (posts: Post[]) => {
         // this.starsText = res.body[0].title.rendered;
@@ -97,74 +97,74 @@ export class HomeComponent implements OnInit, OnDestroy {
             // console.log('res.body', res.body[0]);
             this.getFeautredImage(post.featured_media);
           }
-          const currentShow: SliderItem = {
-            emoji: '🌸 Online Now ',
-            text: post.title.rendered,
-            // delay: 10000,
-            url: post.slug
-          }
-          this.addSliderItem = currentShow;
+          // const currentShow: SliderItem = {
+          //   emoji: 'Online Now ',
+          //   text: post.title.rendered,
+          //   // delay: 10000,
+          //   url: post.slug
+          // }
+          // this.addSliderItem = currentShow;
         }
 
         this._getCurrentSaverSub.unsubscribe();
       },
       error: (e: any) => console.error(e)
     });
-
-    // get name of last offline screensaver
-    this._getCurrentOfflineSaverSub = this.wpService.getCurrentOfflineScreensaver().subscribe({
-      next: (posts: Post[]) => {
-        if (posts.length) {
-          const post = posts[0];
-          const currentOfflineShow: SliderItem = {
-            emoji: '🪷 Offline Now ',
-            text: post.title.rendered,
-            // delay: 10000,
-            url: post.slug
-          }
-          this.addSliderItem = currentOfflineShow;
-        }
-        this._getCurrentOfflineSaverSub.unsubscribe();
-      },
-      error: (e: any) => console.error(e)        
-    });
-
-    /* TODO: hot 🔥NEWS🔥 to slider */
-    /* 2 month news (60 days) */
-    // https://developer.wordpress.org/rest-api/reference/posts/
-    const today = Date.now();
-    const period = 60 * (24 * 60 * 60 * 1000); // set to 60 days
-    const queryDate = new Date(today - period).toISOString();
-    console.log('🔥 NEWS 🔥 queryDate', queryDate);
-    this._getLastNewsSub = this.wpService.getPosts(`categories=1&orderby=date&per_page=2&after=${queryDate}`).subscribe({
-      next: (posts: Post[]) => {
-        if (posts.length) {
-          console.log('NEWS res', posts);
-          for (let i = 0; i < posts.length; i++) {
-            const news = posts[i];
-            const message: SliderItem = {
-              emoji: '🐣 Hot News ', // '🦑 🐣 🐍',
-              text: news.title.rendered,
-              // delay: 10000,
-              url: news.slug
-            }
-            // slower adding
-            setTimeout(() => this.addSliderItem = message, i * 100);
-          }
-        }
-
-        this._getLastNewsSub.unsubscribe();
-      },
-      error: (e: any) => console.error(e)
-    });
+// 
+    // // get name of last offline screensaver
+    // this._getCurrentOfflineSaverSub = this.wpService.getCurrentOfflineScreensaver().subscribe({
+    //   next: (posts: Post[]) => {
+    //     if (posts.length) {
+    //       const post = posts[0];
+    //       const currentOfflineShow: SliderItem = {
+    //         emoji: '🪷 Offline Now ',
+    //         text: post.title.rendered,
+    //         // delay: 10000,
+    //         url: post.slug
+    //       }
+    //       this.addSliderItem = currentOfflineShow;
+    //     }
+    //     this._getCurrentOfflineSaverSub.unsubscribe();
+    //   },
+    //   error: (e: any) => console.error(e)        
+    // });
+// 
+    // /* TODO: hot 🔥NEWS🔥 to slider */
+    // /* 2 month news (60 days) */
+    // // https://developer.wordpress.org/rest-api/reference/posts/
+    // const today = Date.now();
+    // const period = 60 * (24 * 60 * 60 * 1000); // set to 60 days
+    // const queryDate = new Date(today - period).toISOString();
+    // console.log('🔥 NEWS 🔥 queryDate', queryDate);
+    // this._getLastNewsSub = this.wpService.getPosts(`categories=1&orderby=date&per_page=2&after=${queryDate}`).subscribe({
+    //   next: (posts: Post[]) => {
+    //     if (posts.length) {
+    //       console.log('NEWS res', posts);
+    //       for (let i = 0; i < posts.length; i++) {
+    //         const news = posts[i];
+    //         const message: SliderItem = {
+    //           emoji: '🐣 Hot News ', // '🦑 🐣 🐍',
+    //           text: news.title.rendered,
+    //           // delay: 10000,
+    //           url: news.slug
+    //         }
+    //         // slower adding
+    //         setTimeout(() => this.addSliderItem = message, i * 100);
+    //       }
+    //     }
+// 
+    //     this._getLastNewsSub.unsubscribe();
+    //   },
+    //   error: (e: any) => console.error(e)
+    // });
     
   }
 
   ngOnDestroy(): void {
-    this._getCurrentSaverSub.unsubscribe();
-    this._getCurrentOfflineSaverSub.unsubscribe();
+    // this._getCurrentSaverSub.unsubscribe();
+    // this._getCurrentOfflineSaverSub.unsubscribe();
     this._getSiteInfoSub.unsubscribe();
-    this._getLastNewsSub.unsubscribe();
+    // this._getLastNewsSub.unsubscribe();
   }
 
   goToDownload(): void {

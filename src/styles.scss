@@ -28,6 +28,12 @@ $font-secondary: 'Roboto Mono', monospace;
 // 
 // @include mat.core-theme($ssg-color-theme);
 
+.permanent-marker-regular {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 
 // custom typography
 $ssg-typography: mat.m2-define-legacy-typography-config($font-family: $font-primary);
@@ -179,6 +185,7 @@ h5,
 h6 {
     font-family: $font-secondary;
     color: white;
+    line-height: 1.2;
 }
 
 
@@ -306,30 +313,43 @@ ssg-info-slider-horizontal {
     flex-direction: row;
     align-items: flex-end;
     width: 100%;
-    min-height: calc(3 * $space);
+    min-height: 1em; //calc(2 * $space);
+    // min-height: min-content;
     overflow: hidden;
-    position: relative;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($accent-color, 1);
+
 
     .slider-container {
         width: auto;
         position: absolute;
-        left: 0;
+        left: 100%;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-
-        &.active {
-            animation: positionRightToLeft 30s infinite linear;
-        }
+        // background-color: $accent-color;
+        
+        // animation: backgroundWheel 10s infinite linear;
+        // &.active {
+        //     animation: positionRightToLeft 30s infinite linear;
+        // }
 
         .slider-item {
             display: flex;
             flex-direction: row;
-            margin-right: calc(2 * $space);
+            margin: 0 calc($space);
             white-space: nowrap;
-
-            .item-emoji {
-                margin-right: $space;
+            // color: black;
+            line-height: 1;
+            // animation: textShadowWheel 10s infinite linear;
+            
+            .item-emoji, a {
+                margin-right: calc($space / 2.5);
+                color: black;
+                // font-size: larger;
+                // animation: textWheel 20s infinite linear;
             }
         }
     }

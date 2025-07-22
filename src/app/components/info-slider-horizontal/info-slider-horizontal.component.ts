@@ -55,7 +55,34 @@ export class InfoSliderHorizontalComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    
+    if (this._sliderContainer) {
+      console.log('SLIDER CONTAINER', this._sliderContainer);
+      let t = 0;
+      const animate = () => {
+        const e = this._sliderContainer.nativeElement;
+        const rect = e.getBoundingClientRect();
+        // console.log('animate e', e);
+        // console.log('animate val', val);
+        if (e.classList.contains('active')) {
+          e.style.transform = `translateX(${t}px)`;
+          t -= .8;
+          if (Math.abs(t) > (rect.width + this.elm.nativeElement.getBoundingClientRect().width)) {
+            t = 0;
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+      this.elm.nativeElement.addEventListener('mouseenter', () => {
+        console.log('------mouseenter------');
+        this._sliderContainer.nativeElement.classList.remove('active');
+      }, true);
+      this.elm.nativeElement.addEventListener('mouseout', () => {
+        console.log('------mouseout------');
+        this._sliderContainer.nativeElement.classList.add('active');
+      }, true);
+    }
   }
 
 

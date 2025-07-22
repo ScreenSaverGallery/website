@@ -1,8 +1,8 @@
-<div class="slider-container active">
+<div #sliderContainer class="slider-container active">
     @for(item of sliderItems; let i = $index; track i) {
         <div class="slider-item">
             @if(item.emoji) {
-                <div class="item-emoji" [innerHTML]="item.emoji"></div>
+                <div class="item-emoji permanent-marker-regular" [innerHTML]="item.emoji"></div>
             }
             @if(item.url) {
                 <a [routerLink]="[item.url]">
