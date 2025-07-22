@@ -4,7 +4,8 @@ import {
   Input,
   ElementRef,
   AfterViewInit,
-  ViewChild
+  ViewChild,
+  OnDestroy
 } from '@angular/core';
 
 export interface SliderItem {
@@ -21,7 +22,7 @@ export interface SliderItem {
   templateUrl: './info-slider-horizontal.component.html',
   styleUrl: './info-slider-horizontal.component.scss'
 })
-export class InfoSliderHorizontalComponent implements AfterViewInit {
+export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
 
   @Input() sliderItems: SliderItem[] = [];
   
@@ -58,8 +59,8 @@ export class InfoSliderHorizontalComponent implements AfterViewInit {
     if (this._sliderContainer) {
       console.log('SLIDER CONTAINER', this._sliderContainer);
       let t = 0;
+      const e = this._sliderContainer.nativeElement;
       const animate = () => {
-        const e = this._sliderContainer.nativeElement;
         const rect = e.getBoundingClientRect();
         // console.log('animate e', e);
         // console.log('animate val', val);
@@ -72,19 +73,26 @@ export class InfoSliderHorizontalComponent implements AfterViewInit {
         }
         requestAnimationFrame(animate);
       }
-
-      animate();
-      this.elm.nativeElement.addEventListener('mouseenter', () => {
-        console.log('------mouseenter------');
-        this._sliderContainer.nativeElement.classList.remove('active');
-      }, true);
-      this.elm.nativeElement.addEventListener('mouseout', () => {
-        console.log('------mouseout------');
-        this._sliderContainer.nativeElement.classList.add('active');
-      }, true);
+      // start loop
+      requestAnimationFrame(animate);
+      this.elm.nativeElement.addEventListener('mouseenter', this.onEnter.bind(this), true);
+      this.elm.nativeElement.addEventListener('mouseout', this.onOut.bind(this), true);
     }
   }
 
+  private onEnter(): void {
+    if (this._sliderContainer) this._sliderContainer.nativeElement.classList.remove('active');
+  }
+
+  private onOut(): void {
+    if (this._sliderContainer) this._sliderContainer.nativeElement.classList.add('active');
+  }
+
+  ngOnDestroy(): void {
+    if (this.elm) {
+      this.elm.nativeElement.removeEventListener('mouseenter')
+    }
+  }
 
   private _includesMessage(item: SliderItem, messages: SliderItem[]): boolean {
     for (let i = 0; i < messages.length; i++) {
