@@ -66,7 +66,7 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
         // console.log('animate val', val);
         if (e.classList.contains('active')) {
           e.style.transform = `translateX(${t}px)`;
-          t -= .8;
+          t -= 1.5;
           if (Math.abs(t) > (rect.width + this.elm.nativeElement.getBoundingClientRect().width)) {
             t = 0;
           }
