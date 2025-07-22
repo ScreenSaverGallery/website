@@ -64,10 +64,10 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
   private routerSub: Subscription = new Subscription();
 
   followUs: SocialMedium[] = [
-    {name: 'signal', shortcut: 'signal', urlBase: 'https://signal.group/#CjQKIHzeKjxDhPsOkmyVBuDyY4UfRo5aboltmuM6_DvKTmquEhD75Gre_8iJg4UB7zW6AhMY'},
+    // {name: 'signal', shortcut: 'signal', urlBase: 'https://signal.group/#CjQKIHzeKjxDhPsOkmyVBuDyY4UfRo5aboltmuM6_DvKTmquEhD75Gre_8iJg4UB7zW6AhMY'},
     {name: 'mastodon', shortcut: 'mastodon', urlBase: 'https://tldr.nettime.org/@screensavergallery'},
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
-    {name: 'discord', shortcut: 'dc', urlBase: 'https://discord.gg/QJtRUYptRR'},
+    // {name: 'discord', shortcut: 'dc', urlBase: 'https://discord.gg/QJtRUYptRR'},
     {name: 'rss', shortcut: 'rss', urlBase: 'https://sleep.screensaver.gallery/feed/'},
     // {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/ScreenSaverG'},
     {name: 'instagram', shortcut: 'i', urlBase: 'https://www.instagram.com/screensavergallery/'},
