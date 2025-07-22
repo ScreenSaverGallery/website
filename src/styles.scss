@@ -347,7 +347,7 @@ ssg-info-slider-horizontal {
             
             .item-emoji, a {
                 margin-right: calc($space / 2.5);
-                color: black;
+                color: $dark-color;
                 // font-size: larger;
                 // animation: textWheel 20s infinite linear;
             }
