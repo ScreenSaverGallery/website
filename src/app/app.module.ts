@@ -36,6 +36,8 @@ import { StatsComponent } from './components/stats/stats.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { InfoSliderHorizontalComponent } from './components/info-slider-horizontal/info-slider-horizontal.component';
 import { FeedComponent } from './components/feed/feed.component';
+import { DonateComponent } from './components/donate/donate.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { FeedComponent } from './components/feed/feed.component';
     StatsComponent,
     LoadingComponent,
     InfoSliderHorizontalComponent,
-    FeedComponent
+    FeedComponent,
+    DonateComponent,
+    ContactComponent
   ],
   bootstrap: [AppComponent],
   imports: [

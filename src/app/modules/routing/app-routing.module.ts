@@ -8,12 +8,16 @@ import { PostComponent } from '../../components/post/post.component';
 import { TagPostsComponent } from '../../components/tag-posts/tag-posts.component';
 import { AuthorPostsComponent } from '../../components/author-posts/author-posts.component';
 import { CategoryPostsComponent } from '../../components/category-posts/category-posts.component';
-import { FeedComponent } from 'src/app/components/feed/feed.component';
+import { DonateComponent } from 'src/app/components/donate/donate.component';
+import { ContactComponent } from 'src/app/components/contact/contact.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'contact', component: ContactComponent },
+  /* { path: 'thanks', component: DonateComponent }, */
   // { path: 'feed', component: FeedComponent }, // <-- not works as xml result :/
   { path: ':name', component: PostComponent },
+  
   { path: 'archive/:name', component: CategoryPostsComponent },
   { path: 'archive/:name/:subarchive', component: CategoryPostsComponent },
   { path: 'tag/:name', component: TagPostsComponent },
