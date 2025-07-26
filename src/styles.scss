@@ -28,6 +28,27 @@ $font-secondary: 'Roboto Mono', monospace;
 // 
 // @include mat.core-theme($ssg-color-theme);
 
+.roboto-mono-100 {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-mono-400 {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-mono-700 {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
 .permanent-marker-regular {
   font-family: "Permanent Marker", cursive;
   font-weight: 400;
