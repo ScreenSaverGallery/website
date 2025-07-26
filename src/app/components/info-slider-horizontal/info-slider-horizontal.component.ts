@@ -57,7 +57,7 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (this._sliderContainer) {
-      console.log('SLIDER CONTAINER', this._sliderContainer);
+      // console.log('SLIDER CONTAINER', this._sliderContainer);
       let t = 0;
       const e = this._sliderContainer.nativeElement;
       const animate = () => {
@@ -75,8 +75,9 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
       }
       // start loop
       requestAnimationFrame(animate);
-      this.elm.nativeElement.addEventListener('mouseenter', this.onEnter.bind(this), true);
-      this.elm.nativeElement.addEventListener('mouseout', this.onOut.bind(this), true);
+      // add listeners
+      this.elm.nativeElement.addEventListener('pointerenter', this.onEnter.bind(this), true);
+      this.elm.nativeElement.addEventListener('pointerout', this.onOut.bind(this), true);
     }
   }
 
@@ -90,7 +91,8 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.elm) {
-      this.elm.nativeElement.removeEventListener('mouseenter')
+      this.elm.nativeElement.removeEventListener('pointerenter', this.onEnter);
+      this.elm.nativeElement.removeEventListener('pointerout', this.onOut);
     }
   }
 
