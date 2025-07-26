@@ -926,6 +926,7 @@ ssg-home {
         }
 
         .site-description {
+            cursor: pointer;
             text-align: center;
             padding: 0 calc($space / 2);
             animation: textShadowWheel 10s infinite linear;
