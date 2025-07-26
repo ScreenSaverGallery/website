@@ -6,15 +6,16 @@
 <div class="home">
     <!-- <h5 class="text-colored">{{siteDescription}}</h5> -->
     <header>
-        <ssg-ssg-icon
+        <!-- <ssg-ssg-icon
             [animated]="!siteTitle ? true : false"
             [cursor]="true"
             [routerLink]="['/get']"
-        ></ssg-ssg-icon>
+        ></ssg-ssg-icon> -->
         @if(siteTitle && siteDescriptions.length) {
             <div>
                 <!-- <h1>{{siteTitle}}</h1> -->
-                <h2 #waving>{{chooseRandomHeadline(siteDescriptions)}}</h2>
+                <!-- <h2 #waving>{{chooseRandomHeadline(siteDescriptions)}}</h2> -->
+                <div class="site-description permanent-marker-regular">{{siteDescription}}</div>
             </div>
         }
     </header>
@@ -26,6 +27,11 @@
         }
     </div>
     <span class="flex-spacer"></span>
+    <div class="social">
+        @for(medium of followUs; track medium.shortcut) {
+            <div class="social-item"><a [href]="medium.urlBase" target="_blank">✦ {{medium.name}}</a></div>
+        }
+    </div>
     <!-- <ssg-info-slider [addItem]="addSliderItem" [align]="'center'"></ssg-info-slider> -->
     <!-- <ssg-info-slider-horizontal [addItem]="addSliderItem"></ssg-info-slider-horizontal> -->
     
