@@ -964,6 +964,7 @@ ssg-home {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            z-index: 99;
             .social-item {
                 margin: 0 calc($space / 3);
             }
