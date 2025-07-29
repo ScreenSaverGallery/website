@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // {name: 'signal', shortcut: 'signal', urlBase: 'https://signal.group/#CjQKIHzeKjxDhPsOkmyVBuDyY4UfRo5aboltmuM6_DvKTmquEhD75Gre_8iJg4UB7zW6AhMY'},
     {name: 'mastodon', shortcut: 'mastodon', urlBase: 'https://tldr.nettime.org/@screensavergallery'},
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
+    {name: 'matrix', shortcut: 'matrix', urlBase: 'https://matrix.to/#/#screensaver.gallery:matrix.org'},
     // {name: 'discord', shortcut: 'dc', urlBase: 'https://discord.gg/QJtRUYptRR'},
     {name: 'rss', shortcut: 'rss', urlBase: 'https://sleep.screensaver.gallery/feed/'},
     // {name: 'X', shortcut: 'x', urlBase: 'https://twitter.com/ScreenSaverG'},
