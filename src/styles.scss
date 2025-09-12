@@ -985,6 +985,15 @@ ssg-home {
     border-radius: calc($space * 2);
     box-shadow: 0 0 $space white;
     background-color: red;
+    animation: buttonWheel 10s infinite linear;
+
+    &:hover {
+        // background-color: red;
+        box-shadow: 0 0 $space red;
+        border-color: transparent;       
+        -webkit-animation: scale-up-center 1s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite alternate-reverse both;
+        animation: scale-up-center 1s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite alternate-reverse both;
+    }
 
     a {
         padding: calc($space / 4) $space;
@@ -998,11 +1007,11 @@ ssg-home {
         }
     }
 }
-
-::selection {
-    background: $accent-color;
-    color: $dark-color;
-}
+// 
+// ::selection {
+//     background: $accent-color;
+//     color: $dark-color;
+// }
 
 ssg-button {
     margin: 0;
