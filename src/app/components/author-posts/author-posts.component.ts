@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 // rxjs
 import { Subscription } from 'rxjs';
-import { NgIf } from '@angular/common';
+
 import { PostsComponent } from '../posts/posts.component';
 
 
@@ -10,7 +10,7 @@ import { PostsComponent } from '../posts/posts.component';
     selector: 'ssg-author-posts',
     templateUrl: './author-posts.component.html',
     styleUrls: ['./author-posts.component.scss'],
-    imports: [NgIf, PostsComponent]
+    imports: [PostsComponent]
 })
 export class AuthorPostsComponent implements OnInit, OnDestroy {
 

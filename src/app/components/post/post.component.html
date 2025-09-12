@@ -1,112 +1,114 @@
 @if(post || loadedPost) {
-    @if (!post) {
-        <!-- POSTS -->
-        <div [ngClass]="{'post': true, 'full': true, 'has-featured-image': hasFeaturedImage }">
-            <!-- featured image -->
-            <div class="featured-image-container" #featuredImage></div>
-            <!-- date -->
-            <div class="date" *ngIf="postType === 'post'"><small>🔥 {{loadedPost.date | date: 'longDate' }}</small></div>
-            <!-- title -->
-            <div class="title">
-                <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
-            </div>
-            
-            <div class="post-controls">
-                <div class="social">
-                    <ssg-social [medias]="social"></ssg-social>
-                </div>
-                <div class="sponsor">
-                    <ssg-social [medias]="sponsor" [share]="false" [sponsor]="true"></ssg-social>
-                </div>
-            </div>
-            <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
-            <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
-                <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
-                <ssg-author [id]="loadedPost.author" [text]="'posted by'"></ssg-author>
-            </div> -->
-            
-            <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
+  @if (!post) {
+    <!-- POSTS -->
+    <div [ngClass]="{'post': true, 'full': true, 'has-featured-image': hasFeaturedImage }">
+      <!-- featured image -->
+      <div class="featured-image-container" #featuredImage></div>
+      <!-- date -->
+      @if (postType === 'post') {
+        <div class="date"><small>🔥 {{loadedPost.date | date: 'longDate' }}</small></div>
+      }
+      <!-- title -->
+      <div class="title">
+        <h1 [innerHTML]="loadedPost.title.rendered | safeHtml" [ngStyle]="{'color': randomColor}"></h1>
+      </div>
 
-            <!-- TOO COMPLEX FOR THE REASON TO CHANGE JUST A BUTTON :/ -->
-            <!-- <ssg-article [rawHTMLContent]="loadedPost.content.rendered | demetazoa"></ssg-article> -->
-            
-
-            @if(loadedPost.tags && loadedPost.tags.length) {
-                <div class="tags">
-                    @for(tagId of loadedPost.tags; track tagId) {
-                        <ssg-tag [id]="tagId"></ssg-tag>
-                    }
-                </div>
-            }
-            
+      <div class="post-controls">
+        <div class="social">
+          <ssg-social [medias]="social"></ssg-social>
         </div>
-    } @else {
-        @if(post.title) {
-            <!-- POST EXCERPT -->
-            <div [ngClass]="{'post': true, 'excerpt': true}">
-                
-                <div class="date"><small>🔥 {{post.date | date: 'longDate' }}</small></div>
+        <div class="sponsor">
+          <ssg-social [medias]="sponsor" [share]="false" [sponsor]="true"></ssg-social>
+        </div>
+      </div>
+      <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
+      <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
+      <div class="date">{{loadedPost.date | date: 'longDate' }}</div>
+      <ssg-author [id]="loadedPost.author" [text]="'posted by'"></ssg-author>
+    </div> -->
 
-                <div class="post-header">
-                    <h2>
-                        <!-- <button *ngIf="highlighted" class="get-ssg"  mat-icon-button [routerLink]="downloadLink">
-                            <ssg-ssg-icon [size]="24" [flat]="true" [flatColor]="ssgIconColor" [animated]="true"></ssg-ssg-icon>
-                        </button> -->
-                        <div><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></div>
-                    </h2>
-                    <!-- date -->
-                    
-                    <!-- toggle pin if highlighted -->
-                    <!-- <ng-container *ngIf="highlighted">
-                        <button mat-icon-button (click)="togglePin()">
-                            <mat-icon *ngIf="pinned">turned_in</mat-icon>
-                            <mat-icon *ngIf="!pinned">turned_in_not</mat-icon>
-                        </button>
-                    </ng-container> -->
-                </div>
-                
-                <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
-                <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
-                    <div class="date">{{post.date | date: 'longDate' }}</div>
-                    <ssg-author  [id]="post.author" [text]="'posted by'"></ssg-author >
-                </div> -->
+    <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
 
-                <div class="excerpt-body">
-                    @if(post.featured_media){
-                        <div class="featured-media">
-                            <a [routerLink]="'/' + post.slug">
-                                <span class="link-content"><ssg-media [id]="post.featured_media"></ssg-media></span>
-                            </a>
-                        </div>
-                    } @else {
-                        <article [routerLink]="'/' + post.slug" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
-                    }
-                </div>
-                @if(post.tags && post.tags.length) {
-                    <div class="tags">
-                        @for(tagId of post.tags; track tagId) {
-                            <ssg-tag [id]="tagId" [dark]="true"></ssg-tag>
-                        }
-                    </div>
-                }
-                <div class="social">
-                    <ssg-social [medias]="social" [referenceUrl]="getRefUrl()"></ssg-social>
-                </div>
-            </div>
-        } @else {
-            <!-- SUBCATEGORY -->
-            <!-- subcategory -->
-            <h2>
-                <a [routerLink]="post.slug"><span class="link-content" [innerHtml]="post.name | titlecase"></span></a>
-            </h2>
-            <!-- description -->
-             @if(post.description) {
-                <div class="category-description" [innerHTML]="post.description | safeHtml"></div>
-             }
-            
+    <!-- TOO COMPLEX FOR THE REASON TO CHANGE JUST A BUTTON :/ -->
+    <!-- <ssg-article [rawHTMLContent]="loadedPost.content.rendered | demetazoa"></ssg-article> -->
+
+
+    @if(loadedPost.tags && loadedPost.tags.length) {
+      <div class="tags">
+        @for(tagId of loadedPost.tags; track tagId) {
+          <ssg-tag [id]="tagId"></ssg-tag>
         }
+      </div>
     }
-   
+
+  </div>
 } @else {
-    <ssg-loading></ssg-loading>
+  @if(post.title) {
+    <!-- POST EXCERPT -->
+    <div [ngClass]="{'post': true, 'excerpt': true}">
+
+      <div class="date"><small>🔥 {{post.date | date: 'longDate' }}</small></div>
+
+      <div class="post-header">
+        <h2>
+          <!-- <button *ngIf="highlighted" class="get-ssg"  mat-icon-button [routerLink]="downloadLink">
+          <ssg-ssg-icon [size]="24" [flat]="true" [flatColor]="ssgIconColor" [animated]="true"></ssg-ssg-icon>
+        </button> -->
+        <div><a [routerLink]="'/' + post.slug"><span class="link-content" [innerHtml]="post.title.rendered | safeHtml"></span></a></div>
+      </h2>
+      <!-- date -->
+
+      <!-- toggle pin if highlighted -->
+      <!-- <ng-container *ngIf="highlighted">
+      <button mat-icon-button (click)="togglePin()">
+        <mat-icon *ngIf="pinned">turned_in</mat-icon>
+        <mat-icon *ngIf="!pinned">turned_in_not</mat-icon>
+      </button>
+    </ng-container> -->
+  </div>
+
+  <!-- post meta --> <!-- ZAVÁDĚJÍCÍ -->
+  <!-- <div class="post-meta" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="12px">
+  <div class="date">{{post.date | date: 'longDate' }}</div>
+  <ssg-author  [id]="post.author" [text]="'posted by'"></ssg-author >
+</div> -->
+
+<div class="excerpt-body">
+  @if(post.featured_media){
+    <div class="featured-media">
+      <a [routerLink]="'/' + post.slug">
+        <span class="link-content"><ssg-media [id]="post.featured_media"></ssg-media></span>
+      </a>
+    </div>
+  } @else {
+    <article [routerLink]="'/' + post.slug" [innerHtml]="post.excerpt.rendered | demetazoa | safeHtml"></article>
+  }
+</div>
+@if(post.tags && post.tags.length) {
+  <div class="tags">
+    @for(tagId of post.tags; track tagId) {
+      <ssg-tag [id]="tagId" [dark]="true"></ssg-tag>
+    }
+  </div>
+}
+<div class="social">
+  <ssg-social [medias]="social" [referenceUrl]="getRefUrl()"></ssg-social>
+</div>
+</div>
+} @else {
+  <!-- SUBCATEGORY -->
+  <!-- subcategory -->
+  <h2>
+    <a [routerLink]="post.slug"><span class="link-content" [innerHtml]="post.name | titlecase"></span></a>
+  </h2>
+  <!-- description -->
+  @if(post.description) {
+    <div class="category-description" [innerHTML]="post.description | safeHtml"></div>
+  }
+
+}
+}
+
+} @else {
+  <ssg-loading></ssg-loading>
 }

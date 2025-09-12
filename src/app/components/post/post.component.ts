@@ -26,7 +26,7 @@ import { LoadingComponent } from '../loading/loading.component';
 import { ArticleComponent } from '../article/article.component';
 // rxjs
 import { Subscription } from 'rxjs';
-import { NgClass, NgIf, NgStyle, TitleCasePipe, DatePipe } from '@angular/common';
+import { NgClass, NgStyle, TitleCasePipe, DatePipe } from '@angular/common';
 // pipes
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 import { DemetazoaPipe } from '../../pipes/demetazoa.pipe';
@@ -37,20 +37,18 @@ import { DemetazoaPipe } from '../../pipes/demetazoa.pipe';
     styleUrls: ['./post.component.scss'],
     standalone: true,
     imports: [
-        NgClass,
-        NgIf,
-        NgStyle,
-        SocialComponent,
-        TagComponent,
-        RouterLink,
-        MediaComponent,
-        LoadingComponent,
-        // ArticleComponent,
-        TitleCasePipe,
-        DatePipe,
-        SafeHtmlPipe,
-        DemetazoaPipe
-    ]
+    NgClass,
+    NgStyle,
+    SocialComponent,
+    TagComponent,
+    RouterLink,
+    MediaComponent,
+    LoadingComponent,
+    TitleCasePipe,
+    DatePipe,
+    SafeHtmlPipe,
+    DemetazoaPipe
+]
 })
 export class PostComponent implements OnInit, OnDestroy {
 

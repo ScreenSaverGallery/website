@@ -1,7 +1,8 @@
-<ng-container *ngIf="author; else loading">
-    <div class="author">
-        {{text ? text : ''}} <a [routerLink]="'/author/' + author.slug"><span class="link-content" [innerHtml]="author.name | safeHtml"></span></a>
-    </div>
-</ng-container>
+@if (author) {
+  <div class="author">
+    {{text ? text : ''}} <a [routerLink]="'/author/' + author.slug"><span class="link-content" [innerHtml]="author.name | safeHtml"></span></a>
+  </div>
+} @else {
+  Loading...
+}
 
-<ng-template #loading>Loading...</ng-template>

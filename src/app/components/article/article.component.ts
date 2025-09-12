@@ -8,7 +8,7 @@ import {
   inject,
   EnvironmentInjector
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 // pipes
 // import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 // components
@@ -20,7 +20,7 @@ import { ButtonComponent } from '../button/button.component';
     templateUrl: './article.component.html',
     styleUrl: './article.component.scss',
     standalone: true,
-    imports: [CommonModule]
+    imports: []
 })
 export class ArticleComponent implements AfterViewInit {
   @Input({required: true}) rawHTMLContent!: string;
