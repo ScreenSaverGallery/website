@@ -26,7 +26,11 @@
             </div> -->
             
             <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
+
+            <!-- TOO COMPLEX FOR THE REASON TO CHANGE JUST A BUTTON :/ -->
+            <!-- <ssg-article [rawHTMLContent]="loadedPost.content.rendered | demetazoa"></ssg-article> -->
             
+
             @if(loadedPost.tags && loadedPost.tags.length) {
                 <div class="tags">
                     @for(tagId of loadedPost.tags; track tagId) {
