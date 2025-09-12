@@ -20,7 +20,6 @@ import { InfoSliderHorizontalComponent } from './components/info-slider-horizont
     selector: 'ssg-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: true,
     imports: [NgClass, RouterOutlet, MenuComponent, InfoSliderHorizontalComponent]
 })
 export class AppComponent implements OnInit, OnDestroy {

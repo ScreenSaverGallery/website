@@ -9,7 +9,6 @@ import { ButtonComponent } from '../button/button.component';
     selector: 'ssg-not-found',
     templateUrl: './not-found.component.html',
     styleUrls: ['./not-found.component.scss'],
-    standalone: true,
     imports: [NgStyle, ButtonComponent]
 })
 export class NotFoundComponent implements OnInit {

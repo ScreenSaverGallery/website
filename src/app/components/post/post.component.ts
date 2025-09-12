@@ -37,19 +37,19 @@ import { DemetazoaPipe } from '../../pipes/demetazoa.pipe';
     styleUrls: ['./post.component.scss'],
     standalone: true,
     imports: [
-      NgClass, 
-      NgIf, 
-      NgStyle, 
-      SocialComponent,
-      TagComponent,
-      RouterLink,
-      MediaComponent,
-      LoadingComponent,
-      // ArticleComponent,
-      TitleCasePipe,
-      DatePipe,
-      SafeHtmlPipe,
-      DemetazoaPipe
+        NgClass,
+        NgIf,
+        NgStyle,
+        SocialComponent,
+        TagComponent,
+        RouterLink,
+        MediaComponent,
+        LoadingComponent,
+        // ArticleComponent,
+        TitleCasePipe,
+        DatePipe,
+        SafeHtmlPipe,
+        DemetazoaPipe
     ]
 })
 export class PostComponent implements OnInit, OnDestroy {

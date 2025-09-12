@@ -19,8 +19,8 @@ import { ButtonComponent } from '../button/button.component';
     selector: 'ssg-article',
     templateUrl: './article.component.html',
     styleUrl: './article.component.scss',
-    imports: [ CommonModule ],
-    standalone: true
+    standalone: true,
+    imports: [CommonModule]
 })
 export class ArticleComponent implements AfterViewInit {
   @Input({required: true}) rawHTMLContent!: string;

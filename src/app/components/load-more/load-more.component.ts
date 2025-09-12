@@ -12,7 +12,6 @@ import { LoadingComponent } from '../loading/loading.component';
     selector: 'ssg-load-more',
     templateUrl: './load-more.component.html',
     styleUrls: ['./load-more.component.scss'],
-    standalone: true,
     imports: [LoadingComponent]
 })
 export class LoadMoreComponent implements AfterViewInit {

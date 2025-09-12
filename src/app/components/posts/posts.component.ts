@@ -29,7 +29,6 @@ interface UserExt extends User {
     selector: 'ssg-posts',
     templateUrl: './posts.component.html',
     styleUrls: ['./posts.component.scss'],
-    standalone: true,
     imports: [NgStyle, PostComponent, LoadMoreComponent, RouterLink, LoadingComponent, ButtonComponent, TitleCasePipe, SafeHtmlPipe]
 })
 export class PostsComponent implements OnInit, OnDestroy {

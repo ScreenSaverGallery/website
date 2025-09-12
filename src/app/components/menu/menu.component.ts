@@ -48,7 +48,6 @@ interface MenuItemExtended extends MenuItem {
     selector: 'ssg-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
-    standalone: true,
     imports: [SsgIconComponent, ButtonComponent, MatIcon, RouterLink, MatDrawerContainer, MatDrawer, SearchComponent, LoadingComponent, RouterLinkActive, SocialComponent, TitleCasePipe, SafeHtmlPipe]
 })
 export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {

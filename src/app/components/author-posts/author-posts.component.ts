@@ -10,7 +10,6 @@ import { PostsComponent } from '../posts/posts.component';
     selector: 'ssg-author-posts',
     templateUrl: './author-posts.component.html',
     styleUrls: ['./author-posts.component.scss'],
-    standalone: true,
     imports: [NgIf, PostsComponent]
 })
 export class AuthorPostsComponent implements OnInit, OnDestroy {

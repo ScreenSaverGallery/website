@@ -9,7 +9,6 @@ import { SocialComponent } from '../social/social.component';
     selector: 'ssg-contact',
     templateUrl: './contact.component.html',
     styleUrl: './contact.component.scss',
-    standalone: true,
     imports: [NgStyle, SocialComponent]
 })
 export class ContactComponent {
