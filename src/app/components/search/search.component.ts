@@ -31,6 +31,7 @@ interface SearchItem {
     selector: 'ssg-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
+    standalone: true,
     imports: [MatFormField, MatIcon, MatPrefix, MatInput, FormsModule, MatAutocompleteTrigger, ReactiveFormsModule, MatSuffix, MatProgressSpinner, MatAutocomplete, MatOption, AsyncPipe, SafeHtmlPipe]
 })
 export class SearchComponent implements OnInit {

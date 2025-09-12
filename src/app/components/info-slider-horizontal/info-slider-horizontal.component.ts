@@ -22,6 +22,7 @@ export interface SliderItem {
     selector: 'ssg-info-slider-horizontal',
     templateUrl: './info-slider-horizontal.component.html',
     styleUrl: './info-slider-horizontal.component.scss',
+    standalone: true,
     imports: [RouterLink]
 })
 export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {

@@ -9,6 +9,7 @@ import { PostsComponent } from '../posts/posts.component';
     selector: 'ssg-tag-posts',
     templateUrl: './tag-posts.component.html',
     styleUrls: ['./tag-posts.component.scss'],
+    standalone: true,
     imports: [PostsComponent]
 })
 export class TagPostsComponent implements OnInit, OnDestroy {

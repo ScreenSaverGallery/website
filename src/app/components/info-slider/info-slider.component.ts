@@ -23,6 +23,7 @@ export interface SliderItem {
     selector: 'ssg-info-slider',
     templateUrl: './info-slider.component.html',
     styleUrls: ['./info-slider.component.scss'],
+    standalone: true,
     imports: [NgClass, RouterLink, SafeHtmlPipe]
 })
 export class InfoSliderComponent implements OnInit, AfterViewInit {

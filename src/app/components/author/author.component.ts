@@ -12,6 +12,7 @@ import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
     selector: 'ssg-author',
     templateUrl: './author.component.html',
     styleUrls: ['./author.component.scss'],
+    standalone: true,
     imports: [RouterLink, SafeHtmlPipe]
 })
 export class AuthorComponent implements OnInit {

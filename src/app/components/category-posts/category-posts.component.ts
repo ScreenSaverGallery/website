@@ -9,6 +9,7 @@ import { PostsComponent } from '../posts/posts.component';
     selector: 'ssg-category-posts',
     templateUrl: './category-posts.component.html',
     styleUrls: ['./category-posts.component.scss'],
+    standalone: true,
     imports: [PostsComponent]
 })
 export class CategoryPostsComponent implements OnInit, OnDestroy {
