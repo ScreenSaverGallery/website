@@ -6,11 +6,14 @@ import {
   EventEmitter,
   ElementRef
 } from '@angular/core';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
-  selector: 'ssg-load-more',
-  templateUrl: './load-more.component.html',
-  styleUrls: ['./load-more.component.scss']
+    selector: 'ssg-load-more',
+    templateUrl: './load-more.component.html',
+    styleUrls: ['./load-more.component.scss'],
+    standalone: true,
+    imports: [LoadingComponent]
 })
 export class LoadMoreComponent implements AfterViewInit {
 

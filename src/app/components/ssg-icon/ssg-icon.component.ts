@@ -8,9 +8,10 @@ import {
 
 
 @Component({
-  selector: 'ssg-ssg-icon',
-  templateUrl: './ssg-icon.component.html',
-  styleUrls: ['./ssg-icon.component.scss']
+    selector: 'ssg-ssg-icon',
+    templateUrl: './ssg-icon.component.html',
+    styleUrls: ['./ssg-icon.component.scss'],
+    standalone: true
 })
 export class SsgIconComponent implements OnInit, AfterViewInit {
 

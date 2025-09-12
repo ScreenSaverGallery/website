@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 // services
 import { ColorService } from '../../services/color/color.service';
 import { MenuService } from 'src/app/services/menu/menu.service';
+import { NgStyle } from '@angular/common';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  selector: 'ssg-not-found',
-  templateUrl: './not-found.component.html',
-  styleUrls: ['./not-found.component.scss']
+    selector: 'ssg-not-found',
+    templateUrl: './not-found.component.html',
+    styleUrls: ['./not-found.component.scss'],
+    standalone: true,
+    imports: [NgStyle, ButtonComponent]
 })
 export class NotFoundComponent implements OnInit {
 

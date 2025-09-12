@@ -7,7 +7,7 @@ import {
   ElementRef,
   ViewChild
 } from '@angular/core';
-import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
+import { ActivatedRoute, UrlSegment, Router, RouterLink } from '@angular/router';
 import { Category, Page, Post } from '@tomaszatoo/ngx-wp-api';
 // services
 import { WpService } from '../../services/wp/wp.service';
@@ -20,11 +20,20 @@ import { Media } from '@tomaszatoo/ngx-wp-api';
 import { SocialMedium } from 'src/app/models/social-medium';
 // rxjs
 import { Subscription } from 'rxjs';
+import { NgClass, NgIf, NgStyle, TitleCasePipe, DatePipe } from '@angular/common';
+import { SocialComponent } from '../social/social.component';
+import { TagComponent } from '../tag/tag.component';
+import { MediaComponent } from '../media/media.component';
+import { LoadingComponent } from '../loading/loading.component';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
+import { DemetazoaPipe } from '../../pipes/demetazoa.pipe';
 
 @Component({
-  selector: 'ssg-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+    selector: 'ssg-post',
+    templateUrl: './post.component.html',
+    styleUrls: ['./post.component.scss'],
+    standalone: true,
+    imports: [NgClass, NgIf, NgStyle, SocialComponent, TagComponent, RouterLink, MediaComponent, LoadingComponent, TitleCasePipe, DatePipe, SafeHtmlPipe, DemetazoaPipe]
 })
 export class PostComponent implements OnInit, OnDestroy {
 

@@ -10,9 +10,10 @@ import {
 import { ExplosionService } from '../../services/explosion/explosion.service';
 
 @Component({
-  selector: 'ssg-stars',
-  templateUrl: './stars.component.html',
-  styleUrls: ['./stars.component.scss']
+    selector: 'ssg-stars',
+    templateUrl: './stars.component.html',
+    styleUrls: ['./stars.component.scss'],
+    standalone: true
 })
 export class StarsComponent implements AfterViewInit, OnDestroy {
 

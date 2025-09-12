@@ -5,9 +5,10 @@ import { FeedService } from 'src/app/services/feed/feed.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'ssg-feed',
-  templateUrl: './feed.component.html',
-  styleUrl: './feed.component.scss'
+    selector: 'ssg-feed',
+    templateUrl: './feed.component.html',
+    styleUrl: './feed.component.scss',
+    standalone: true
 })
 export class FeedComponent implements OnInit, OnDestroy {
 

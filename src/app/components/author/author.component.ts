@@ -4,11 +4,16 @@ import { User } from '@tomaszatoo/ngx-wp-api';
 import { WpService } from '../../services/wp/wp.service';
 // rxjs
 import { Subscription } from 'rxjs';
+import { NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 @Component({
-  selector: 'ssg-author',
-  templateUrl: './author.component.html',
-  styleUrls: ['./author.component.scss']
+    selector: 'ssg-author',
+    templateUrl: './author.component.html',
+    styleUrls: ['./author.component.scss'],
+    standalone: true,
+    imports: [NgIf, RouterLink, SafeHtmlPipe]
 })
 export class AuthorComponent implements OnInit {
 

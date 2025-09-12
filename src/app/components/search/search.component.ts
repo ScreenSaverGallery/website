@@ -4,12 +4,20 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 // services
 import { WpService } from '../../services/wp/wp.service';
 // rxjs
 import { Observable, of, Subject } from 'rxjs';
 import {map, startWith, catchError, debounceTime, switchMap} from 'rxjs/operators';
+import { MatFormField, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatOption } from '@angular/material/core';
+import { AsyncPipe } from '@angular/common';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 interface SearchItem {
   id: number,
@@ -20,9 +28,11 @@ interface SearchItem {
 }
 
 @Component({
-  selector: 'ssg-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+    selector: 'ssg-search',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.scss'],
+    standalone: true,
+    imports: [MatFormField, MatIcon, MatPrefix, MatInput, FormsModule, MatAutocompleteTrigger, ReactiveFormsModule, MatSuffix, MatProgressSpinner, MatAutocomplete, MatOption, AsyncPipe, SafeHtmlPipe]
 })
 export class SearchComponent implements OnInit {
 

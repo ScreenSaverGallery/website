@@ -11,11 +11,17 @@ import { SliderItem } from './components/info-slider/info-slider.component';
 import { Subscription } from 'rxjs';
 // ngx-wp-api
 import { Post } from '@tomaszatoo/ngx-wp-api';
+import { NgClass } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { MenuComponent } from './components/menu/menu.component';
+import { InfoSliderHorizontalComponent } from './components/info-slider-horizontal/info-slider-horizontal.component';
 
 @Component({
-  selector: 'ssg-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'ssg-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [NgClass, RouterOutlet, MenuComponent, InfoSliderHorizontalComponent]
 })
 export class AppComponent implements OnInit, OnDestroy {
 

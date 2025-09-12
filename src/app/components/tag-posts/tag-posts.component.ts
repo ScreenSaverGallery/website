@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 // rxjs
 import { Subscription } from 'rxjs';
+import { PostsComponent } from '../posts/posts.component';
 
 
 @Component({
-  selector: 'ssg-tag-posts',
-  templateUrl: './tag-posts.component.html',
-  styleUrls: ['./tag-posts.component.scss']
+    selector: 'ssg-tag-posts',
+    templateUrl: './tag-posts.component.html',
+    styleUrls: ['./tag-posts.component.scss'],
+    standalone: true,
+    imports: [PostsComponent]
 })
 export class TagPostsComponent implements OnInit, OnDestroy {
 

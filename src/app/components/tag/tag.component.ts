@@ -11,11 +11,15 @@ import { ColorService } from '../../services/color/color.service';
 // import { ThemeService } from '../../services/theme/theme.service';
 // rxjs
 import { Subscription } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { NgStyle, LowerCasePipe } from '@angular/common';
 
 @Component({
-  selector: 'ssg-tag',
-  templateUrl: './tag.component.html',
-  styleUrls: ['./tag.component.scss']
+    selector: 'ssg-tag',
+    templateUrl: './tag.component.html',
+    styleUrls: ['./tag.component.scss'],
+    standalone: true,
+    imports: [RouterLink, NgStyle, LowerCasePipe]
 })
 export class TagComponent implements OnInit, OnDestroy {
 

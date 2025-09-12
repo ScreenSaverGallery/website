@@ -8,8 +8,8 @@ describe('InfoSliderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoSliderComponent ]
-    })
+    imports: [InfoSliderComponent]
+})
     .compileComponents();
   }));
 

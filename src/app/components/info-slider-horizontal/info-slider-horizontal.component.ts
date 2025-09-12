@@ -7,6 +7,7 @@ import {
   ViewChild,
   OnDestroy
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 export interface SliderItem {
   text: string,
@@ -18,9 +19,11 @@ export interface SliderItem {
 } 
 
 @Component({
-  selector: 'ssg-info-slider-horizontal',
-  templateUrl: './info-slider-horizontal.component.html',
-  styleUrl: './info-slider-horizontal.component.scss'
+    selector: 'ssg-info-slider-horizontal',
+    templateUrl: './info-slider-horizontal.component.html',
+    styleUrl: './info-slider-horizontal.component.scss',
+    standalone: true,
+    imports: [RouterLink]
 })
 export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
 

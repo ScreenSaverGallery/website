@@ -16,9 +16,10 @@ import { Subscription } from 'rxjs';
 // }
 
 @Component({
-  selector: 'ssg-media',
-  templateUrl: './media.component.html',
-  styleUrls: ['./media.component.scss']
+    selector: 'ssg-media',
+    templateUrl: './media.component.html',
+    styleUrls: ['./media.component.scss'],
+    standalone: true
 })
 export class MediaComponent implements OnInit, OnDestroy {
 

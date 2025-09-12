@@ -8,8 +8,8 @@ describe('InfoSliderHorizontalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InfoSliderHorizontalComponent]
-    })
+    imports: [InfoSliderHorizontalComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(InfoSliderHorizontalComponent);

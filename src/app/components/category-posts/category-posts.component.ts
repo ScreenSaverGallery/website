@@ -2,11 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 // rxjs
 import { Subscription } from 'rxjs';
+import { NgIf } from '@angular/common';
+import { PostsComponent } from '../posts/posts.component';
 
 @Component({
-  selector: 'ssg-category-posts',
-  templateUrl: './category-posts.component.html',
-  styleUrls: ['./category-posts.component.scss']
+    selector: 'ssg-category-posts',
+    templateUrl: './category-posts.component.html',
+    styleUrls: ['./category-posts.component.scss'],
+    standalone: true,
+    imports: [NgIf, PostsComponent]
 })
 export class CategoryPostsComponent implements OnInit, OnDestroy {
 

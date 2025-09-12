@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 // models
 import { SocialMedium } from '../../models/social-medium';
 import { SliderItem } from '../info-slider/info-slider.component';
@@ -11,11 +11,14 @@ import { SiteInfoService } from '../../services/site-info/site-info.service';
 // rxjs
 import { Subscription } from 'rxjs';
 import { Post, Media } from '@tomaszatoo/ngx-wp-api';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  selector: 'ssg-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'ssg-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: true,
+    imports: [RouterLink, ButtonComponent]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 

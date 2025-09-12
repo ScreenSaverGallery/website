@@ -26,9 +26,10 @@ export class SsgIconButton {
 } */
 
 @Component({
-  selector: 'ssg-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+    selector: 'ssg-button',
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.scss'],
+    standalone: true
 })
 export class ButtonComponent implements OnInit, AfterViewInit, OnDestroy {
 

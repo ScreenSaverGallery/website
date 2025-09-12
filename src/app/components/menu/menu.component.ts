@@ -10,10 +10,10 @@ import {
   OnDestroy
 } from '@angular/core';
 // material
-import { MatDrawer } from '@angular/material/sidenav';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { Menu, Post, MenuItem } from '@tomaszatoo/ngx-wp-api';
 // router
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
 // models
 import { SocialMedium } from '../../models/social-medium';
 // services
@@ -25,6 +25,14 @@ import { ColorService } from 'src/app/services/color/color.service';
 import { MenuService } from 'src/app/services/menu/menu.service';
 // rxjs
 import { Subscription } from 'rxjs';
+import { SsgIconComponent } from '../ssg-icon/ssg-icon.component';
+import { ButtonComponent } from '../button/button.component';
+import { MatIcon } from '@angular/material/icon';
+import { SearchComponent } from '../search/search.component';
+import { LoadingComponent } from '../loading/loading.component';
+import { SocialComponent } from '../social/social.component';
+import { TitleCasePipe } from '@angular/common';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 interface MenuExtended extends Omit<Menu, 'items'> {
   items: MenuItemExtended[];
@@ -37,9 +45,11 @@ interface MenuItemExtended extends MenuItem {
 
 
 @Component({
-  selector: 'ssg-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+    selector: 'ssg-menu',
+    templateUrl: './menu.component.html',
+    styleUrls: ['./menu.component.scss'],
+    standalone: true,
+    imports: [SsgIconComponent, ButtonComponent, MatIcon, RouterLink, MatDrawerContainer, MatDrawer, SearchComponent, LoadingComponent, RouterLinkActive, SocialComponent, TitleCasePipe, SafeHtmlPipe]
 })
 export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
 

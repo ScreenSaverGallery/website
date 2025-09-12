@@ -8,8 +8,8 @@ describe('SsgIconComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SsgIconComponent ]
-    })
+    imports: [SsgIconComponent]
+})
     .compileComponents();
   }));
 

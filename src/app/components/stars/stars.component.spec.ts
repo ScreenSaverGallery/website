@@ -8,8 +8,8 @@ describe('StarsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StarsComponent ]
-    })
+    imports: [StarsComponent]
+})
     .compileComponents();
   }));
 

@@ -6,13 +6,17 @@ import {
 } from '@angular/core';
 // models
 import { SocialMedium } from '../../models/social-medium';
+import { ButtonComponent } from '../button/button.component';
+import { NgClass } from '@angular/common';
 
 
 
 @Component({
-  selector: 'ssg-social',
-  templateUrl: './social.component.html',
-  styleUrls: ['./social.component.scss']
+    selector: 'ssg-social',
+    templateUrl: './social.component.html',
+    styleUrls: ['./social.component.scss'],
+    standalone: true,
+    imports: [ButtonComponent, NgClass]
 })
 export class SocialComponent implements OnInit {
 

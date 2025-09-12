@@ -6,6 +6,9 @@ import {
   AfterViewInit,
   ViewChild
 } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 export interface SliderItem {
   text: string,
@@ -17,9 +20,11 @@ export interface SliderItem {
 } 
 
 @Component({
-  selector: 'ssg-info-slider',
-  templateUrl: './info-slider.component.html',
-  styleUrls: ['./info-slider.component.scss']
+    selector: 'ssg-info-slider',
+    templateUrl: './info-slider.component.html',
+    styleUrls: ['./info-slider.component.scss'],
+    standalone: true,
+    imports: [NgClass, RouterLink, SafeHtmlPipe]
 })
 export class InfoSliderComponent implements OnInit, AfterViewInit {
 

@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { StatsService } from 'src/app/services/stats/stats.service';
 
 @Component({
-  selector: 'ssg-stats',
-  templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.scss']
+    selector: 'ssg-stats',
+    templateUrl: './stats.component.html',
+    styleUrls: ['./stats.component.scss'],
+    standalone: true
 })
 export class StatsComponent implements OnInit {
 

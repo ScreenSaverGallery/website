@@ -26,6 +26,7 @@
             </div> -->
             
             <article [innerHTML]="loadedPost.content.rendered | demetazoa | safeHtml"></article>
+            
             @if(loadedPost.tags && loadedPost.tags.length) {
                 <div class="tags">
                     @for(tagId of loadedPost.tags; track tagId) {

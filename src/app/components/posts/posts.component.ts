@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 // router
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { ActivatedRoute, UrlSegment, RouterLink } from '@angular/router';
 // services
 import { WpService } from '../../services/wp/wp.service';
 import { ColorService } from '../../services/color/color.service';
@@ -8,6 +8,12 @@ import { Category, Post, User, Tag } from '@tomaszatoo/ngx-wp-api';
 import { HttpResponse } from '@angular/common/http';
 // rxjs
 import { Subscription } from 'rxjs';
+import { NgStyle, TitleCasePipe } from '@angular/common';
+import { PostComponent } from '../post/post.component';
+import { LoadMoreComponent } from '../load-more/load-more.component';
+import { LoadingComponent } from '../loading/loading.component';
+import { ButtonComponent } from '../button/button.component';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 interface CategoryChild {
   catId: number,
@@ -20,9 +26,11 @@ interface UserExt extends User {
 }
 
 @Component({
-  selector: 'ssg-posts',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss']
+    selector: 'ssg-posts',
+    templateUrl: './posts.component.html',
+    styleUrls: ['./posts.component.scss'],
+    standalone: true,
+    imports: [NgStyle, PostComponent, LoadMoreComponent, RouterLink, LoadingComponent, ButtonComponent, TitleCasePipe, SafeHtmlPipe]
 })
 export class PostsComponent implements OnInit, OnDestroy {
 
