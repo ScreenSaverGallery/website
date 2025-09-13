@@ -7,12 +7,12 @@ import { CategoryPostsComponent } from './components/category-posts/category-pos
 import { TagPostsComponent } from './components/tag-posts/tag-posts.component';
 import { AuthorPostsComponent } from './components/author-posts/author-posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { SponsorComponent } from './components/sponsor/sponsor.component';
+import { DonateComponent } from './components/donate/donate.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'sponsor', component: SponsorComponent },
+  { path: 'donate', component: DonateComponent },
   /* { path: 'thanks', component: DonateComponent }, */
   // { path: 'feed', component: FeedComponent }, // <-- not works as xml result :/
   { path: ':name', component: PostComponent },

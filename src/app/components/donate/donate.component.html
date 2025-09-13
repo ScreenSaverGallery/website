@@ -1,0 +1,14 @@
+
+<h1 class="title" [style]="{'color': randomColor}">Donate to ScreenSaverGallery</h1>
+@if(release) {
+    @if(assets && assets.length && assets.length > 1) {
+        <div>Your donwload is ready</div>
+        @for(asset of assets; track asset.id) {
+            <div class="download-link"><a [href]="asset.browser_download_url">🔗 {{asset.name}}</a></div>
+        }
+    }
+    @if (assets && assets.length === 1) {
+        <p class="download-link">Your download will start automatically. If it didn't start, <a [href]="release">download manualy</a></p>
+    }
+}
+<ssg-sponsor></ssg-sponsor>
