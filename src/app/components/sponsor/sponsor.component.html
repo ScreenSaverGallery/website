@@ -1,1 +1,58 @@
-<p>sponsor works!</p>
+<div class="sponsor-container">
+    
+    <div class="sponsor-form">
+        <div class="interval">
+            <ssg-button
+                type="stroked"
+                [class]="{'oneTime': true, 'sponsor-form-tab': true, 'active': sponsor.interval === 'oneTime'}"
+                (click)="setInterval('oneTime')"
+            >One time</ssg-button>
+            <ssg-button
+                type="stroked"
+                [class]="{'monthly': true, 'sponsor-form-tab': true, 'active': sponsor.interval === 'month'}"
+                (click)="setInterval('month')"
+            >Monthly</ssg-button>
+            <ssg-button
+                type="stroked"
+                [class]="{'yearly': true, 'sponsor-form-tab': true, 'active': sponsor.interval === 'year'}"
+                (click)="setInterval('year')"
+            >Yearly</ssg-button>
+        </div>
+        <div class="amount">
+            @for (amount of amounts; track amount) {
+                @if (
+                    sponsor.interval === 'year' && amount >= 100 ||
+                    sponsor.interval === 'oneTime' && amount >= 50 ||
+                    sponsor.interval !== 'year' && sponsor.interval !== 'oneTime'
+                ) {
+                    <ssg-button type="stroked" [class]="{'amount': true, 'active': sponsor.amount === amount}" (click)="setAmount(amount)">€ {{amount}}</ssg-button>
+                }
+                <!-- @if (sponsor.interval === 'oneTime' && amount >= 50) {
+
+                }
+                @if (sponsor.interval !== 'year') {
+                    <ssg-button type="stroked" [class]="{'amount': true, 'active': sponsor.amount === amount}" (click)="setAmount(amount)">€ {{amount}}</ssg-button>
+                } -->
+                
+            }
+        </div>
+        <div class="donate">
+            @if(sponsor.interval === 'oneTime') {
+                € <input 
+                    min="50" 
+                    type="number" 
+                    name="amount" 
+                    id="amount" 
+                    [(ngModel)]="sponsor.amount"
+                    (change)="sponsor.amount < 50 ? sponsor.amount = 50 : sponsor.amount = sponsor.amount"
+                >
+            }
+            <ssg-button type="stroked" class="donate active" (click)="donate()">Donate {{readibleInterval(sponsor.interval)}}</ssg-button>
+            <!-- <button class="donate" (click)="donate()">Donate {{readibleInterval(sponsor.interval)}}</button> -->
+        </div>
+    </div>
+    <div class="sponsor-headline">
+        <p>Running ScreenSaverGallery involves many complex tasks, from programming and funding to curating and exhibition production, not to mention the never-ending research into the art scene.</p>
+        <p><strong>With your support, we can do all of this with ♥️</strong>.</p>
+    </div>
+</div>

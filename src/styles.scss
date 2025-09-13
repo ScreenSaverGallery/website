@@ -1029,14 +1029,14 @@ ssg-button {
 
         .button-content {
             background-color: transparent;
-            padding: calc($space / 4) $space
+            padding: calc($space / 4) $space;
         }
 
         animation: buttonWheel 10s infinite linear;
         // animation-delay: random(5) + s;
     }
 
-    &:hover {
+    &:hover, &.active {
         // background-color: red;
         box-shadow: 0 0 $space red;
         border-color: transparent;
@@ -1152,6 +1152,29 @@ ssg-button {
 .text-color-wheel {
     animation: textWheel 20s infinite linear;
     // animation-delay: random(5) + s;
+}
+
+ssg-sponsor {
+    display: block;
+    margin: calc($space * 2) 0; 
+    .sponsor-container, .sponsor-form .interval, .sponsor-form .amount {
+        display: flex;
+        align-items: center;
+    }
+    .sponsor-headline, .sponsor-form {
+        flex: 50%;
+        padding-right: calc($space * 2);
+    }
+    ssg-button {
+        min-width: calc($space * 5);
+    }
+    input[type=number] {
+        background-color: transparent;
+        border-radius: calc($space * 2);
+        box-shadow: 0 0 $space white;
+        animation: buttonWheel 10s infinite linear;
+        padding: calc($space / 4) $space
+    }
 }
 
 ssg-loading {
@@ -1468,6 +1491,18 @@ ssg-not-found {
                 }
 
             }
+        }
+    }
+
+    ssg-sponsor {
+        .sponsor-container, .sponsor-form .interval, .sponsor-form .amount {
+            flex-direction: column;
+            // align-items: flex-start;
+        }
+        .sponsor-headline, .sponsor-form {
+            flex: 100%;
+            padding-right: 0;
+            text-align: center;
         }
     }
 
