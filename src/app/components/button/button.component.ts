@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 
 // services
-import { ThemeService } from '../../services/theme/theme.service';
-import { ColorService } from 'src/app/services/color/color.service';
+// import { ThemeService } from '../../services/theme/theme.service';
+// import { ColorService } from 'src/app/services/color/color.service';
 // rxjs
 import { Subscription } from 'rxjs';
 
@@ -34,7 +34,7 @@ export class SsgIconButton {
 export class ButtonComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() dark: boolean = true;
-  @Input() type: string =  undefined; // default undefined, types: stroked, icon
+  @Input() type: string =  'stroked'; // default undefined, types: stroked, icon
   @Input() colors: string[] = new Array(3);
   @Input() badge: number = 0;
   // @Input() skew: boolean = false;
