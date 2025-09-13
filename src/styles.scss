@@ -1157,13 +1157,14 @@ ssg-button {
 ssg-sponsor {
     display: block;
     margin: calc($space * 2) 0; 
-    .sponsor-container, .sponsor-form .interval, .sponsor-form .amount {
+    .sponsor-container/* , .sponsor-form .interval, .sponsor-form .amount */ {
         display: flex;
         align-items: center;
     }
     .sponsor-headline, .sponsor-form {
         flex: 50%;
         padding-right: calc($space * 2);
+        margin-bottom: calc($space * 3);
     }
     ssg-button {
         min-width: calc($space * 5);
@@ -1502,7 +1503,7 @@ ssg-not-found {
         .sponsor-headline, .sponsor-form {
             flex: 100%;
             padding-right: 0;
-            text-align: center;
+            // text-align: center;
         }
     }
 

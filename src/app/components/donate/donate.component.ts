@@ -40,6 +40,13 @@ export class DonateComponent implements OnInit, OnDestroy {
             this.release = value.assets[0].browser_download_url;
             /* TODO: AUTOMATIC DOWNLOAD */
             console.log('DOWNLOAD URL', this.release);
+            if (this.assets.length && this.assets.length === 1) {
+              // setTimeout(() => {
+              //   const asset = this.assets[0];
+              //   console.log('START DOWNLOAD', asset.name);
+              //   this.downloadURI(asset.browser_download_url, asset.name);
+              // }, 5000);
+            }
           }
         },
         error: (e: unknown) => console.error(e)
@@ -49,6 +56,15 @@ export class DonateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
+  }
+
+  private downloadURI(uri: string, name: string): void {
+    const link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   private getGitHubAssets<T>(os: string): Observable<T> {

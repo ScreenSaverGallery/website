@@ -26,14 +26,7 @@
                     sponsor.interval !== 'year' && sponsor.interval !== 'oneTime'
                 ) {
                     <ssg-button type="stroked" [class]="{'amount': true, 'active': sponsor.amount === amount}" (click)="setAmount(amount)">€ {{amount}}</ssg-button>
-                }
-                <!-- @if (sponsor.interval === 'oneTime' && amount >= 50) {
-
-                }
-                @if (sponsor.interval !== 'year') {
-                    <ssg-button type="stroked" [class]="{'amount': true, 'active': sponsor.amount === amount}" (click)="setAmount(amount)">€ {{amount}}</ssg-button>
-                } -->
-                
+                }               
             }
         </div>
         <div class="donate">
@@ -48,11 +41,10 @@
                 >
             }
             <ssg-button type="stroked" class="donate active" (click)="donate()">Donate {{readibleInterval(sponsor.interval)}}</ssg-button>
-            <!-- <button class="donate" (click)="donate()">Donate {{readibleInterval(sponsor.interval)}}</button> -->
         </div>
     </div>
     <div class="sponsor-headline">
-        <p>Running ScreenSaverGallery involves many complex tasks, from programming and funding to curating and exhibition production, not to mention the never-ending research into the art scene.</p>
-        <p><strong>With your support, we can do all of this with ♥️</strong>.</p>
+        <p>Running ScreenSaverGallery involves many complex tasks, from programming and exhibition production to curating and funding, not to mention the never-ending research into the art scene.</p>
+        <p><strong>With your support, we can do all of this with ♥️</strong></p>
     </div>
 </div>
