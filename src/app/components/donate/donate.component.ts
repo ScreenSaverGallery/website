@@ -32,20 +32,21 @@ export class DonateComponent implements OnInit, OnDestroy {
     this.randomColor = this.color.generateHslaColors(100)[0];
     const os = this.route.snapshot.queryParamMap.get('get');
     if (os) {
+      // GET LATEST RELEASES FROM GITHUB
       this.getGitHubAssets<any>(os).subscribe({
         next: (value: any) => {
-          console.log('githubassets', value);
+          // console.log('githubassets', value);
           if (value && value.assets.length && value.assets[0].browser_download_url) {
             this.assets = value.assets.filter((o: any) => !o.name.includes('blockmap')); // blockmap is a product by windows NSIS  
             this.release = value.assets[0].browser_download_url;
             /* TODO: AUTOMATIC DOWNLOAD */
-            console.log('DOWNLOAD URL', this.release);
+            // console.log('DOWNLOAD URL', this.release);
             if (this.assets.length && this.assets.length === 1) {
-              // setTimeout(() => {
-              //   const asset = this.assets[0];
-              //   console.log('START DOWNLOAD', asset.name);
-              //   this.downloadURI(asset.browser_download_url, asset.name);
-              // }, 5000);
+              setTimeout(() => {
+                const asset = this.assets[0];
+                // console.log('START DOWNLOAD', asset.name);
+                this.downloadURI(asset.browser_download_url, asset.name);
+              }, 5000);
             }
           }
         },
@@ -68,7 +69,7 @@ export class DonateComponent implements OnInit, OnDestroy {
   }
 
   private getGitHubAssets<T>(os: string): Observable<T> {
-    console.log('GET GITHUBASSETS', os);
+    // console.log('GET GITHUBASSETS', os);
     return this.http.get<T>(`https://api.github.com/repos/screensavergallery/${os}/releases/latest`, { headers: new HttpHeaders(
       { 'Accept': 'application/vnd.github.v3+json' }
     )});
