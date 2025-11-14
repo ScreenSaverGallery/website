@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 // models
-import { SocialMedium } from '../../models/social-medium';
+import { SocialMedium, followUs } from '../../models/social-medium';
 import { SliderItem } from '../info-slider/info-slider.component';
 // services
 import { WpService } from '../../services/wp/wp.service';
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // infoMessages: Message[] = [];
   // addSliderItem: SliderItem = undefined;
 
-  followUs: SocialMedium[] = [
+  followUs: SocialMedium[] = followUs; /* [
     // {name: 'signal', shortcut: 'signal', urlBase: 'https://signal.group/#CjQKIHzeKjxDhPsOkmyVBuDyY4UfRo5aboltmuM6_DvKTmquEhD75Gre_8iJg4UB7zW6AhMY'},
     {name: 'mastodon', shortcut: 'mastodon', urlBase: 'https://tldr.nettime.org/@screensavergallery'},
     {name: 'telegram', shortcut: 'tlgrm', urlBase: 'https://t.me/screensavergallery'},
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     {name: 'facebook', shortcut: 'fb', urlBase: 'https://www.facebook.com/ScreenSaverGallery'},
     {name: 'github', shortcut: 'git', urlBase: 'https://github.com/ScreenSaverGallery'},
     {name: 'newsletter', shortcut: 'monk', urlBase: 'https://listmonk.screensaver.gallery/subscription/form'}
-  ];
+  ]; */
 
   private _getSiteInfoSub: Subscription = new Subscription();
   private _getCurrentSaverSub: Subscription = new Subscription();
