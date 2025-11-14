@@ -1,15 +1,10 @@
 # TODO
 
-- implement sponsorshipt to download page (see eg https://www.blender.org/thanks/)
+- [X] implement sponsorship to download page 
+- [X] check subscribtions without unsubscribes
+- [X] bug: (Failed to load resource: the server responded with a status of 404 (Not Found): https://screensaver.metazoa.org/wp-json/categories?orderby=count&order=asc&page=2) <- it seems no category asked :/
 
-x check subscribtions without unsubscribes
-
-
-x bug: (Failed to load resource: the server responded with a status of 404 (Not Found): https://screensaver.metazoa.org/wp-json/categories?orderby=count&order=asc&page=2) <- it seems no category asked :/
-
-
-x color service rainbow only css (viz. https://stackoverflow.com/questions/54702124/rainbow-text-animation-using-only-css)
-- add universal (+ solve document.window...)
-- add caching (see: https://danielk.tech/home/angular-http-cache-how-to)
-- redesign homepage (online + offline), add social to homepage(?)
-x move under node on felis
+- [X] color service rainbow only css (viz. https://stackoverflow.com/questions/54702124/rainbow-text-animation-using-only-css)
+- [ ] add universal (+ solve document.window...)
+- [X] add caching (made on API side)
+- [...] redesign homepage (online + offline), add social to homepage(?)
