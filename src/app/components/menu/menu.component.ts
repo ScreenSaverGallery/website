@@ -100,9 +100,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
     private themeService: ThemeService,
     private linksService: LinksService,
     private siteInfoService: SiteInfoService,
-    private menuService: MenuService,
-    private colorService: ColorService,
-    private elm: ElementRef
+    private menuService: MenuService
   ) { }
 
   ngOnInit() {
@@ -110,14 +108,15 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
     // home route
     this.routerSub = this.router.events.subscribe((res: any) => {
       if (res instanceof NavigationEnd) {
-        // console.log('router res', res);
-        if (res && res.url === '/') {
+        const url = res.url.replace(/\?.*/, ''); // exlude any additional parrams
+        // console.log('router res', url);
+        if (res && url === '/') {
           this.homePage = true;
         } else {
           this.homePage = false;
         }
 
-        if (res && res.url === '/get') {
+        if (res && url === '/get') {
           this.getPage = true;
           this.homeLink = this.linksService.homeLink;
         } else {
@@ -192,19 +191,6 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this._positionOfSandwitch();
-    // const buttons = this.elm.nativeElement.querySelectorAll('ssg-button');
-    // console.log('buttons', buttons);
-    // this.colorService.animateRandomColor(1, 0, 100, 70, 1.0).subscribe({
-    //   next: (hslaColor: string) => {
-    //     for (const button of buttons) {
-    //       // button.style.backgroundColor = hslaColor;
-    //       button.style.boxShadow = `0 0 24px ${hslaColor}`;
-    //     }
-    //   },
-    //   error: (e: any) => console.log(e)
-    // });
-
-    // this._animateIcons();
   }
 
   ngOnDestroy(): void {
