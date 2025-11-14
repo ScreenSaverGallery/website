@@ -685,6 +685,13 @@ div.mat-mdc-autocomplete-panel {
     align-items: flex-start !important;
 }
 
+.cdk-overlay-pane {
+    pointer-events: none !important;
+    .mat-mdc-snack-bar-label {
+        pointer-events: auto !important;
+    }
+}
+
 
 ssg-post {
     display: block;
