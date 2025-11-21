@@ -5,7 +5,7 @@
                 <div class="item-emoji permanent-marker-regular" [innerHTML]="item.emoji"></div>
             }
             @if(item.url) {
-                <a [routerLink]="[item.url]">
+                <a [routerLink]="[item.url]" (click)="itemClicked(item)">
                     <div class="item-text" [innerHTML]="item.text"></div>
                 </a>
             } @else {

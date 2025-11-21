@@ -1,11 +1,12 @@
 import {
   Component,
-  OnInit,
+  Output,
   Input,
   ElementRef,
   AfterViewInit,
   ViewChild,
-  OnDestroy
+  OnDestroy,
+  EventEmitter
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -50,6 +51,8 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
   @Input() align: string = 'left'; // default
 
   @ViewChild('sliderContainer') _sliderContainer!: ElementRef;
+
+  @Output() selected: EventEmitter<SliderItem> = new EventEmitter();
 
   private _activeSlideTime: number = 0;
   private _pausedSlider: boolean = false;
@@ -97,6 +100,10 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
       this.elm.nativeElement.removeEventListener('pointerenter', this.onEnter);
       this.elm.nativeElement.removeEventListener('pointerout', this.onOut);
     }
+  }
+
+  itemClicked(item: SliderItem): void {
+    this.selected.emit(item);
   }
 
   private _includesMessage(item: SliderItem, messages: SliderItem[]): boolean {

@@ -350,8 +350,8 @@ ssg-info-slider-horizontal {
         position: absolute;
         left: 100%;
         display: flex;
-        // flex-direction: row;
-        // flex-wrap: nowrap;
+        flex-direction: row;
+        flex-wrap: nowrap;
         flex: 1 0 auto;
         // animation-name: positionRightToLeft;
         // animation-timing-function: linear;
@@ -1227,7 +1227,7 @@ ssg-not-found {
 /* ANIMATIONS */
 @keyframes positionRightToLeft {
     from {
-        left: 150%;
+        left: 0%;
     }
 
     to {

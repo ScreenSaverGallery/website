@@ -92,7 +92,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
   private _space: number = 24;
 
   private menuToggleSub: Subscription = new Subscription();
-
+  private menuOpenedSub: Subscription = new Subscription();
 
   constructor(
     private wpService: WpService,
@@ -187,6 +187,12 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuToggleSub = this.menuService.toggle.subscribe(() => {
       this.toggleMenu(this.drawer.toggle());
     });
+    this.menuOpenedSub = this.menuService.opened.subscribe({
+      next: (opened: boolean) => {
+        if (opened) this.drawer.open();
+        if (!opened) this.drawer.close();
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -195,6 +201,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.menuToggleSub.unsubscribe();
+    this.menuOpenedSub.unsubscribe();
     this.routerSub.unsubscribe();
   }
 

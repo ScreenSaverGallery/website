@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, inject } from '@angular/core';
 // services
 // import { ThemeService } from './services/theme/theme.service';
 // import { SiteInfoService } from './services/site-info/site-info.service';
 // import { ColorService } from './services/color/color.service';
+import { MenuService } from './services/menu/menu.service';
 import { SnackService } from './services/snack/snack.service';
 import { WpService } from './services/wp/wp.service';
 // import { FeedService } from './services/feed/feed.service';
@@ -24,6 +25,12 @@ import { InfoSliderHorizontalComponent } from './components/info-slider-horizont
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  private readonly snackService: SnackService = inject(SnackService);
+  private readonly menuService: MenuService = inject(MenuService);
+  private readonly wpService: WpService = inject(WpService);
+  private readonly appElm: ElementRef = inject(ElementRef);
+
+
   title: string = 'Screensaver';
   bwTheme: boolean = false;
   OS: string = 'Unknown';
@@ -37,15 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private _getCurrentOfflineSaverSub: Subscription = new Subscription();
   private _getLastNewsSub: Subscription = new Subscription();
 
-  constructor(
-    // private themeService: ThemeService,
-    // private siteInfoService: SiteInfoService,
-    // private colorService: ColorService,
-    private snackService: SnackService,
-    // private feedService: FeedService,
-    private wpService: WpService,
-    private appElm: ElementRef
-  ){}
+  constructor(){}
 
   ngOnInit(): void {
     // get rss feed
@@ -138,12 +137,18 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   menuAction(open: boolean): void {
-    // console.log('menu is open?', open);
+    console.log('menu is open?', open);
     if (open) {
       this.appElm.nativeElement.classList.add('active-menu');
     } else {
       this.appElm.nativeElement.classList.remove('active-menu');
     }
+  }
+
+  sliderItemSelected(item: SliderItem): void {
+    console.log('SLIDER ITEM SELECTED', item);
+    // close menu
+    this.menuService.close();
   }
 
   private getOS(): string {
