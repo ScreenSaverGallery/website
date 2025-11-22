@@ -96,7 +96,7 @@ $ssg-typography: mat.m2-define-legacy-typography-config($font-family: $font-prim
 
 $space: 24px;
 $dark-color: #14141e;
-$light-color: silver;
+$light-color: black;
 $accent-color: #84ffff; // #4fc3f7; // #81d4fa; // #55b5db;
 $warn-color: red;
 
@@ -708,7 +708,10 @@ ssg-post {
     }
 
     .has-featured-image {
-        color: white;
+        color: $accent-color;
+        a .link-content {
+            color: $warn-color;
+        }
     }
 
     .full {
