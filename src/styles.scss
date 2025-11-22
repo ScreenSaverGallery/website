@@ -1031,7 +1031,7 @@ ssg-button {
 
     &.stroked {
         background-color: transparent;
-        border-radius: calc($space * 2);
+        border-radius: 100%; // calc($space * 2);
         box-shadow: 0 0 $space white;
 
         .button-content {
@@ -1178,7 +1178,7 @@ ssg-sponsor {
     }
     input[type=number] {
         background-color: transparent;
-        border-radius: calc($space * 2);
+        border-radius: 100%; // calc($space * 2);
         box-shadow: 0 0 $space white;
         animation: buttonWheel 10s infinite linear;
         padding: calc($space / 4) $space
