@@ -97,7 +97,7 @@ export class PostComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // console.log('init post component post', this.post);
+    console.log('init post component post', this.post);
     this.downloadLink = this.linksService.downloadLink;
     this.randomColor = this.colorService.generateHslaColors(100)[0];
     
@@ -203,6 +203,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   private _cleanPostElm(): void {
+    this.hasFeaturedImage = false;
     this.loadedPost = undefined;
     this.elm.nativeElement.classList.remove(...this.elm.nativeElement.classList);
     if (this.featuredImgContainer && this.featuredImgContainer.nativeElement) this.featuredImgContainer.nativeElement.style.backgroundImage = 'none';
