@@ -41,15 +41,18 @@ export class SocialComponent implements OnInit {
   openHref(base: string, href: string): void {
     if (!base) { // if base === undefined, it is Mastodon :/ not wel figured
       let instance: string = '';
-      if (localStorage.getItem('mastodon-instance')) {
-        instance = localStorage.getItem('mastodon-instance');
-      } else {
-        instance = window.prompt(
-          'Please tell me your Mastodon instance'
-        );
-        if (instance) localStorage.setItem('mastodon-instance', instance);
-      }
+      // if (localStorage.getItem('mastodon-instance')) {
+      //   instance = localStorage.getItem('mastodon-instance');
+      // } else {
+      instance = window.prompt(
+        'Please tell me your Mastodon instance'
+      );
+      // if (instance) localStorage.setItem('mastodon-instance', instance);
+      // }
       if (instance) {
+        // remove any protocol (see https://stackoverflow.com/a/8206299/7185355)
+        instance = instance.replace(/(^\w+:|^)\/\//, ''); 
+        // open in new tab
         window.open(`https://${instance}/share?text=${encodeURIComponent(href)}`, '_blank');
       }
       return;
