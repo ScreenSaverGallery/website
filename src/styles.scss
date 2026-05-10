@@ -117,6 +117,14 @@ $warn-color: red;
   z-index: 9999;
 }
 
+@mixin layer-4 {
+  z-index: 999999;
+}
+
+@mixin layer-5 {
+  z-index: 99999999;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -592,7 +600,7 @@ ssg-tag {
 }
 
 .cdk-overlay-container {
-  @include layer-3();
+  @include layer-5();
 }
 
 .mat-drawer-inner-container {
@@ -681,12 +689,12 @@ div.mat-mdc-autocomplete-panel {
   align-items: flex-start !important;
 }
 
-.cdk-overlay-pane {
+/* .cdk-overlay-pane {
   pointer-events: none !important;
   .mat-mdc-snack-bar-label {
     pointer-events: auto !important;
   }
-}
+} */
 
 ssg-post {
   display: block;
