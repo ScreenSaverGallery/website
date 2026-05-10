@@ -1,6 +1,6 @@
 @if(posts && posts.length || children.length) {
     @if(posts && posts.length) {
-        <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
+        <h1 [innerHtml]="title | titlecase" class="title" [style]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
         @if(category?.description) {
             <div class="category-description" [innerHTML]="category.description | safeHtml"></div>
@@ -8,23 +8,24 @@
         <!-- AUTHOR DESCRIPTION -->
         @if(author?.description) {
             <div class="author-description" [innerHtml]="author.description | safeHtml"></div>
-        }     
+        }
         <div class="posts-container">
             @for(post of posts; let i = $index; track i) {
-                @if(slug === 'screensavers' && i === 0) {
-                    <!-- do not show last show -->
-                } @else {
+                <!-- @if(slug === 'screensavers' && i === 0) { -->
+                  <!-- {{post.title.rendered}} -->
+                  <!-- do not show last show -->
+                  <!-- } @else { -->
                     <ssg-post [post]="post"></ssg-post>
-                }
+                  <!-- } -->
             }
         </div>
         <!-- TODO LOAD MORE -->
         <ssg-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></ssg-load-more>
-    } 
+    }
     <!-- CATEGORY WITH SUBCATEGORIES -->
     @if(children.length && slug !== 'screensavers') {
         <!-- {{log('category', category)}} -->
-        <h1 [innerHtml]="title | titlecase" class="title" [ngStyle]="{'color': randomColor}"></h1>
+        <h1 [innerHtml]="title | titlecase" class="title" [style]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
         @if(category?.description) {
            <div class="category-description" [innerHTML]="category.description | safeHtml"></div>
@@ -45,7 +46,7 @@
                     <div class="subcategory-container">
                         <h2 [innerHtml]="child.category.name | titlecase | safeHtml" class="text-color-wheel"></h2>
                         <div class="category-description" [innerHtml]="child.category?.description | safeHtml"></div>
-                        
+
                         <!-- <ssg-post [post]="child.category"></ssg-post> -->
                         @if(child.posts && child.posts.length) {
                             <div class="posts-container">
@@ -67,7 +68,7 @@
                             [badge]="child.category.count"
                             [routerLink]="['/archive', child.category.slug]"
                         >More from {{child.category.name | titlecase}} <!-- [...]&nbsp;{{child.category.name | titlecase}} --></ssg-button>
-                    </div> 
+                    </div>
                 }
             }
         </div>
