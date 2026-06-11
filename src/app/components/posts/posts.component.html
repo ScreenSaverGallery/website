@@ -1,4 +1,4 @@
-@if(posts && posts.length || children.length) {
+@if(posts && posts.length || childCategories.length) {
     @if(posts && posts.length) {
         <h1 [innerHtml]="title | titlecase" class="title" [style]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
@@ -23,7 +23,7 @@
         <ssg-load-more [loadMore]="shouldLoadMore() ? true : false" (inViewport)="loadMorePosts($event)"></ssg-load-more>
     }
     <!-- CATEGORY WITH SUBCATEGORIES -->
-    @if(children.length && slug !== 'screensavers') {
+    @if(childCategories.length && slug !== 'screensavers') {
         <!-- {{log('category', category)}} -->
         <h1 [innerHtml]="title | titlecase" class="title" [style]="{'color': randomColor}"></h1>
         <!-- CATEGORY DESCRIPTION -->
@@ -32,7 +32,7 @@
         }
         <!-- LINKS TO SUBCATEGORIES -->
         <div class="subcategories-links">
-            @for(subcategory of children; track subcategory.catId) {
+            @for(subcategory of childCategories; track subcategory.catId) {
                 @if (subcategory.category.count) {
                     <div>🦥 <a [routerLink]="['/archive', subcategory.category.slug]" [innerHTML]="subcategory.category.name | titlecase | safeHtml"></a></div>
                 }
@@ -40,7 +40,7 @@
         </div>
         <!-- SUBCATEGORIES -->
         <div class="subcategories">
-            @for(child of children; track child.catId) {
+            @for(child of childCategories; track child.catId) {
                 @if(child.category.count) {
                     <!-- CONTAINER FOR SUBCATEGORY CONTENT -->
                     <div class="subcategory-container">

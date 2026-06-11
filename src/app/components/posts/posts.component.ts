@@ -7,8 +7,9 @@ import { ColorService } from "../../services/color/color.service";
 import { Category, Post, User, Tag } from "@tomaszatoo/ngx-wp-api";
 import { HttpResponse } from "@angular/common/http";
 // rxjs
-import { Subscription } from "rxjs";
-import { NgStyle, TitleCasePipe } from "@angular/common";
+import { Subscription, take } from "rxjs";
+//
+import { TitleCasePipe } from "@angular/common";
 import { PostComponent } from "../post/post.component";
 import { LoadMoreComponent } from "../load-more/load-more.component";
 import { LoadingComponent } from "../loading/loading.component";
@@ -31,7 +32,6 @@ interface UserExt extends User {
   styleUrls: ["./posts.component.scss"],
   standalone: true,
   imports: [
-    NgStyle,
     PostComponent,
     LoadMoreComponent,
     RouterLink,
@@ -59,7 +59,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   category: Category;
   author: UserExt;
-  children: CategoryChild[] = [];
+  childCategories: CategoryChild[] = [];
   posts: Post[] = [];
   maxVisiblePosts: number = 30;
   postsPage: number = 1;
@@ -124,13 +124,13 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   /* GET CATEGORY POSTS */
   private getCategoryPosts(categorySlug: string): void {
-    this.getCategoriesSub = this.wpService.categories.subscribe(
-      (categories: Category[]) => {
+    this.wpService.categories
+      .pipe(take(2)) // take second (why?)
+      .subscribe((categories: Category[]) => {
         if (categories) {
-          // console.log('getCategoryPosts -> categories', categories);
           this.category = this.wpService.getCategoryBySlug(categorySlug);
-          this.children = this.wpService
-            .categoryChildren(this.category.id)
+          this.childCategories = this.wpService
+            .childCategories(this.category.id)
             .map((child: Category) => {
               const catChild: CategoryChild = {
                 catId: child.id,
@@ -140,93 +140,102 @@ export class PostsComponent implements OnInit, OnDestroy {
               return catChild;
             });
           // console.log('getCategoryPosts category', this.category);
-          // console.log('getCategoryPosts children', this.children);
+          // console.log('getCategoryPosts children', this.childCategories);
           // set title
           this.title = this.category.name;
           // console.log("CATEGORY NAME", this.title);
-          // console.log('children', this.children);
+          // console.log('children', this.childCategories);
           // console.log('categorySlug', categorySlug);
           // no children
-          if (this.children.length === 0 || categorySlug === "screensavers") {
+          if (
+            this.childCategories.length === 0 ||
+            categorySlug === "screensavers"
+          ) {
+            console.log(
+              "0 child categories && screensavers categorySlug",
+              categorySlug,
+            );
             // this.loadingPosts = true;
-            const getCatPostsSub: Subscription = this.wpService
+            console.log("---- category", this.category);
+            console.log("---- postPage", this.postsPage);
+            this.wpService
               .getCategoryPosts(this.category.id, this.postsPage, true)
-              .subscribe((res: HttpResponse<any>) => {
-                this.recievePosts(res);
-                // unsubscribe
-                getCatPostsSub.unsubscribe();
+              .pipe(take(1))
+              .subscribe({
+                next: (res: HttpResponse<any>) => {
+                  this.recievePosts(res);
+                  // this.loadingPosts = false;
+                },
+                error: (e: any) => console.error(e),
               });
           } else {
-            console.warn("getCategoryPosts -> children", this.children);
+            console.warn("getCategoryPosts -> children", this.childCategories);
             this.loadingPosts = false;
-            for (let i = 0; i < this.children.length; i++) {
-              const child = this.children[i];
-              const getCatPostsSub: Subscription = this.wpService
+            for (let i = 0; i < this.childCategories.length; i++) {
+              const child = this.childCategories[i];
+              this.wpService
                 .getCategoryPosts(child.catId, this.postsPage, false)
+                .pipe(take(1))
                 .subscribe({
                   next: (posts: Post[]) => {
+                    console.log("CATEGORY POSTS", posts);
                     child.posts = posts;
-                    if (i === this.children.length - 1) {
+                    if (i === this.childCategories.length - 1) {
                       this.loadingPosts = false;
                     }
                     console.log("child", child);
                     console.log(`posts of ${child.category.slug}`, posts);
-                    getCatPostsSub.unsubscribe();
                   },
                   error: (e: any) => {
                     console.error(e);
-                    getCatPostsSub.unsubscribe();
                   },
                 });
             }
             // sort children
-            // console.log('children', this.children);
-            // this.children = this.children.sort((a: any, b: any) => parseFloat(a.id) + parseFloat(b.id) );
-            // console.log('sorted children', this.children);
+            // console.log('children', this.childCategories);
+            // this.childCategories = this.childCategories.sort((a: any, b: any) => parseFloat(a.id) + parseFloat(b.id) );
+            // console.log('sorted children', this.childCategories);
           }
-          this.getCategoriesSub.unsubscribe();
         }
-      },
-    );
+      });
   }
 
   /* GET AUTHOR POSTS (not used) */
   private getAuthorPosts(authorSlug: string): void {
-    const getUserBySlugSub: Subscription = this.wpService
+    this.wpService
       .getUserBySlug(authorSlug)
+      .pipe(take(1))
       .subscribe((user: User) => {
         if (user) {
           // const author = user;
           this.author = user as UserExt;
           this.title = this.author.name.replace(/\&amp\;/g, "&");
-          const getPostsByAuthorSub: Subscription = this.wpService
+          this.wpService
             .getPostsByAuthor(this.author.id, this.postsPage, true)
+            .pipe(take(1))
             .subscribe((r: any) => {
               this.recievePosts(r);
-              // unsubscribe
-              getPostsByAuthorSub.unsubscribe();
             });
         }
-        getUserBySlugSub.unsubscribe();
       });
   }
 
   /* GET TAG POSTS */
   private getTagPosts(tagSlug: string): void {
     // console.log('getTagPosts', tagSlug);
-    const getTagSub: Subscription = this.wpService
+    this.wpService
       .getTagBySlug(tagSlug)
+      .pipe(take(1))
       .subscribe((tag: Tag) => {
         if (tag) {
           // const tag = res;
           this.title = tag.name;
-          const getPostsSub: Subscription = this.wpService
+          this.wpService
             .getPostsByTag(tag.id, this.postsPage, true)
+            .pipe(take(1))
             .subscribe((res: HttpResponse<any>) => {
               this.recievePosts(res);
-              getPostsSub.unsubscribe();
             });
-          getTagSub.unsubscribe();
         }
       });
   }
@@ -234,6 +243,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   /* RECIVE POSTS FROM TAXONOMY */
   private recievePosts(res: HttpResponse<any>): void {
     if (res && res.body && res.body.length > 0) {
+      console.log("recievePosts", res.body);
       this.loadingPosts = false;
       const temp: any[] = this.posts;
       this.total = Number(res.headers.get("X-WP-Total"));
