@@ -1,4 +1,4 @@
-<div #sliderContainer class="slider-container active">
+<div class="slider-container">
     @for(item of sliderItems; let i = $index; track i) {
         <div class="slider-item">
             @if(item.emoji) {
@@ -12,5 +12,19 @@
                 <div class="item-text" [innerHTML]="item.text"></div>
             }
         </div>
-    } 
+    }
+    @for(item of sliderItems; let i = $index; track i) {
+        <div class="slider-item slider-item--clone" aria-hidden="true">
+            @if(item.emoji) {
+                <div class="item-emoji permanent-marker-regular" [innerHTML]="item.emoji"></div>
+            }
+            @if(item.url) {
+                <a [routerLink]="[item.url]" tabindex="-1">
+                    <div class="item-text" [innerHTML]="item.text"></div>
+                </a>
+            } @else {
+                <div class="item-text" [innerHTML]="item.text"></div>
+            }
+        </div>
+    }
 </div>

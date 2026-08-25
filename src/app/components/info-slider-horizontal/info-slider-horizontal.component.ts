@@ -2,10 +2,6 @@ import {
   Component,
   Output,
   Input,
-  ElementRef,
-  AfterViewInit,
-  ViewChild,
-  OnDestroy,
   EventEmitter
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -17,7 +13,7 @@ export interface SliderItem {
   url?: string,
   active?: boolean,
   leaving?: boolean
-} 
+}
 
 @Component({
     selector: 'ssg-info-slider-horizontal',
@@ -26,10 +22,10 @@ export interface SliderItem {
     standalone: true,
     imports: [RouterLink]
 })
-export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
+export class InfoSliderHorizontalComponent {
 
   @Input() sliderItems: SliderItem[] = [];
-  
+
   @Input() set addItem(item: SliderItem) {
     console.log('addItem', item);
     if (item && !this._includesMessage(item, this.sliderItems)) {
@@ -37,70 +33,16 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
       if (this.sliderItems.length === 1) {
         item.active = false;
       }
-      // this._justifySliderHeight();
     }
   }
+
   @Input() set removeMessage(item: SliderItem) {
     if (item && this._includesMessage(item, this.sliderItems)) {
       this.sliderItems.splice(this._indexOfMessage(item, this.sliderItems), 1);
-      // this.sliderItems.splice(this.sliderItems.indexOf(item), 1);
     }
   }
-
-  @Input() delay: number = 500; // default
-  @Input() align: string = 'left'; // default
-
-  @ViewChild('sliderContainer') _sliderContainer!: ElementRef;
 
   @Output() selected: EventEmitter<SliderItem> = new EventEmitter();
-
-  private _activeSlideTime: number = 0;
-  private _pausedSlider: boolean = false;
-
-  constructor(
-    private elm: ElementRef
-  ) { }
-
-  ngAfterViewInit(): void {
-    if (this._sliderContainer) {
-      // console.log('SLIDER CONTAINER', this._sliderContainer);
-      let t = 0;
-      const e = this._sliderContainer.nativeElement;
-      const animate = () => {
-        const rect = e.getBoundingClientRect();
-        // console.log('animate e', e);
-        // console.log('animate val', val);
-        if (e.classList.contains('active')) {
-          e.style.transform = `translateX(${t}px)`;
-          t -= 1.5;
-          if (Math.abs(t) > (rect.width + this.elm.nativeElement.getBoundingClientRect().width)) {
-            t = 0;
-          }
-        }
-        requestAnimationFrame(animate);
-      }
-      // start loop
-      requestAnimationFrame(animate);
-      // add listeners
-      this.elm.nativeElement.addEventListener('pointerenter', this.onEnter.bind(this), true);
-      this.elm.nativeElement.addEventListener('pointerout', this.onOut.bind(this), true);
-    }
-  }
-
-  private onEnter(): void {
-    if (this._sliderContainer) this._sliderContainer.nativeElement.classList.remove('active');
-  }
-
-  private onOut(): void {
-    if (this._sliderContainer) this._sliderContainer.nativeElement.classList.add('active');
-  }
-
-  ngOnDestroy(): void {
-    if (this.elm) {
-      this.elm.nativeElement.removeEventListener('pointerenter', this.onEnter);
-      this.elm.nativeElement.removeEventListener('pointerout', this.onOut);
-    }
-  }
 
   itemClicked(item: SliderItem): void {
     this.selected.emit(item);
@@ -119,6 +61,5 @@ export class InfoSliderHorizontalComponent implements AfterViewInit, OnDestroy {
     }
     return -1;
   }
-
 
 }
