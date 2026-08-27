@@ -34,10 +34,10 @@
   white-space: nowrap;
   line-height: 1;
 
-  &--clone {
-    user-select: none;
-    pointer-events: none;
-  }
+  // &--clone {
+  //   user-select: none;
+  //   pointer-events: none;
+  // }
 
   .item-emoji,
   a {

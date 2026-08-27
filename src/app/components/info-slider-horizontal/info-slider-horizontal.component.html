@@ -19,7 +19,7 @@
                 <div class="item-emoji permanent-marker-regular" [innerHTML]="item.emoji"></div>
             }
             @if(item.url) {
-                <a [routerLink]="[item.url]" tabindex="-1">
+                <a [routerLink]="[item.url]" tabindex="-1" (click)="itemClicked(item)">
                     <div class="item-text" [innerHTML]="item.text"></div>
                 </a>
             } @else {
