@@ -69,7 +69,10 @@ export class MediaComponent implements OnInit, OnDestroy {
   }
 
   getImageSrcSizes(): string {
-    let sizes: string = `(max-width: ${this.imageDetails.sizes.full.width}px) 100vw, ${this.imageDetails.sizes.full.width}px`;
+    let sizes: string = `(max-width: ${this.imageDetails.width}px) 100vw, ${this.imageDetails.width}px`;
+    if (this.imageDetails.sizes.full) {
+      sizes = `(max-width: ${this.imageDetails.sizes.full.width}px) 100vw, ${this.imageDetails.sizes.full.width}px`;
+    }
     return sizes;
   }
 
